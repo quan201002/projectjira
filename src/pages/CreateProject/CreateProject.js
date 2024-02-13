@@ -1,78 +1,118 @@
 import React, { useEffect, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { withFormik } from "formik";
+import { Input, Button } from "antd";
 import * as Yup from "yup";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { getAllProjectCaterory } from "../../redux/reducer/ProjectCaterorySlice";
+
 import { https } from "../../service/api";
 
 function CreateProject(props) {
-  const dispatch = useDispatch();
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
-    props;
+  let arrProjectCaterory = useSelector(
+    (state) => state.ProjectCateroryReducer.arrProjectCaterory
+  );
 
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setValues,
+    setFieldValue,
+  } = props;
+  useEffect(() => {
+    dispatch({
+      type: "GET_ALL_PROJECT_CATEGORY_SAGA",
+    });
+  }, []);
   const handelEditorChange = (content, editor) => {
-    console.log("Content was update:", content);
+    setFieldValue("description", content);
+    console.log(content);
   };
+
   return (
-    <div className="content-container">
+    <form
+      onSubmit={handleSubmit}
+      className="content-container"
+      onChange={handleChange}
+    >
       <h3>{props.displayName}</h3>
-      <form onSubmit={handleSubmit} className="container">
-        <div className="form-group">
-          <p>Name</p>
-          <input
-            onChange={handleChange}
-            className="form-control"
-            name="projectName"
-          ></input>
-          <div>{errors.projectName}</div>
-        </div>
-        <div className="form-group">
-          <p>Description</p>
-          <Editor
-            name="description"
-            apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-            init={{
-              plugins:
-                "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-              toolbar:
-                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-              tinycomments_mode: "embedded",
-              tinycomments_author: "Author name",
-              mergetags_list: [
-                { value: "First.Name", title: "First Name" },
-                { value: "Email", title: "Email" },
-              ],
-              ai_request: (request, respondWith) =>
-                respondWith.string(() =>
-                  Promise.reject("See docs to implement AI Assistant")
-                ),
-            }}
-            initialValue="Welcome to TinyMCE!"
-            onEditorChange={handelEditorChange}
-          />
-        </div>
-        <div className="form-group">
-          <select name="catergoryId" className="form-control">
-            {/* <option>Software</option>
-            <option>Web</option>
-            <option>App</option> */}
-          </select>
-        </div>
-        <button className="btn btn-outline-primary" type="submit">
-          submit
-        </button>
-      </form>
-    </div>
+      <div className="form-group">
+        <p>Name</p>
+        <Input
+          onChange={handleChange}
+          className="form-control"
+          name="projectName"
+          value={values.projectName}
+        ></Input>
+        <div>{errors.projectName}</div>
+      </div>
+      <div className="form-group">
+        <p>Description</p>
+        <Editor
+          value={values.description}
+          name="description"
+          apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
+          init={{
+            plugins:
+              "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+            toolbar:
+              "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+            tinycomments_mode: "embedded",
+            tinycomments_author: "Author name",
+            mergetags_list: [
+              { value: "First.Name", title: "First Name" },
+              { value: "Email", title: "Email" },
+            ],
+            ai_request: (request, respondWith) =>
+              respondWith.string(() =>
+                Promise.reject("See docs to implement AI Assistant")
+              ),
+          }}
+          initialValue="Welcome to TinyMCE!"
+          onEditorChange={handelEditorChange}
+        />
+      </div>
+      <div className="form-group">
+        <select
+          name="catergoryId"
+          className="form-control"
+          value={values.catergoryId}
+          onChange={handleChange}
+        >
+          {arrProjectCaterory.map((item, index) => {
+            return (
+              <option value={item.id} key={index}>
+                {item.projectCategoryName}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <Button
+        htmlType="submit"
+        size="large"
+        className="mt-5 btn btn-primary"
+        style={{ width: "65%" }}
+      >
+        CreateProject
+      </Button>
+    </form>
   );
 }
 const createProjectForm = withFormik({
-  mapPropsToValues: () => ({
-    projectName: "",
-    description: "",
-    catergoryId: "",
-  }),
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
+    console.log("props value", props);
+    return {
+      projectName: "",
+      description: "",
+      catergoryId: props.arrProjectCaterory[0]?.id,
+    };
+  },
   validationSchema: Yup.object().shape({
     projectName: Yup.string().required("Project name is required"),
   }),
@@ -81,19 +121,119 @@ const createProjectForm = withFormik({
   },
 
   // Custom sync validation
-  validate: (values) => {
-    const errors = {};
-
-    if (!values.name) {
-      errors.name = "Required";
-    }
-
-    return errors;
+  handleSubmit: (values, { props, setSubmitting }) => {
+    props.dispatch({ type: "CREATE_PROJECT_SAGA", newProject: values });
   },
-
-  handleSubmit: (values, { setSubmitting }) => {},
-
   displayName: "CreateProjectFormik",
 })(CreateProject);
 
-export default connect()(createProjectForm);
+const mapStateToProps = (state) => ({
+  arrProjectCaterory: state.ProjectCateroryReducer.arrProjectCaterory,
+});
+export default connect(mapStateToProps)(createProjectForm);
+// import React from "react";
+// import { withFormik } from "formik";
+// import { Input, Button } from "antd";
+// import { Editor } from "@tinymce/tinymce-react";
+
+// const CreateProject = (props) => {
+//   const {
+//     values,
+//     touched,
+//     errors,
+//     handleChange,
+//     handleBlur,
+//     handleSubmit,
+//     setFieldValue,
+//   } = props;
+//   const handelEditorChange = (content, editor) => {
+//     setFieldValue("description", content);
+//     console.log(props);
+//   };
+//   return (
+//     <form onSubmit={handleSubmit} className="content-container">
+//       <h3>{props.displayName}</h3>
+//       <input
+//         type="text"
+//         onChange={handleChange}
+//         onBlur={handleBlur}
+//         value={values.name}
+//         name="name"
+//       />
+//       <Input
+//         onChange={handleChange}
+//         name="projectName"
+//         value={values.projectName}
+//       ></Input>
+//       {/* <Editor
+//         value={values.description}
+//         name="description"
+//         apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
+//         init={{
+//           plugins:
+//             "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+//           toolbar:
+//             "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+//           tinycomments_mode: "embedded",
+//           tinycomments_author: "Author name",
+//           mergetags_list: [
+//             { value: "First.Name", title: "First Name" },
+//             { value: "Email", title: "Email" },
+//           ],
+//           ai_request: (request, respondWith) =>
+//             respondWith.string(() =>
+//               Promise.reject("See docs to implement AI Assistant")
+//             ),
+//         }}
+//         initialValue="Welcome to TinyMCE!"
+//         onEditorChange={handelEditorChange}
+//       /> */}
+//       <select
+//         name="catergoryId"
+//         value={values.catergoryId}
+//         onChange={handleChange}
+//       >
+//         {/* {arrProjectCaterory.map((item, index) => {
+//           return (
+//             <option value={item.id} key={index}>
+//               {item.projectCategoryName}
+//             </option>
+//           );
+//         })} */}
+//         <option value="web">web</option>
+//         <option value="app">app</option>
+//         <option value="mobile">mobile</option>
+//       </select>
+//       <button type="submit">Submit</button>
+//     </form>
+//   );
+// };
+
+// const MyEnhancedForm = withFormik({
+//   mapPropsToValues: () => ({
+//     name: "",
+//     projectName: "",
+//     // description: "",
+//     catergoryId: "",
+//   }),
+
+//   validate: (values) => {
+//     const errors = {};
+
+//     if (!values.name) {
+//       errors.name = "Required";
+//     }
+
+//     return errors;
+//   },
+//   handleChange: (values, { setSubmitting }) => {
+//     console.log(values);
+//   },
+//   handleSubmit: (values, { setSubmitting }) => {
+//     console.log(values);
+//   },
+
+//   displayName: "BasicForm",
+// })(CreateProject);
+
+// export default MyEnhancedForm;

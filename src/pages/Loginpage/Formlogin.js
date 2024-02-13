@@ -102,7 +102,7 @@ const LoginCyberBugs = withFormik({
       .max(32, "password"),
   }),
   handleSubmit: ({ email, passWord }, { props, setSubmitting }) => {
-    props.dispatch(signinCyberbugAction(email, passWord));
+    props.dispatch(signinCyberbugAction(email, passWord, props.history));
   },
   displayName: "BasicForm",
 })(Formlogin);

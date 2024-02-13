@@ -23,9 +23,9 @@ export default function Menu() {
                 Create project
               </NavLink>
               <div className="sb-sidenav-menu-heading">Interface</div>
-              <a
+              <NavLink
                 className="nav-link collapsed"
-                href="#"
+                to="/projectmanagement"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseLayouts"
                 aria-expanded="false"
@@ -34,11 +34,11 @@ export default function Menu() {
                 <div className="sb-nav-link-icon">
                   <i className="fas fa-columns" />
                 </div>
-                Layouts
+                Project management
                 <div className="sb-sidenav-collapse-arrow">
                   <i className="fas fa-angle-down" />
                 </div>
-              </a>
+              </NavLink>
               <div
                 className="collapse"
                 id="collapseLayouts"

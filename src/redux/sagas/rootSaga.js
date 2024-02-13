@@ -2,12 +2,17 @@ import { all, fork, take, takeLatest, call, put } from "redux-saga/effects";
 // import { theoDoiActionGetTaskApi } from "./TodoListSaga";
 import * as ToDoListSaga from "./TodoListSaga";
 import * as CyberBugs from "./Cyberbugs/UserCyberBugsSaga";
+import * as ProjectCategory from "./Cyberbugs/ProjectCategory";
+import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
+
 export function* rootSaga() {
   yield all([
     //nghiep vu theo doi cac action saga todolist dung de test xoa sau khi xong
     // ToDoListSaga.theoDoiActionGetTaskApi(),
     //nghiep vu cyber bug
     CyberBugs.theoDoiSignin(),
+    ProjectCategory.theoDoigetAllProjectCategory(),
+    ProjectSaga.theodoiCreateProjectSaga(),
   ]);
 }
 //dua vao action type de quan li

@@ -8,27 +8,26 @@ import SecureGate from "./Layout/Securegate";
 import Layout from "./Layout/Layout";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import LoadingComponent from "./component/GlobalSetting/LoadingComponent";
+import ProjectManagement from "./pages/ProjectManagement/ProjectManagement";
+
 function App() {
   return (
     <>
       <LoadingComponent />
-      <BrowserRouter>
+      <>
         <Routes>
           <Route path="/login" element={<Loginpage />}></Route>
           <Route path="/" element={<Layout />}>
-            <Route
-              path="/"
-              element={
-                <SecureGate>
-                  <Homepage />
-                </SecureGate>
-              }
-            ></Route>
+            <Route path="/" element={<Homepage />}></Route>
             <Route path="/createproject" element={<CreateProject />}></Route>
+            <Route
+              path="/projectmanagement"
+              element={<ProjectManagement />}
+            ></Route>
           </Route>
           <Route path="/signup" element={<Signuppage />}></Route>
         </Routes>
-      </BrowserRouter>
+      </>
     </>
   );
 }

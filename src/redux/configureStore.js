@@ -2,11 +2,14 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import createSagaMiddleware from "redux-saga";
 
 import { rootSaga } from "./sagas/rootSaga";
-import ProjectCaterorySlice from "./reducer/ProjectCaterorySlice";
-import LoadingReducer from "./reducer/LoadingReducer";
 
+import LoadingReducer from "./reducer/LoadingReducer";
+import UserLoginCyberBugsReducer from "./reducer/UserLoginCyberBugReducer";
+import ProjectCateroryReducer from "./reducer/ProjectCategoryReducer";
 const rootReducer = combineReducers({
   LoadingReducer,
+  UserLoginCyberBugsReducer,
+  ProjectCateroryReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

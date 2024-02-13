@@ -43,6 +43,7 @@ function* siginSaga(action) {
       type: HIDE_LOADING,
     });
   }
+  window.location.replace("/");
 }
 
 export function* theoDoiSignin() {
