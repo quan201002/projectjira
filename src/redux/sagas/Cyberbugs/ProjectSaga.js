@@ -23,6 +23,7 @@ function* createProjectSaga(action) {
     console.log(data);
     //gọi api thành công thì dispatch lên reducer
     if (status === STATUS_CODE.SUCCESS) {
+      window.location.replace("/projectmanagement");
     }
   } catch (err) {
     console.log(err);
@@ -30,6 +31,27 @@ function* createProjectSaga(action) {
   yield put({
     type: HIDE_LOADING,
   });
+}
+
+//get all project
+function* getListProjectSaga(action) {
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.getListProject()
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: "GET_LIST_PROJECT",
+        projectList: data.content,
+      });
+    }
+  } catch (err) {
+    console.log("rr", err);
+  }
+}
+
+export function* theodoiGetListProjectSaga() {
+  yield takeLatest("GET_LIST_PROJECT_SAGA", getListProjectSaga);
 }
 
 export function* theodoiCreateProjectSaga() {

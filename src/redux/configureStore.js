@@ -6,10 +6,12 @@ import { rootSaga } from "./sagas/rootSaga";
 import LoadingReducer from "./reducer/LoadingReducer";
 import UserLoginCyberBugsReducer from "./reducer/UserLoginCyberBugReducer";
 import ProjectCateroryReducer from "./reducer/ProjectCategoryReducer";
+import ProjectCyberBugsReducer from "./reducer/ProjectCyberBugsReducer";
 const rootReducer = combineReducers({
   LoadingReducer,
   UserLoginCyberBugsReducer,
   ProjectCateroryReducer,
+  ProjectCyberBugsReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

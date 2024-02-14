@@ -13,6 +13,7 @@ export function* rootSaga() {
     CyberBugs.theoDoiSignin(),
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theodoiCreateProjectSaga(),
+    ProjectSaga.theodoiGetListProjectSaga(),
   ]);
 }
 //dua vao action type de quan li

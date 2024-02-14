@@ -1,81 +1,25 @@
-import React, { useState } from "react";
-import { Button, Space, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
+import { useSelector, useDispatch } from "react-redux";
 
-const data = [
-  {
-    members: [],
-    creator: {
-      id: 2417,
-      name: "hello1122",
-    },
-    id: 14794,
-    projectName: "project name",
-    description: "<p>qweqweCE!</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "project-name",
-    deleted: false,
-  },
-  {
-    members: [],
-    creator: {
-      id: 2417,
-      name: "hello1122",
-    },
-    id: 14795,
-    projectName: "qweqw",
-    description: "<p>Welcome to TinyMCE!eqweqw</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "qweqw",
-    deleted: false,
-  },
-  {
-    members: [],
-    creator: {
-      id: 6376,
-      name: "quan",
-    },
-    id: 14796,
-    projectName: "qeweqw",
-    description: "<p>Welcome to TinyMCE!eqweqw</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "qeweqw",
-    deleted: false,
-  },
-  {
-    members: [],
-    creator: {
-      id: 6376,
-      name: "quan",
-    },
-    id: 14797,
-    projectName: "eqw",
-    description: "<p>Welcome to TinyMCE!qweqwe</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "eqw",
-    deleted: false,
-  },
-  {
-    members: [],
-    creator: {
-      id: 6376,
-      name: "quan",
-    },
-    id: 14798,
-    projectName: "eqwqweqw",
-    description: "<p>Welcome to TinyMCE!qweqweqweqwee</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "eqwqweqw",
-    deleted: false,
-  },
-];
 const ProjectManagement = () => {
+  const projectList = useSelector(
+    (state) => state.ProjectCyberBugsReducer.projectList
+  );
+
+  const data = projectList;
+
+  let dispatch = useDispatch();
+
+  //dung useDispatch de goi action
+  useEffect(() => {
+    dispatch({ type: "GET_LIST_PROJECT_SAGA" });
+  }, []);
+
+  console.log("projectList", projectList);
+
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
@@ -101,19 +45,59 @@ const ProjectManagement = () => {
       title: "id",
       dataIndex: "id",
       key: "id",
+      sorter: (item2, item1) => {
+        return item2.id - item1.id;
+      },
     },
     {
       title: "Project name",
       dataIndex: "projectName",
       key: "projectName",
+      sorter: (item2, item1) => {
+        let projectName1 = item1.projectName?.trim().toLowerCase();
+        let projectName2 = item2.projectName?.trim().toLowerCase();
+        if (projectName2 < projectName1) {
+          return -1;
+        }
+        return 1;
+      },
+    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description",
+    //   render: (text, record, index) => {
+    //     let jsxContent = ReactHTMLParser(text);
+    //     return <div>{jsxContent}</div>;
+    //   },
+    // },
+    {
+      title: "category",
+      dataIndex: "categoryName",
+      key: "categoryName",
+      sorter: (item2, item1) => {
+        let categoryName1 = item1.categoryName?.trim().toLowerCase();
+        let categoryName2 = item2.categoryName?.trim().toLowerCase();
+        if (categoryName2 < categoryName2) {
+          return -1;
+        }
+        return 1;
+      },
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "creator",
+      dataIndex: "categoryName",
+      key: "creator",
       render: (text, record, index) => {
-        let jsxContent = ReactHTMLParser(text);
-        return <div>{jsxContent}</div>;
+        return <Tag color="green">{record.creator?.name}</Tag>;
+      },
+      sorter: (item2, item1) => {
+        let creator1 = item1.creator?.trim().toLowerCase();
+        let creator2 = item2.creator?.trim().toLowerCase();
+        if (creator2 < creator1) {
+          return -1;
+        }
+        return 1;
       },
     },
     {
