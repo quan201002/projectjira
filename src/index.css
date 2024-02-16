@@ -4,7 +4,7 @@
   justify-content:center;
   align-items:center;
   height:100vh;
-  z-index:1030;
+   
   position:absolute;
   width: 80%;
   height:80%;
@@ -15,7 +15,7 @@
 
 :where(.css-dev-only-do-not-override-1b0bdye).ant-layout.ant-layout-has-sider >.ant-layout-content {
   width: 0;
-  padding: 0 70px !important;
+  padding: 0 20px !important;
 }
 
 :where(.css-dev-only-do-not-override-1b0bdye).ant-layout .ant-layout-sider-has-trigger {
@@ -25,4 +25,18 @@
   display: flex;
   align-items:flex-start;
    
+}
+.menu-item{
+  color:black;
+  font-size:16px;
+  margin-left:10px;
+}
+.menu-item:hover{
+  text-decoration: none;
+  color:rgba(0,0,0,0.1);
+  font-weight:600;
+}
+.menu-sidebar-item{
+  font-size:40px;
+  font-weight:600;
 }

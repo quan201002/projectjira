@@ -3,6 +3,7 @@ import { Button, Space, Table, Tag } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
 import { useSelector, useDispatch } from "react-redux";
+import FormEditProject from "../../component/Forms/FormEditProject";
 
 const ProjectManagement = () => {
   const projectList = useSelector(
@@ -107,10 +108,27 @@ const ProjectManagement = () => {
       render: () => {
         return (
           <>
-            <button className="btn btn-primary">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                dispatch({ type: "OPEN_DRAWER", open: true });
+              }}
+            >
               <DeleteOutlined />
             </button>
-            <button className="ms-3 btn btn-danger">
+            <button
+              className="ms-3 btn btn-danger"
+              onClick={() => {
+                const action = {
+                  type: "OPEN_FORM_EDIT_PROJECT",
+                  open: true,
+                  Component: () => {
+                    return <FormEditProject />;
+                  },
+                };
+                dispatch(action);
+              }}
+            >
               <EditOutlined />
             </button>
           </>
