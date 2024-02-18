@@ -1,11 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Button, Space, Table, Tag } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Button,
+  Space,
+  Table,
+  Tag,
+  message,
+  Popconfirm,
+  Avatar,
+  Popover,
+  AutoComplete,
+} from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../component/Forms/FormEditProject";
 
 const ProjectManagement = () => {
+  const searchRef = useRef(null);
+
+  const [value, setValue] = useState("");
+
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+  const content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
+  const confirm = (e) => {
+    console.log(e);
+    message.success("Click on Yes");
+  };
   const projectList = useSelector(
     (state) => state.ProjectCyberBugsReducer.projectList
   );
@@ -19,12 +46,9 @@ const ProjectManagement = () => {
     dispatch({ type: "GET_LIST_PROJECT_SAGA" });
   }, []);
 
-  console.log("projectList", projectList);
-
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -63,15 +87,7 @@ const ProjectManagement = () => {
         return 1;
       },
     },
-    // {
-    //   title: "Description",
-    //   dataIndex: "description",
-    //   key: "description",
-    //   render: (text, record, index) => {
-    //     let jsxContent = ReactHTMLParser(text);
-    //     return <div>{jsxContent}</div>;
-    //   },
-    // },
+
     {
       title: "category",
       dataIndex: "categoryName",
@@ -102,20 +118,147 @@ const ProjectManagement = () => {
       },
     },
     {
+      title: "members",
+      key: "members",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.members?.slice(0, 3).map((member, index) => {
+              return (
+                <Popover
+                  key={index}
+                  placement="topLeft"
+                  title="Members"
+                  content={() => {
+                    return (
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>avatar</th>
+                            <th>name</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.members?.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{item.id}</td>
+                                <td>
+                                  <img
+                                    style={{ borderRadius: "50%" }}
+                                    src={item.avatar}
+                                    width="50"
+                                    height="50"
+                                  ></img>
+                                </td>
+                                <td>{item.name}</td>
+                                <td>
+                                  <button
+                                    onClick={() => {
+                                      dispatch({
+                                        type: "REMOVE_USER_PROJECT_API",
+                                        userProject: {
+                                          projectId: record.id,
+                                          userId: item.userId,
+                                        },
+                                      });
+                                    }}
+                                    style={{ borderRadius: "50%" }}
+                                    className="btn btn-danger"
+                                  >
+                                    X
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    );
+                  }}
+                >
+                  <Avatar src={member.avatar} key={index} />
+                </Popover>
+              );
+            })}
+            {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+            <Popover
+              placement="right"
+              title={"add user"}
+              content={() => {
+                return (
+                  <AutoComplete
+                    options={userSearch?.map((user, index) => {
+                      return {
+                        label: user.name,
+                        value: user.userId.toString(),
+                      };
+                    })}
+                    style={{ width: "100%" }}
+                    onSearch={(value) => {
+                      if (searchRef.current) {
+                        clearTimeout(searchRef.current);
+                      }
+
+                      searchRef.current = setTimeout(() => {
+                        dispatch({
+                          type: "GET_USER_API",
+                          keyWord: value,
+                        });
+                      }, 500);
+                    }}
+                    value={value}
+                    onChange={(text) => {
+                      setValue(text);
+                    }}
+                    onSelect={(valueSelected, option) => {
+                      //set gia tri cua hop thoai = option.label
+                      setValue(option.label);
+                      //goi api tra ve backend
+                      dispatch({
+                        type: "ADD_USER_PROJECT_API",
+                        userProject: {
+                          projectId: record.id,
+                          userId: option.value,
+                        },
+                      });
+                    }}
+                  />
+                );
+              }}
+            >
+              <Button>+</Button>
+            </Popover>
+          </div>
+        );
+      },
+    },
+    {
       title: "Action",
       dataIndex: "",
       key: "x",
-      render: () => {
+      render: (text, record) => {
         return (
           <>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                dispatch({ type: "OPEN_DRAWER", open: true });
+            <Popconfirm
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={() => {
+                dispatch({
+                  type: "DELETE_PROJECT_SAGA",
+                  idProject: record.id,
+                });
               }}
+              okText="Yes"
+              cancelText="No"
             >
-              <DeleteOutlined />
-            </button>
+              <button className="btn btn-primary">
+                <DeleteOutlined />
+              </button>
+            </Popconfirm>
+
             <button
               className="ms-3 btn btn-danger"
               onClick={() => {
@@ -127,6 +270,12 @@ const ProjectManagement = () => {
                   },
                 };
                 dispatch(action);
+
+                const actionEditProject = {
+                  type: "EDIT_PROJECT",
+                  projectEditModel: record,
+                };
+                dispatch(actionEditProject);
               }}
             >
               <EditOutlined />

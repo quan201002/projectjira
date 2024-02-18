@@ -20,4 +20,27 @@ export const cyberbugsService = {
   getListProject: () => {
     return https.get("/api/Project/getAllProject");
   },
+  updateProject: (projectUpdate) => {
+    return https.put(
+      `/api/Project/updateProject?projectId=${projectUpdate.id}`,
+      projectUpdate
+    );
+  },
+  deleteProject: (id) => {
+    return https.delete(
+      `https://jiranew.cybersoft.edu.vn/api/Project/deleteProject?projectId=${id}`
+    );
+  },
+  getUserfromAPI: (keyWord) => {
+    return https.get(
+      `https://jiranew.cybersoft.edu.vn/api/Users/getUser?keyword=${keyWord}`,
+      keyWord
+    );
+  },
+  addUserProject: (userProject) => {
+    return https.post(
+      `https://jiranew.cybersoft.edu.vn/api/Project/assignUserProject`,
+      userProject
+    );
+  },
 };

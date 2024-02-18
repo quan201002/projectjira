@@ -7,6 +7,7 @@ import {
   GET_ALL_PROJECT_CATEGORY_SAGA,
   HIDE_LOADING,
 } from "../../constant/CyberBugsConstant";
+import { notifiFunction } from "../../../component/Notification/Notification";
 
 function* createProjectSaga(action) {
   console.log("action", action);
@@ -56,4 +57,76 @@ export function* theodoiGetListProjectSaga() {
 
 export function* theodoiCreateProjectSaga() {
   yield takeLatest("CREATE_PROJECT_SAGA", createProjectSaga);
+}
+//Update Project
+
+function* updateProjectSaga(action) {
+  console.log("action", action);
+
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+
+  yield delay(500);
+
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.updateProject(action.projectUpdate)
+    );
+    console.log(data);
+    //gọi api thành công thì dispatch lên reducer
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log("data update", data);
+    }
+    yield call(getListProjectSaga);
+    yield put({
+      type: "CLOSE_DRAWER",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+export function* theodoiUpdateProjectSaga() {
+  yield takeLatest("UPDATE_PROJECT_SAGA", updateProjectSaga);
+}
+
+//xoa project
+function* deleteProjectSaga(action) {
+  console.log("action", action);
+
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+
+  yield delay(500);
+
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.deleteProject(action.idProject)
+    );
+    console.log(data);
+    //gọi api thành công thì dispatch lên reducer
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log("data update", data);
+      notifiFunction("success", "Delete project successfully!");
+    } else {
+      notifiFunction("error", "Delete project fail!");
+    }
+    yield call(getListProjectSaga);
+    yield put({
+      type: "CLOSE_DRAWER",
+    });
+  } catch (err) {
+    console.log(err);
+    notifiFunction("error", "Delete project fail!");
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+export function* theodoiDeleteProjectSaga() {
+  yield takeLatest("DELETE_PROJECT_SAGA", deleteProjectSaga);
 }

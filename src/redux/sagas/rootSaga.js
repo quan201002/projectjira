@@ -11,9 +11,14 @@ export function* rootSaga() {
     // ToDoListSaga.theoDoiActionGetTaskApi(),
     //nghiep vu cyber bug
     CyberBugs.theoDoiSignin(),
+    CyberBugs.theoDoiGetUser(),
+    CyberBugs.theoDoiAddUser(),
+    CyberBugs.theoDoiRemoveUser(),
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theodoiCreateProjectSaga(),
     ProjectSaga.theodoiGetListProjectSaga(),
+    ProjectSaga.theodoiUpdateProjectSaga(),
+    ProjectSaga.theodoiDeleteProjectSaga(),
   ]);
 }
 //dua vao action type de quan li

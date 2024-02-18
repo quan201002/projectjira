@@ -1,44 +1,92 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { withFormik } from "formik";
 
 import * as Yup from "yup";
 function FormEditProject(props) {
+  let arrProjectCaterory = useSelector(
+    (state) => state.ProjectCateroryReducer.arrProjectCaterory
+  );
+  console.log("arr", arrProjectCaterory);
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setValues,
+    setFieldValue,
+  } = props;
   let dispatch = useDispatch();
-  const submitForm = (e) => {
-    alert("submit edit");
-  };
+  //   const submitForm = (e) => {
+  //     alert("submit edit");
+  //   };
   useEffect(() => {
-    dispatch({ type: "SET_SUBMIT_EDIT_PROJECT", submitFunction: submitForm });
+    //goi api load project category
+    dispatch({ type: "GET_ALL_PROJECT_CATEGORY_SAGA" });
+
+    setFieldValue("description", values.description);
+    //load su kien len drawer nut submit
+    dispatch({ type: "SET_SUBMIT_EDIT_PROJECT", submitFunction: handleSubmit });
   }, []);
 
   const handelEditorChange = (content, editor) => {
-    // setFieldValue("description", content);
+    setFieldValue("description", content);
     // console.log(content);
   };
   const [state, setState] = useState();
   return (
-    <form onSubmit>
+    <form onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-4">
           <div className="form-group">
             <h4 className="font-weight-bold">Project Id</h4>
-            <input className="form-control" />
+            <input
+              className="form-control"
+              value={values.id}
+              onChange={handleChange}
+              name="id"
+            />
           </div>
         </div>
 
         <div className="col-4">
           <div className="form-group">
             <h4 className="font-weight-bold">Project name</h4>
-            <input className="form-control" />
+            <input
+              value={values.projectName}
+              className="form-control"
+              onChange={handleChange}
+              name="projectName"
+            />
           </div>
         </div>
 
         <div className="col-4">
           <div className="form-group">
             <h4 className="font-weight-bold">Project category</h4>
-            <input className="form-control" />
+            {/* <input
+              value={values.categoryId}
+              className="form-control"
+              onChange={handleChange}
+              name="categoryId"
+            /> */}
+            <select
+              name="catergoryId"
+              className="form-control"
+              value={values.catergoryId}
+              onChange={handleChange}
+            >
+              {arrProjectCaterory?.map((item, index) => {
+                return (
+                  <option value={item.categoryId} key={index}>
+                    {item.projectCategoryName}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
 
@@ -46,6 +94,7 @@ function FormEditProject(props) {
           <div className="form-group">
             <h4 className="font-weight-bold">Description</h4>
             <Editor
+              value={values.description}
               name="description123"
               apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
               init={{
@@ -64,6 +113,7 @@ function FormEditProject(props) {
                     Promise.reject("See docs to implement AI Assistant")
                   ),
               }}
+              initialValue={values.description}
               onEditorChange={handelEditorChange}
             />
           </div>
@@ -75,7 +125,13 @@ function FormEditProject(props) {
 const editProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    return {};
+    const { projectEdit } = props;
+    return {
+      id: projectEdit?.id,
+      projectName: projectEdit.projectName,
+      description: projectEdit.description,
+      categoryId: projectEdit.categoryId,
+    };
   },
   validationSchema: Yup.object().shape({
     projectName: Yup.string().required("Project name is required"),
@@ -86,7 +142,12 @@ const editProjectForm = withFormik({
 
   // Custom sync validation
   handleSubmit: (values, { props, setSubmitting }) => {
-    props.dispatch({ type: "CREATE_PROJECT_SAGA", newProject: values });
+    const action = {
+      type: "UPDATE_PROJECT_SAGA",
+      projectUpdate: values,
+    };
+    //call saga dinh nghia mot ham vi khong sai dc hook nen sai mapdispatchtoprops
+    props.dispatch(action);
   },
   displayName: "CreateProjectFormik",
 })(FormEditProject);
