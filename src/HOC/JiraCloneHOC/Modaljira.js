@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 const { Option } = Select;
 const Modaljira = () => {
   let dispatch = useDispatch();
-  const { open, ComponentContentDrawer, callBackSubmit } = useSelector(
+  const { open, ComponentContentDrawer, callBackSubmit, title } = useSelector(
     (state) => state.drawerReducer
   );
   const showDrawer = () => {
@@ -29,7 +29,7 @@ const Modaljira = () => {
     <>
       <button onClick={showDrawer}>showDrawer</button>
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         open={open}

@@ -33,8 +33,7 @@ export const cyberbugsService = {
   },
   getUserfromAPI: (keyWord) => {
     return https.get(
-      `https://jiranew.cybersoft.edu.vn/api/Users/getUser?keyword=${keyWord}`,
-      keyWord
+      `https://jiranew.cybersoft.edu.vn/api/Users/getUser?keyword=${keyWord}`
     );
   },
   addUserProject: (userProject) => {
@@ -43,4 +42,5 @@ export const cyberbugsService = {
       userProject
     );
   },
+  getProjectDetail: (projectId) => {},
 };

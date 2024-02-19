@@ -10,6 +10,7 @@ import CreateProject from "./pages/CreateProject/CreateProject";
 import LoadingComponent from "./component/GlobalSetting/LoadingComponent";
 import ProjectManagement from "./pages/ProjectManagement/ProjectManagement";
 import Modaljira from "./HOC/JiraCloneHOC/Modaljira";
+import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 
 function App() {
   return (
@@ -27,9 +28,10 @@ function App() {
             ></Route>
             <Route
               path="/projectdetail/:projectId"
-              element={<ProjectManagement />}
+              element={<ProjectDetail />}
             ></Route>
           </Route>
+
           <Route path="/signup" element={<Signuppage />}></Route>
           <Route path="/modalHOC" element={<Modaljira />}></Route>
         </Routes>

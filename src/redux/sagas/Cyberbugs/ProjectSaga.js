@@ -8,6 +8,7 @@ import {
   HIDE_LOADING,
 } from "../../constant/CyberBugsConstant";
 import { notifiFunction } from "../../../component/Notification/Notification";
+import { https } from "../../../service/api";
 
 function* createProjectSaga(action) {
   console.log("action", action);
@@ -129,4 +130,26 @@ function* deleteProjectSaga(action) {
 }
 export function* theodoiDeleteProjectSaga() {
   yield takeLatest("DELETE_PROJECT_SAGA", deleteProjectSaga);
+}
+
+//get project detail
+
+function* getProjectDetailSaga(action) {
+  console.log("action", action);
+
+  try {
+    const { data, status } = yield call(() =>
+      https.get(`/api/Project/getProjectDetail?id=${action.projectId}`)
+    );
+    yield put({
+      type: "PUT_PROJECT_DETAIL",
+      projectDetail: data,
+    });
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* theodoiGetProjectDetailSaga() {
+  yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
 }

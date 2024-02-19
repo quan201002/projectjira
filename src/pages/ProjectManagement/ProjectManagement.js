@@ -14,6 +14,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../component/Forms/FormEditProject";
+import { NavLink } from "react-router-dom";
 
 const ProjectManagement = () => {
   const searchRef = useRef(null);
@@ -78,6 +79,9 @@ const ProjectManagement = () => {
       title: "Project name",
       dataIndex: "projectName",
       key: "projectName",
+      render: (text, record, index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
+      },
       sorter: (item2, item1) => {
         let projectName1 = item1.projectName?.trim().toLowerCase();
         let projectName2 = item2.projectName?.trim().toLowerCase();
@@ -264,6 +268,7 @@ const ProjectManagement = () => {
               onClick={() => {
                 const action = {
                   type: "OPEN_FORM_EDIT_PROJECT",
+                  title: "Edit Project",
                   open: true,
                   Component: () => {
                     return <FormEditProject />;

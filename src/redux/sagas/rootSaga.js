@@ -14,6 +14,7 @@ export function* rootSaga() {
     CyberBugs.theoDoiGetUser(),
     CyberBugs.theoDoiAddUser(),
     CyberBugs.theoDoiRemoveUser(),
+    ProjectSaga.theodoiGetProjectDetailSaga(),
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theodoiCreateProjectSaga(),
     ProjectSaga.theodoiGetListProjectSaga(),

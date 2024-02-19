@@ -5,14 +5,17 @@ import {
   SettingFilled,
 } from "@ant-design/icons";
 
-import { Layout, theme } from "antd";
+import { Button, Layout, theme } from "antd";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
 
 const { Content, Sider } = Layout;
 
 //menu items
 
 const ControllBar = () => {
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -34,8 +37,19 @@ const ControllBar = () => {
               onCollapse={(value) => setCollapsed(value)}
             >
               <p>
-                <NavLink className="menu-sidebar-item    text-light">
-                  <PlusCircleOutlined />
+                <NavLink
+                  onClick={() => {
+                    dispatch({
+                      type: "OPEN_FORM_CREATE_TASK",
+                      ComponentContentDrawer: () => {
+                        return <FormCreateTask />;
+                      },
+                      open: true,
+                    });
+                  }}
+                  className="menu-sidebar-item    text-light"
+                >
+                  <PlusCircleOutlined /> Create tast
                 </NavLink>
               </p>
               <p>
