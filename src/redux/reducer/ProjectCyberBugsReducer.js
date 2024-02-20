@@ -1,11 +1,6 @@
 const stateDefault = {
-  projectList: [
-    {
-      id: "1",
-      projectName: "abc",
-      description: "<p style='color:red '>abc</p>",
-    },
-  ],
+  projectList: [],
+  projectArr: [],
 };
 
 const ProjectCyberBugsReducer = (state = stateDefault, action) => {
@@ -14,7 +9,10 @@ const ProjectCyberBugsReducer = (state = stateDefault, action) => {
       state.projectList = action.projectList;
       return { ...state };
     }
-
+    case "GET_All_PROJECT": {
+      state.projectArr = action.arrProject;
+      return { ...state };
+    }
     default:
       return { ...state };
   }

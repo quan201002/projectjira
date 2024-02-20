@@ -43,4 +43,8 @@ export const cyberbugsService = {
     );
   },
   getProjectDetail: (projectId) => {},
+  getAllProject: () => {
+    return https.get(`
+    /api/Project/getAllProject`);
+  },
 };

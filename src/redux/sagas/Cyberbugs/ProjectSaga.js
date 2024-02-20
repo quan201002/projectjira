@@ -9,6 +9,10 @@ import {
 } from "../../constant/CyberBugsConstant";
 import { notifiFunction } from "../../../component/Notification/Notification";
 import { https } from "../../../service/api";
+import {
+  GET_ALL_PROJECT,
+  GET_ALL_PROJECT_SAGA,
+} from "../../constant/ProjectCyberBugsConstant";
 
 function* createProjectSaga(action) {
   console.log("action", action);
@@ -152,4 +156,24 @@ function* getProjectDetailSaga(action) {
 }
 export function* theodoiGetProjectDetailSaga() {
   yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
+}
+
+//get all project saga
+function* getAllProjectSaga(action) {
+  try {
+    const { data, status } = yield call(() =>
+      https.get("/api/Project/getAllProject")
+    );
+
+    yield put({
+      type: "GET_ALL_PROJECT",
+      arrProject: data.content,
+    });
+  } catch (err) {
+    console.log("eror", err);
+  }
+}
+
+export function* theodoiGetAllProjectSaga() {
+  yield takeLatest(GET_ALL_PROJECT_SAGA, getAllProjectSaga);
 }
