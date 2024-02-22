@@ -62,7 +62,7 @@ function* getUserSaga(action) {
       return https.get(`/api/Users/getUser?keyword=${action.keyWord}`);
       // cyberbugsService.getUserfromAPI(action.keyWord);
     });
-    console.log("data", res);
+
     yield put({
       type: "GET_USER_SEARCH",
       lstUserSearch: res.data.content,

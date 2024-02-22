@@ -8,24 +8,30 @@ import {
   GET_ALL_PRIORITY,
   GET_ALL_PRIORITY_SAGA,
 } from "../../redux/constant/PriorityConstants";
+import { connect, withFormik } from "formik";
 
-const options = [];
-for (let i = 10; i < 36; i++) {
-  options.push({
-    value: i.toString(36) + i,
-    label: i.toString(36) + i,
-  });
-}
-const handleChange = (value) => {
-  console.log(`Selected: ${value}`);
-};
+const FormCreateTask = (props) => {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setValues,
+    setFieldValue,
+  } = props;
 
-export default function FormCreateTask(props) {
+  //do kết nối với withFormmik nên sinh ra những props này
   let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
   let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   let { arrPriority } = useSelector((state) => state.PriorityReducer);
+  let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
 
-  console.log("arrTaskType", arrTaskType);
+  const userOptions = userSearch.map((item, index) => {
+    return { value: item.userId, label: item.name };
+  });
+
   const [size, setSize] = useState("middle");
   const handleSizeChange = (e) => {
     setSize(e.target.value);
@@ -36,27 +42,32 @@ export default function FormCreateTask(props) {
     timeTrackingRemaining: 0,
   });
 
-  let dispatch = useDispatch();
+  let disp = useDispatch();
   useEffect(() => {
-    dispatch({
+    disp({
       type: "GET_ALL_PROJECT_SAGA",
     });
-    dispatch({
+    disp({
       type: GET_ALL_TASK_TYPE_SAGA,
     });
-    dispatch({
+    disp({
       type: GET_ALL_PRIORITY_SAGA,
+    });
+    disp({
+      type: "GET_USER_API",
+      keyWord: "",
     });
   }, []);
 
-  const handelEditorChange = (content, editor) => {
-    // console.log(content);
-  };
   return (
-    <div className="container">
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
         <p>Project</p>
-        <select name="projectId" className="form-control">
+        <select
+          name="projectId"
+          className="form-control"
+          onChange={handleChange}
+        >
           {projectList.map((item, index) => {
             return (
               <option key={index} value={item.id}>
@@ -67,10 +78,22 @@ export default function FormCreateTask(props) {
         </select>
       </div>
       <div className="form-group">
+        <p>Task name</p>
+        <input
+          name="taskName"
+          className="form-control"
+          onChange={handleChange}
+        ></input>
+      </div>
+      <div className="form-group">
         <div className="row">
           <div className="col-6">
             <p>priority</p>
-            <select name="priorityId" className="form-control">
+            <select
+              name="priorityId"
+              className="form-control"
+              onChange={handleChange}
+            >
               {arrPriority.map((priority, index) => {
                 return (
                   <option key={index} value={priority.priorityId}>
@@ -82,7 +105,11 @@ export default function FormCreateTask(props) {
           </div>
           <div className="col-6">
             <p>Task type</p>
-            <select className="form-control" name="typeId">
+            <select
+              className="form-control"
+              name="typeId"
+              onChange={handleChange}
+            >
               {arrTaskType.map((taskType, index) => {
                 return (
                   <option key={index} value={taskType.id}>
@@ -99,18 +126,16 @@ export default function FormCreateTask(props) {
           {/* asignment */}
 
           <div className="col-6">
-            <p>Asignment</p>
+            <p>Asignees</p>
             <Select
               mode="multiple"
-              options={[
-                { value: "a12", label: "a12" },
-                { value: "a12", label: "a12" },
-                { value: "a12", label: "a12" },
-              ]}
+              options={userOptions}
               size={size}
+              onChange={(values) => {
+                setFieldValue("listUserAsign", values);
+              }}
               placeholder="Please select"
-              defaultValue={["a10", "c12"]}
-              onChange={handleChange}
+              optionFilterProp="label"
               style={{
                 width: "100%",
               }}
@@ -120,10 +145,11 @@ export default function FormCreateTask(props) {
               <div className="col-12 mt-1">
                 <p>Original estimate</p>
                 <input
+                  onChange={handleChange}
                   className="form-control"
                   type="number"
                   defaultValue="0"
-                  name="OriginalEstimate"
+                  name="originalEstimate"
                   min="0"
                 ></input>
               </div>
@@ -132,6 +158,7 @@ export default function FormCreateTask(props) {
           <div className="col-6">
             <p>Time tracking</p>
             <Slider
+              onChange={handleChange}
               max={
                 Number(timeTracking.timeTrackingSpent) +
                 Number(timeTracking.timeTrackingRemaining)
@@ -159,6 +186,7 @@ export default function FormCreateTask(props) {
                       ...timeTracking,
                       timeTrackingSpent: e.target.value,
                     });
+                    setFieldValue(`timeTrackingSpent`, e.target.value);
                   }}
                   type="number"
                   defaultValue="0"
@@ -175,6 +203,7 @@ export default function FormCreateTask(props) {
                       ...timeTracking,
                       timeTrackingRemaining: e.target.value,
                     });
+                    setFieldValue(`timeTrackingRemaining`, e.target.value);
                   }}
                   type="number"
                   defaultValue="0"
@@ -208,9 +237,37 @@ export default function FormCreateTask(props) {
                 Promise.reject("See docs to implement AI Assistant")
               ),
           }}
-          onEditorChange={handelEditorChange}
+          onEditorChange={(content, editor) => {
+            setFieldValue("description", content);
+          }}
         />
       </div>
-    </div>
+      <button type="submit">submit</button>
+    </form>
   );
-}
+};
+
+const createTaskForm = withFormik({
+  mapPropsToValues: () => {
+    return {
+      listUserAsign: [],
+      taskName: " ",
+      description: " ",
+      originalEstimate: 0,
+      timeTrackingSpent: 0,
+      timeTrackingRemaining: 0,
+      projectId: 0,
+      typeId: 0,
+      priorityId: 0,
+    };
+  },
+
+  handleSubmit: (values, { props, setSubmitting }) => {
+    props.dispatch({
+      type: "CREATE_TASK_SAGA",
+      taskObject: values,
+    });
+  },
+  displayName: "Create Task",
+})(FormCreateTask);
+export default createTaskForm;

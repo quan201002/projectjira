@@ -17,7 +17,7 @@ function* getAllPrioritySaga(action) {
     const { data, status } = yield call(() => {
       return PriorityService.getAllPriority();
     });
-    console.log("data priority", data);
+
     yield put({
       type: GET_ALL_PRIORITY,
       arrPriority: data.content,

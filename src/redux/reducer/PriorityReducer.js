@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case GET_ALL_PRIORITY:
       return { ...state, arrPriority: action.arrPriority };

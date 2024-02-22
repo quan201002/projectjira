@@ -6,6 +6,7 @@ import * as ProjectCategory from "./Cyberbugs/ProjectCategory";
 import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
 import * as TaskTypeSaga from "./Cyberbugs/TaskTypeSaga";
 import * as PrioritySaga from "./Cyberbugs/PrioritySaga";
+import * as TaskSaga from "./Cyberbugs/TaskSaga";
 
 export function* rootSaga() {
   yield all([
@@ -25,6 +26,7 @@ export function* rootSaga() {
     ProjectSaga.theodoiGetAllProjectSaga(),
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
     PrioritySaga.theoDoiGetAllPrioritySaga(),
+    TaskSaga.theoDoiCreateTaskSaga(),
   ]);
 }
 //dua vao action type de quan li

@@ -149,7 +149,7 @@ const editProjectForm = withFormik({
     //call saga dinh nghia mot ham vi khong sai dc hook nen sai mapdispatchtoprops
     props.dispatch(action);
   },
-  displayName: "CreateProjectFormik",
+  displayName: "edit form",
 })(FormEditProject);
 
 const mapStateToProps = (state) => ({

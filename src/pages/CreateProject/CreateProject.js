@@ -39,7 +39,6 @@ function CreateProject(props) {
       className="content-container"
       onChange={handleChange}
     >
-      <h3>{props.displayName}</h3>
       <div className="form-group">
         <p>Name</p>
         <Input
@@ -124,116 +123,10 @@ const createProjectForm = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     props.dispatch({ type: "CREATE_PROJECT_SAGA", newProject: values });
   },
-  displayName: "CreateProjectFormik",
+  displayName: "create project",
 })(CreateProject);
 
 const mapStateToProps = (state) => ({
   arrProjectCaterory: state.ProjectCateroryReducer.arrProjectCaterory,
 });
 export default connect(mapStateToProps)(createProjectForm);
-// import React from "react";
-// import { withFormik } from "formik";
-// import { Input, Button } from "antd";
-// import { Editor } from "@tinymce/tinymce-react";
-
-// const CreateProject = (props) => {
-//   const {
-//     values,
-//     touched,
-//     errors,
-//     handleChange,
-//     handleBlur,
-//     handleSubmit,
-//     setFieldValue,
-//   } = props;
-//   const handelEditorChange = (content, editor) => {
-//     setFieldValue("description", content);
-//     console.log(props);
-//   };
-//   return (
-//     <form onSubmit={handleSubmit} className="content-container">
-//       <h3>{props.displayName}</h3>
-//       <input
-//         type="text"
-//         onChange={handleChange}
-//         onBlur={handleBlur}
-//         value={values.name}
-//         name="name"
-//       />
-//       <Input
-//         onChange={handleChange}
-//         name="projectName"
-//         value={values.projectName}
-//       ></Input>
-//       {/* <Editor
-//         value={values.description}
-//         name="description"
-//         apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-//         init={{
-//           plugins:
-//             "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-//           toolbar:
-//             "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-//           tinycomments_mode: "embedded",
-//           tinycomments_author: "Author name",
-//           mergetags_list: [
-//             { value: "First.Name", title: "First Name" },
-//             { value: "Email", title: "Email" },
-//           ],
-//           ai_request: (request, respondWith) =>
-//             respondWith.string(() =>
-//               Promise.reject("See docs to implement AI Assistant")
-//             ),
-//         }}
-//         initialValue="Welcome to TinyMCE!"
-//         onEditorChange={handelEditorChange}
-//       /> */}
-//       <select
-//         name="catergoryId"
-//         value={values.catergoryId}
-//         onChange={handleChange}
-//       >
-//         {/* {arrProjectCaterory.map((item, index) => {
-//           return (
-//             <option value={item.id} key={index}>
-//               {item.projectCategoryName}
-//             </option>
-//           );
-//         })} */}
-//         <option value="web">web</option>
-//         <option value="app">app</option>
-//         <option value="mobile">mobile</option>
-//       </select>
-//       <button type="submit">Submit</button>
-//     </form>
-//   );
-// };
-
-// const MyEnhancedForm = withFormik({
-//   mapPropsToValues: () => ({
-//     name: "",
-//     projectName: "",
-//     // description: "",
-//     catergoryId: "",
-//   }),
-
-//   validate: (values) => {
-//     const errors = {};
-
-//     if (!values.name) {
-//       errors.name = "Required";
-//     }
-
-//     return errors;
-//   },
-//   handleChange: (values, { setSubmitting }) => {
-//     console.log(values);
-//   },
-//   handleSubmit: (values, { setSubmitting }) => {
-//     console.log(values);
-//   },
-
-//   displayName: "BasicForm",
-// })(CreateProject);
-
-// export default MyEnhancedForm;

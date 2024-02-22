@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export const TaskTypeReducer = (state = initialState, action) => {
-  console.log("action reducer", action);
   switch (action.type) {
     case GET_ALL_TASK_TYPE:
       return { ...state, arrTaskType: action.arrTaskType };

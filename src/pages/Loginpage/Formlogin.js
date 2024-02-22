@@ -52,9 +52,7 @@ const Formlogin = (props) => {
         <div style={{ width: "50%" }}>
           {/* Phần hiển thị form đăng nhập */}
           <div style={{ width: "50%", margin: "0 auto" }}>
-            <h3 style={{ color: "#1890ff", marginBottom: "30px" }}>
-              {props.displayName}
-            </h3>
+            <h3 style={{ color: "#1890ff", marginBottom: "30px" }}></h3>
             <Input
               onChange={handleChange}
               value={values.email}
@@ -131,7 +129,6 @@ const LoginCyberBugs = withFormik({
   handleSubmit: ({ email, passWord }, { props, setSubmitting }) => {
     props.dispatch(signinCyberbugAction(email, passWord, props.history));
   },
-  displayName: "BasicForm",
 })(Formlogin);
 
 export default connect()(LoginCyberBugs);
