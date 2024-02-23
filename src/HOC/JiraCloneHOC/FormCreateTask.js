@@ -8,7 +8,8 @@ import {
   GET_ALL_PRIORITY,
   GET_ALL_PRIORITY_SAGA,
 } from "../../redux/constant/PriorityConstants";
-import { connect, withFormik } from "formik";
+import { withFormik } from "formik";
+import { connect } from "react-redux";
 
 const FormCreateTask = (props) => {
   const {
@@ -26,6 +27,7 @@ const FormCreateTask = (props) => {
   let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
   let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   let { arrPriority } = useSelector((state) => state.PriorityReducer);
+  console.log("priority", arrPriority);
   let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
 
   const userOptions = userSearch.map((item, index) => {
@@ -55,7 +57,6 @@ const FormCreateTask = (props) => {
     });
     disp({
       type: "GET_USER_API",
-      keyWord: "",
     });
   }, []);
 
@@ -78,12 +79,24 @@ const FormCreateTask = (props) => {
         </select>
       </div>
       <div className="form-group">
-        <p>Task name</p>
-        <input
-          name="taskName"
-          className="form-control"
-          onChange={handleChange}
-        ></input>
+        <div className="row">
+          <div className="col-6">
+            <p>Task name</p>
+            <input
+              name="taskName"
+              className="form-control"
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="col-6">
+            <p>Status</p>
+            <select
+              name="statusId"
+              className="form-control"
+              onChange={handleChange}
+            ></select>
+          </div>
+        </div>
       </div>
       <div className="form-group">
         <div className="row">
@@ -96,7 +109,11 @@ const FormCreateTask = (props) => {
             >
               {arrPriority.map((priority, index) => {
                 return (
-                  <option key={index} value={priority.priorityId}>
+                  <option
+                    key={index}
+                    value={priority.priorityId}
+                    name="priorityId"
+                  >
                     {priority.priority}
                   </option>
                 );
@@ -259,15 +276,20 @@ const createTaskForm = withFormik({
       projectId: 0,
       typeId: 0,
       priorityId: 0,
+      statusId: "",
     };
   },
-
+  mapPropsToTouched: (values) => {
+    return values;
+  },
+  enableReinitialize: true,
   handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("values", values);
     props.dispatch({
       type: "CREATE_TASK_SAGA",
       taskObject: values,
     });
   },
-  displayName: "Create Task",
 })(FormCreateTask);
-export default createTaskForm;
+
+export default connect()(createTaskForm);

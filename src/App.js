@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loginpage from "./pages/Loginpage/Loginpage";
 import Homepage from "./pages/Homepage/Homepage";
 import Signuppage from "./pages/Signuppage/Signuppage";
-import SecureGate from "./Layout/Securegate";
+
 import Layout from "./Layout/Layout";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import LoadingComponent from "./component/GlobalSetting/LoadingComponent";

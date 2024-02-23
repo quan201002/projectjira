@@ -17,6 +17,7 @@ export function* rootSaga() {
     CyberBugs.theoDoiGetUser(),
     CyberBugs.theoDoiAddUser(),
     CyberBugs.theoDoiRemoveUser(),
+    TaskSaga.theoDoiCreateTaskSaga(),
     ProjectSaga.theodoiGetProjectDetailSaga(),
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theodoiCreateProjectSaga(),
@@ -26,7 +27,6 @@ export function* rootSaga() {
     ProjectSaga.theodoiGetAllProjectSaga(),
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
     PrioritySaga.theoDoiGetAllPrioritySaga(),
-    TaskSaga.theoDoiCreateTaskSaga(),
   ]);
 }
 //dua vao action type de quan li

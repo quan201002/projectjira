@@ -12,7 +12,6 @@ import {
 } from "../../constant/PriorityConstants";
 
 function* getAllPrioritySaga(action) {
-  console.log("action saga", action);
   try {
     const { data, status } = yield call(() => {
       return PriorityService.getAllPriority();
