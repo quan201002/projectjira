@@ -16,7 +16,7 @@ function ProjectDetail(props) {
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
 
   const { projectId } = useParams();
-
+  console.log("project detaill", projectDetail);
   const renderAvatar = () => {
     return projectDetail.content?.members.map((user, index) => {
       return (
@@ -27,6 +27,62 @@ function ProjectDetail(props) {
     });
   };
 
+  const renderCardTaskList = () => {
+    return projectDetail.content?.lstTask.map((taskListDetail, index) => {
+      return (
+        <div className="col-3">
+          <div
+            key={index}
+            className="card pb-2"
+            style={{ width: "17rem", height: "auto" }}
+          >
+            <div className="card-header">{taskListDetail.statusName}</div>
+            <ul className="list-group list-group-flush">
+              {taskListDetail.lstTaskDeTail.map((task, index) => {
+                return (
+                  <li
+                    className="list-group-item "
+                    data-toggle="modal"
+                    data-target="#modalDetailTask"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <p>{task.taskName}</p>
+                    <div className="block" style={{ display: "flex" }}>
+                      <div className="block-left">
+                        <i className="fa fa-bookmark"></i>
+                        <i className="fa fa-arrow-up"></i>
+                        <p className="text-danger">
+                          {task.priorityTask.priority}
+                        </p>
+                      </div>
+                      <div className="block-right">
+                        <div
+                          className="avatar-group"
+                          style={{ display: "flex" }}
+                        >
+                          {task.assigness.map((mem, index) => {
+                            return (
+                              <div className="avatar" key={index}>
+                                <img
+                                  src={mem.avatar}
+                                  alt={mem.avatar}
+                                  style={{ borderRadius: "50%" }}
+                                ></img>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      );
+    });
+  };
   return projectDetail.content ? (
     <div className="content-container">
       <Breadcrumb
@@ -51,31 +107,12 @@ function ProjectDetail(props) {
           {renderAvatar()}
         </Col>
       </Row>
-      <Row>
-        <Col span={6} className="col-detailpage">
-          <div className="bg-gray-100 w-full h-full p-2 rounded flex flex-col">
-            <p>BACKLOG</p>
-          </div>
-        </Col>
-        <Col span={6} className="col-detailpage">
-          <div className="bg-gray-100 w-full h-full p-2 rounded flex flex-col">
-            <p>SELECT FOR DEVELOPMENT</p>
-          </div>
-        </Col>
-        <Col span={6} className="col-detailpage">
-          <div className="bg-gray-100 w-full h-full p-2 rounded flex flex-col">
-            <p>IN PROGRESS</p>
-          </div>
-        </Col>
-        <Col span={6} className="col-detailpage">
-          <div className="bg-gray-100 w-full h-full p-2 rounded flex flex-col">
-            <p>DONE</p>
-          </div>
-        </Col>
-      </Row>
+      <div className="row">{renderCardTaskList()}</div>
     </div>
   ) : (
-    <></>
+    <>
+      <p>Project is empty</p>
+    </>
   );
 }
 export default ProjectDetail;

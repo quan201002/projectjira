@@ -11,7 +11,7 @@ function CreateProject(props) {
   let arrProjectCaterory = useSelector(
     (state) => state.ProjectCateroryReducer.arrProjectCaterory
   );
-
+  console.log("arrProjectCaterory", arrProjectCaterory);
   const dispatch = useDispatch();
   const {
     values,

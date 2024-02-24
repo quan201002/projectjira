@@ -11,21 +11,25 @@ import LoadingComponent from "./component/GlobalSetting/LoadingComponent";
 import ProjectManagement from "./pages/ProjectManagement/ProjectManagement";
 import Modaljira from "./HOC/JiraCloneHOC/Modaljira";
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
+import ModalDetail from "./HOC/JiraCloneHOC/ModalDetail";
 
 function App() {
   return (
     <>
       <LoadingComponent />
+      <ModalDetail />
       <>
         <Routes>
           <Route path="/login" element={<Loginpage />}></Route>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<ProjectManagement />}></Route>
             <Route path="/createproject" element={<CreateProject />}></Route>
+            <Route path="/home" element={<Homepage />}></Route>
             <Route
               path="/projectmanagement"
               element={<ProjectManagement />}
             ></Route>
+
             <Route
               path="/projectdetail/:projectId"
               element={<ProjectDetail />}
