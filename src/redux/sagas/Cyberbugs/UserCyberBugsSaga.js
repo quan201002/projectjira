@@ -15,9 +15,13 @@ import {
   USER_SIGIN_API,
 } from "../../constant/CyberBugsConstant";
 import { cyberbugsService } from "../../../service/CyberBugService";
-import { TOKEN, USER_LOGIN } from "../../constant/SettingSystem";
+import { STATUS_CODE, TOKEN, USER_LOGIN } from "../../constant/SettingSystem";
 import { message } from "antd";
 import { https } from "../../../service/api";
+import {
+  GET_USER_BY_PROJECT_ID,
+  GET_USER_BY_PROJECT_ID_SAGA,
+} from "../../constant/UserConstants";
 
 function* siginSaga(action) {
   yield delay(500);
@@ -126,4 +130,31 @@ function* removeUserSaga(action) {
 
 export function* theoDoiRemoveUser() {
   yield takeLatest("REMOVE_USER_PROJECT_API", removeUserSaga);
+}
+
+function* getUserByProjectIdSaga(action) {
+  const { idProject } = action;
+  console.log("id project", idProject);
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.getUserByProjectId(idProject)
+    );
+    console.log("data", data);
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_USER_BY_PROJECT_ID,
+        arrUser: data.content,
+      });
+    }
+  } catch (err) {
+    if (err.response?.data.statusCode === STATUS_CODE.NOT_FOUND) {
+      yield put({
+        type: GET_USER_BY_PROJECT_ID,
+        arrUser: [],
+      });
+    }
+  }
+}
+export function* theoDoigetUserByProjectIdSaga() {
+  yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectIdSaga);
 }

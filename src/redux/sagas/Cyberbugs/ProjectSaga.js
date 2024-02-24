@@ -13,6 +13,7 @@ import {
   GET_ALL_PROJECT,
   GET_ALL_PROJECT_SAGA,
 } from "../../constant/ProjectCyberBugsConstant";
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../../constant/UserConstants";
 
 function* createProjectSaga(action) {
   console.log("action", action);
@@ -161,13 +162,17 @@ export function* theodoiGetProjectDetailSaga() {
 //get all project saga
 function* getAllProjectSaga(action) {
   try {
-    const { data, status } = yield call(() =>
-      https.get("/api/Project/getAllProject")
-    );
-
+    const { data, status } = yield call(() => {
+      return https.get("/api/Project/getAllProject");
+    });
+    console.log("data list project", data);
     yield put({
-      type: "GET_ALL_PROJECT",
-      arrProject: data.content,
+      type: "GET_LIST_PROJECT",
+      projectList: data.content,
+    });
+    yield put({
+      type: GET_USER_BY_PROJECT_ID_SAGA,
+      idProject: data.content[0].id,
     });
   } catch (err) {
     console.log("eror", err);

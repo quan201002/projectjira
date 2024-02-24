@@ -1,7 +1,7 @@
 import { GET_ALL_STATUS } from "../constant/StatusConstants";
 
 const initialState = {
-  statusId: "",
+  arrStatus: [],
 };
 
 export const StatusIdReducer = (state = initialState, action) => {

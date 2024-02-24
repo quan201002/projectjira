@@ -47,4 +47,7 @@ export const cyberbugsService = {
     return https.get(`
     /api/Project/getAllProject`);
   },
+  getUserByProjectId: (idProject) => {
+    return https.get(`/api/Users/getUserByProjectId?idProject=${idProject}`);
+  },
 };

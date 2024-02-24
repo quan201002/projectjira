@@ -10,6 +10,12 @@ import {
 } from "../../redux/constant/PriorityConstants";
 import { withFormik } from "formik";
 import { connect } from "react-redux";
+import {
+  GET_ALL_STATUS,
+  GET_ALL_STATUS_SAGA,
+} from "../../redux/constant/StatusConstants";
+import { select } from "redux-saga/effects";
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../../redux/constant/UserConstants";
 
 const FormCreateTask = (props) => {
   const {
@@ -27,10 +33,11 @@ const FormCreateTask = (props) => {
   let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
   let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   let { arrPriority } = useSelector((state) => state.PriorityReducer);
-  console.log("priority", arrPriority);
+  let { arrStatus } = useSelector((state) => state.StatusIdReducer);
   let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
+  let { arrUser } = useSelector((state) => state.UserLoginCyberBugsReducer);
 
-  const userOptions = userSearch.map((item, index) => {
+  const userOptions = arrUser.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
 
@@ -47,7 +54,7 @@ const FormCreateTask = (props) => {
   let disp = useDispatch();
   useEffect(() => {
     disp({
-      type: "GET_ALL_PROJECT_SAGA",
+      type: GET_ALL_PROJECT_SAGA,
     });
     disp({
       type: GET_ALL_TASK_TYPE_SAGA,
@@ -58,6 +65,13 @@ const FormCreateTask = (props) => {
     disp({
       type: "GET_USER_API",
     });
+    disp({
+      type: GET_ALL_STATUS_SAGA,
+    });
+    disp({
+      type: "SET_SUBMIT_CREATE_TASK",
+      submitFunction: handleSubmit,
+    });
   }, []);
 
   return (
@@ -67,7 +81,13 @@ const FormCreateTask = (props) => {
         <select
           name="projectId"
           className="form-control"
-          onChange={handleChange}
+          onChange={(e) => {
+            let { value } = e.target;
+            disp({
+              type: GET_USER_BY_PROJECT_ID_SAGA,
+              idProject: value,
+            });
+          }}
         >
           {projectList.map((item, index) => {
             return (
@@ -94,7 +114,15 @@ const FormCreateTask = (props) => {
               name="statusId"
               className="form-control"
               onChange={handleChange}
-            ></select>
+            >
+              {arrStatus?.map((status, index) => {
+                return (
+                  <option key={index} value={status.statusId}>
+                    {status.statusName}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       </div>
@@ -140,8 +168,6 @@ const FormCreateTask = (props) => {
       </div>
       <div className="form-group">
         <div className="row">
-          {/* asignment */}
-
           <div className="col-6">
             <p>Asignees</p>
             <Select
@@ -265,7 +291,10 @@ const FormCreateTask = (props) => {
 };
 
 const createTaskForm = withFormik({
-  mapPropsToValues: () => {
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
+    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+
     return {
       listUserAsign: [],
       taskName: " ",
@@ -273,10 +302,10 @@ const createTaskForm = withFormik({
       originalEstimate: 0,
       timeTrackingSpent: 0,
       timeTrackingRemaining: 0,
-      projectId: 0,
-      typeId: 0,
-      priorityId: 0,
-      statusId: "",
+      projectId: arrProject[0]?.id,
+      typeId: arrTaskType[0]?.id,
+      priorityId: arrPriority[0]?.priorityId,
+      statusId: arrStatus[0]?.statusId,
     };
   },
   mapPropsToTouched: (values) => {
@@ -291,5 +320,19 @@ const createTaskForm = withFormik({
     });
   },
 })(FormCreateTask);
+const mapStatetoProps = (state) => {
+  // let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
+  // let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
+  // let { arrPriority } = useSelector((state) => state.PriorityReducer);
+  // let { arrStatus } = useSelector((state) => state.StatusIdReducer);
+  // console.log("arr status", arrStatus);
+  // let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
+  return {
+    arrProject: state.ProjectCyberBugsReducer.projectList,
+    arrTaskType: state.TaskTypeReducer.arrTaskType,
+    arrPriority: state.PriorityReducer.arrPriority,
+    arrStatus: state.StatusIdReducer.arrStatus,
+  };
+};
 
-export default connect()(createTaskForm);
+export default connect(mapStatetoProps)(createTaskForm);

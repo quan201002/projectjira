@@ -8,12 +8,13 @@ import {
   GET_ALL_STATUS,
   GET_ALL_STATUS_SAGA,
 } from "../../constant/StatusConstants";
+import { StatusService } from "../../../service/StatusService";
 
 function* getAllStatusSaga(action) {
   console.log("action saga", action);
   try {
     const { data, status } = yield call(() => {
-      return TaskTypeService.getAllTaskType();
+      return StatusService.getAllStatus();
     });
     yield put({
       type: GET_ALL_STATUS,

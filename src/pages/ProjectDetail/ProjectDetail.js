@@ -16,8 +16,6 @@ function ProjectDetail(props) {
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
 
   const { projectId } = useParams();
-  console.log("project id", projectId);
-  console.log("project detail", projectDetail);
 
   const renderAvatar = () => {
     return projectDetail.content?.members.map((user, index) => {
