@@ -16,8 +16,8 @@ import ModalDetail from "./HOC/JiraCloneHOC/ModalDetail";
 function App() {
   return (
     <>
-      <LoadingComponent />
       <ModalDetail />
+      <LoadingComponent />
       <>
         <Routes>
           <Route path="/login" element={<Loginpage />}></Route>

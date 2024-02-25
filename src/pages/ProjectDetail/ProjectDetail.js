@@ -20,7 +20,7 @@ function ProjectDetail(props) {
   const renderAvatar = () => {
     return projectDetail.content?.members.map((user, index) => {
       return (
-        <div className="avatar">
+        <div className="avatar" key={index}>
           <img src={user.avatar} alt={user.avatar}></img>
         </div>
       );
@@ -43,7 +43,7 @@ function ProjectDetail(props) {
                   <li
                     className="list-group-item "
                     data-toggle="modal"
-                    data-target="#modalDetailTask"
+                    data-target="#exampleModal"
                     style={{ cursor: "pointer" }}
                   >
                     <p>{task.taskName}</p>
