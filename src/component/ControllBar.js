@@ -1,14 +1,14 @@
-import React, { useState } from "react";
 import {
-  PlusCircleOutlined,
+  MenuOutlined,
+  PlusOutlined,
   SearchOutlined,
   SettingFilled,
 } from "@ant-design/icons";
+import React, { useState } from "react";
 
-import { Button, Layout, theme } from "antd";
-import { NavLink } from "react-router-dom";
+import { Button, Divider, Layout, Menu, theme } from "antd";
 import { useDispatch } from "react-redux";
-import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
+import { NavLink } from "react-router-dom";
 
 const { Content, Sider } = Layout;
 
@@ -22,65 +22,73 @@ const ControllBar = () => {
   } = theme.useToken();
   return (
     <>
-      <Layout style={{ height: "100vh" }}>
-        <Content
-          style={{
-            padding: "0 48px",
-          }}
-        >
-          <div className="sider-container">
-            <Sider
-              className="d-flex  justify-content-center"
-              style={{ height: "100vh", backgroundColor: "black" }}
-              collapsible
-              collapsed={collapsed}
-              onCollapse={(value) => setCollapsed(value)}
-            >
-              <p>
-                <NavLink
-                  onClick={() => {
-                    dispatch({
-                      type: "OPEN_FORM_CREATE_TASK",
-                      ComponentContentDrawer: () => {
-                        return <FormCreateTask />;
-                      },
-                      open: true,
-                    });
-                  }}
-                  className="menu-sidebar-item    text-light"
-                >
-                  <PlusCircleOutlined /> Create tast
-                </NavLink>
-              </p>
-              <p>
-                <NavLink className="menu-sidebar-item    text-light">
-                  <SearchOutlined />
-                </NavLink>
-              </p>
-            </Sider>
-            <Sider
-              className="d-flex   justify-content-center "
+   
+      <Layout style={{ height: "100%" }}>
+        <div className="container1">
+        <div className="sider-container">
+          <Sider
+            style={{ height: "100%" }}
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+          >
+            <Button
+              type="text"
+              icon={<MenuOutlined style={{ color: "white" }} />}
+              onClick={() => setCollapsed(!collapsed)}
               style={{
-                background: colorBgContainer,
-                height: "100vh",
+                fontSize: "16px",
+                width: "100%",
+                height: 64,
+                padding: "18px",
+                paddingRight: "30px",
+                display: "flex",
+                justifyContent: "right",
+                alignItems: "center",
               }}
-              width={200}
-            >
-              <p>
-                <SettingFilled />
-                <NavLink className="  menu-item" to="/createproject">
-                  createproject
-                </NavLink>
-              </p>
-              <p>
-                <SettingFilled />
-                <NavLink className="  menu-item" to="/projectmanagement">
-                  Project management
-                </NavLink>
-              </p>
-            </Sider>
-          </div>
-        </Content>
+            />
+            <Menu
+              theme="dark"
+              mode="inline"
+              items={[
+                {
+                  key: "1",
+                  icon: <PlusOutlined />,
+                  label: "Create task",
+                },
+                {
+                  key: "2",
+                  icon: <SearchOutlined />,
+                  label: "Search",
+                },
+              ]}
+            />
+          </Sider>
+          <Sider
+            className="d-flex justify-content-center "
+            style={{
+              background: colorBgContainer,
+              height: "100vh",
+            }}
+            width={200}
+          >
+            
+            <p>
+              <SettingFilled />
+              <NavLink className="  menu-item" to="/createproject">
+                Createproject
+              </NavLink>
+            </p>
+            <p>
+              <SettingFilled />
+              <NavLink className="  menu-item" to="/projectmanagement">
+                Project management
+              </NavLink>
+            </p>
+            <Divider type="horizontal"/>
+          </Sider>
+        </div>
+        </div>
       </Layout>
     </>
   );

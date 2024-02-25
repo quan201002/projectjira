@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+.container1 {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.sider-container {
+  width: 30%; /* Điều chỉnh kích thước của div 1 */
+}
+
+.content-container {
+  width: 60%; /* Điều chỉnh kích thước của div 2 */
+}

@@ -53,6 +53,7 @@ const ProjectManagement = () => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
+
   const clearFilters = () => {
     setFilteredInfo({});
   };
@@ -291,23 +292,24 @@ const ProjectManagement = () => {
     },
   ];
   return (
-    <div className="content-container">
-      <Space
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-      </Space>
-      <Table
-        style={{ width: "100%" }}
-        columns={columns}
-        dataSource={data}
-        onChange={handleChange}
-        rowKey={"id"}
-      />
+    <div className="container1">
+      <div className="content-container" style={{ height: "100%" }}>
+        <Space style={{ width: "100%", justifyContent: "center", marginBottom: 16 }}>
+          <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
+        </Space>
+        <Space style={{ marginBottom: 16 }}>
+          <Button onClick={setAgeSort}>Sort age</Button>
+          <Button onClick={clearFilters}>Clear filters</Button>
+          <Button onClick={clearAll}>Clear filters and sorters</Button>
+        </Space>
+        <Table
+          style={{ width: "100%",}}
+          columns={columns}
+          dataSource={data}
+          onChange={handleChange}
+          rowKey={"id"}
+        />
+      </div>
     </div>
   );
 };

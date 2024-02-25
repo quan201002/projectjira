@@ -27,7 +27,7 @@ const Modaljira = () => {
   };
   return (
     <>
-      <button onClick={showDrawer}>showDrawer</button>
+      {/* <button onClick={showDrawer}>showDrawer</button> */}
       <Drawer
         width={720}
         onClose={onClose}
