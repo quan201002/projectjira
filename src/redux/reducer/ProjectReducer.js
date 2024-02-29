@@ -10,6 +10,7 @@ const initialState = {
 };
 
 export const ProjectReducer = (state = initialState, action) => {
+  console.log("action", action);
   switch (action.type) {
     case "EDIT_PROJECT": {
       state.projectEdit = action.projectEditModel;

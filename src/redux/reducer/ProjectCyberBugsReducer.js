@@ -1,18 +1,14 @@
 const stateDefault = {
   projectList: [],
-  projectArr: [],
 };
 
 const ProjectCyberBugsReducer = (state = stateDefault, action) => {
+  console.log("action get list project", action);
   switch (action.type) {
     case "GET_LIST_PROJECT": {
-      state.projectList = action.projectList;
-      return { ...state };
+      return { ...state, projectList: action.projectList };
     }
-    case "GET_All_PROJECT": {
-      state.projectArr = action.arrProject;
-      return { ...state };
-    }
+
     default:
       return { ...state };
   }

@@ -1,14 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHTMLparser from "html-react-parser";
 import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstants";
 import { GET_ALL_PRIORITY_SAGA } from "../../redux/constant/PriorityConstants";
+import {
+  CHANGE_ASSIGNESS,
+  CHANGE_TASK_MODEL,
+  HANDLE_CHANGE_POST_API_SAGA,
+  REMOVE_USER_ASSIGN,
+  UPDATE_TASK_STATUS_SAGA,
+} from "../../redux/constant/TaskConstants";
+import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
+import { Editor } from "@tinymce/tinymce-react";
+import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
+import { Select } from "antd";
 export default function ModalDetail() {
   let { taskModal } = useSelector((state) => state.TaskReducer);
   let { arrStatus } = useSelector((state) => state.StatusIdReducer);
-  console.log("task modal", taskModal);
+  const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
+
+  let { projectDetail } = useSelector((state) => state.ProjectReducer);
   console.log("arrPriority", arrPriority);
+  console.log("task modal", taskModal);
+  console.log("arr task type", arrTaskType);
+  console.log("project detail", projectDetail);
+  const [visibleEditor, setVisibleEditor] = useState(false);
+  const [historyContent, setHistoryContet] = useState(taskModal.description);
+  const [content, setContent] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -17,10 +36,106 @@ export default function ModalDetail() {
     dispatch({
       type: GET_ALL_PRIORITY_SAGA,
     });
+    dispatch({
+      type: GET_ALL_TASK_TYPE_SAGA,
+    });
   }, []);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: HANDLE_CHANGE_POST_API_SAGA,
+      actionType: CHANGE_TASK_MODEL,
+      name,
+      value,
+    });
+    // dispatch({
+    //   type: CHANGE_TASK_MODEL,
+    //   name,
+    //   value,
+    // });
+  };
   const renderDescription = () => {
+    const handelEditorChange = (e) => {};
     const jsxDescription = ReactHTMLparser(taskModal.description);
-    return jsxDescription;
+    return (
+      <div>
+        {visibleEditor ? (
+          <div>
+            <Editor
+              initialValue={taskModal.description}
+              name="description"
+              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
+              init={{
+                plugins:
+                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                tinycomments_mode: "embedded",
+                tinycomments_author: "Author name",
+                mergetags_list: [
+                  { value: "First.Name", title: "First Name" },
+                  { value: "Email", title: "Email" },
+                ],
+                ai_request: (request, respondWith) =>
+                  respondWith.string(() =>
+                    Promise.reject("See docs to implement AI Assistant")
+                  ),
+              }}
+              onEditorChange={(content, editor) => {
+                setContent(content);
+              }}
+            />
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: HANDLE_CHANGE_POST_API_SAGA,
+                  actionType: CHANGE_TASK_MODEL,
+                  name: "description",
+                  value: content,
+                });
+                // dispatch({
+                //   type: CHANGE_TASK_MODEL,
+                //   name: "description",
+                //   value: content,
+                // });
+                setVisibleEditor(false);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: HANDLE_CHANGE_POST_API_SAGA,
+                  actionType: CHANGE_TASK_MODEL,
+                  name: "description",
+                  value: historyContent,
+                });
+                // dispatch({
+                //   type: CHANGE_TASK_MODEL,
+                //   name: "description",
+                //   value: historyContent,
+                // });
+                setVisibleEditor(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              setHistoryContet(taskModal.description);
+              setVisibleEditor(!visibleEditor);
+            }}
+          >
+            jsxDescription
+          </div>
+        )}
+      </div>
+    );
   };
   const renderTimeTracking = () => {
     const { timeTrackingSpent, timeTrackingRemaining, originalEstimate } =
@@ -28,33 +143,61 @@ export default function ModalDetail() {
     const max = Number(timeTrackingSpent) + Number(timeTrackingRemaining);
     const percent = Math.round((Number(timeTrackingSpent) / max) * 100);
     return (
-      <div style={{ display: "flex" }}>
-        <i className="fa fa-clock"></i>
-        <div style={{ width: "100%" }}>
-          <div className="progress">
+      <div>
+        <div style={{ display: "flex" }}>
+          <i className="fa fa-clock"></i>
+          <div style={{ width: "100%" }}>
+            <div className="progress">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: `${percent}%` }}
+                aria-valuenow={Number(timeTrackingSpent)}
+                aria-valuemin={Number(timeTrackingRemaining)}
+                aira-valuemax={max}
+              />
+            </div>
             <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: `${percent}%` }}
-              aria-valuenow={Number(timeTrackingSpent)}
-              aria-valuemin={Number(timeTrackingRemaining)}
-              aira-valuemax={max}
-            />
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <p className="logged">{Number(timeTrackingRemaining)}h logged</p>
+              <p className="estimate-time">
+                {Number(timeTrackingRemaining)}h remaining
+              </p>
+            </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <p className="logged">{Number(timeTrackingRemaining)}h logged</p>
-            <p className="estimate-time">
-              {Number(timeTrackingRemaining)}h remaining
-            </p>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input
+              className="form-control"
+              name="timeTrackingSpent"
+              onChange={handleChange}
+            ></input>
+          </div>
+
+          <div className="col-6">
+            <input
+              className="form-control"
+              name="timeTrackingRemaining"
+              onChange={handleChange}
+            ></input>
           </div>
         </div>
       </div>
     );
+  };
+  const renderTaskType = () => {
+    return arrTaskType.map((tp, index) => {
+      return (
+        <option key={index} value={tp.id}>
+          {tp.taskType}
+        </option>
+      );
+    });
   };
   return (
     <div
@@ -70,6 +213,13 @@ export default function ModalDetail() {
           <div className="modal-header">
             <div classame="task-title">
               <i className="fa fa-bookmark" />
+              <select
+                name="typeId"
+                value={taskModal.typeId}
+                onChange={handleChange}
+              >
+                {renderTaskType()}
+              </select>
               <span>{taskModal.taskName}</span>
             </div>
             <div style={{ display: "flex" }} className="task-click">
@@ -163,7 +313,18 @@ export default function ModalDetail() {
                   <div className="status">
                     <h6>Status</h6>
                     <select
-                      onChange={(e) => {}}
+                      onChange={(e) => {
+                        const action = {
+                          type: UPDATE_TASK_STATUS_SAGA,
+                          taskUpdateStatus: {
+                            taskId: taskModal.taskId,
+                            statusId: e.target.value,
+                            projectId: taskModal.projectId,
+                          },
+                        };
+
+                        dispatch(action);
+                      }}
                       className="custom-select"
                       value={taskModal.statusId}
                     >
@@ -178,34 +339,112 @@ export default function ModalDetail() {
                   </div>
                   <div className="assignees">
                     <h6>Assignees</h6>
-                    {taskModal.assigness.map((user, index) => {
-                      return (
-                        <div style={{ display: "flex" }} className="item">
-                          <div className="avatar">
-                            <img src={user.avatar} alt={user.avatar}></img>
+                    <div className="row">
+                      {taskModal.assigness.map((user, index) => {
+                        return (
+                          <div className="col-6 mt-2 mb-2">
+                            <div className="item" key={index}>
+                              <div className="avatar">
+                                <img src={user.avatar} alt={user.avatar}></img>
+                              </div>
+                              <p className="name mt-1 ml-1">
+                                {user.name}
+                                <span
+                                  onClick={() => {
+                                    dispatch({
+                                      type: HANDLE_CHANGE_POST_API_SAGA,
+                                      actionType: REMOVE_USER_ASSIGN,
+                                      userId: user.id,
+                                    });
+                                    // dispatch({
+                                    //   type: REMOVE_USER_ASSIGN,
+                                    //   userId: user.id,
+                                    // });
+                                  }}
+                                >
+                                  <i
+                                    className="fa fa-times"
+                                    style={{ marginLeft: 5, cursor: "pointer" }}
+                                  ></i>
+                                </span>
+                              </p>
+                            </div>
                           </div>
-                          <p className="name mt-1 ml-1">
-                            {user.name}
-                            <i
-                              className="fa fa-times"
-                              style={{ marginLeft: 5 }}
-                            ></i>
-                          </p>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
 
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div className="col-6 mt-2 mb-2">
                       <i className="fa fa-plus" style={{ marginRight: 5 }}></i>
-                      <span>Add more</span>
+                      <Select
+                        style={{ width: "100%" }}
+                        name="lstUser"
+                        value=" + Add more"
+                        className="form-control"
+                        option={projectDetail.members
+                          ?.filter((mem) => {
+                            let index = taskModal.assigness?.findIndex(
+                              (us) => us.id === mem.userId
+                            );
+                            if (index !== -1) {
+                              return false;
+                            }
+                            return true;
+                          })
+                          .map((mem, index) => {
+                            return { value: mem.userId, label: mem.name };
+                          })}
+                        optionFilterProp="label"
+                        onSelect={(value) => {
+                          if (value == "0") {
+                            return;
+                          }
+
+                          let userSelected = projectDetail.members.find(
+                            (mem) => mem.userId == value
+                          );
+                          userSelected = {
+                            ...userSelected,
+                            id: userSelected.userId,
+                          };
+                          dispatch({
+                            type: HANDLE_CHANGE_POST_API_SAGA,
+                            actionType: CHANGE_ASSIGNESS,
+                            userSelected,
+                          });
+                          // dispatch({
+                          //   type: CHANGE_ASSIGNESS,
+                          //   userSelected: userSelected,
+                          // });
+                        }}
+                      >
+                        {projectDetail.members
+                          ?.filter((mem) => {
+                            let index = taskModal.assigness?.findIndex(
+                              (us) => us.id === mem.userId
+                            );
+                            if (index !== -1) {
+                              return false;
+                            }
+                            return true;
+                          })
+                          .map((item, index) => {
+                            return (
+                              <option value={item.userId}>{item.name}</option>
+                            );
+                          })}
+                      </Select>
                     </div>
                   </div>
                   <div className="priority" style={{ marginBottom: 20 }}>
                     <h6>PRIORITY</h6>
                     <select
+                      name="priorityId"
                       className="form-control"
-                      value={taskModal.priorityTask.priorityId}
-                      onChange={(e) => {}}
+                      value={taskModal.priorityId}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
                     >
                       {arrPriority.map((priority, index) => {
                         return (
@@ -219,9 +458,13 @@ export default function ModalDetail() {
                   <div className="estimate">
                     <h6>ORIGINAL ESTIMATE (HOURS)</h6>
                     <input
+                      name="originalEstimate"
                       type="text"
                       className="estimate-hours"
                       value={taskModal.originalEstimate}
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
                     ></input>
                   </div>
                   <div className="time-tracking">

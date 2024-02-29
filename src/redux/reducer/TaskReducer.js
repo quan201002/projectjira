@@ -1,3 +1,10 @@
+import {
+  CHANGE_ASSIGNESS,
+  CHANGE_TASK_MODEL,
+  GET_TASK,
+  REMOVE_USER_ASSIGN,
+} from "../constant/TaskConstants";
+
 const initialState = {
   taskModal: {
     priorityTask: {
@@ -32,10 +39,25 @@ const initialState = {
 };
 
 export const TaskReducer = (state = initialState, action) => {
+  console.log("action reducer", action);
   switch (action.type) {
-    case "":
+    case GET_TASK:
+      return { ...state, taskModal: action.taskModal };
+    case CHANGE_TASK_MODEL:
+      const { name, value } = action;
+      return { ...state, taskModal: { ...state.taskModal, [name]: value } };
+    case CHANGE_ASSIGNESS:
+      state.taskModal.assigness = [
+        ...state.taskModal.assigness,
+        action.userSelected,
+      ];
+      console.log("state", state);
       return { ...state };
-
+    case REMOVE_USER_ASSIGN:
+      state.taskModal.assigness = [
+        ...state.taskModal.assigness.filter((us) => us.id !== action.userId),
+      ];
+      return { ...state };
     default:
       return state;
   }

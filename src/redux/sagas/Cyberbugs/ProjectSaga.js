@@ -138,7 +138,6 @@ export function* theodoiDeleteProjectSaga() {
 }
 
 //get project detail
-
 function* getProjectDetailSaga(action) {
   console.log("action", action);
 
@@ -148,7 +147,7 @@ function* getProjectDetailSaga(action) {
     );
     yield put({
       type: "PUT_PROJECT_DETAIL",
-      projectDetail: data,
+      projectDetail: data.content,
     });
     console.log(data);
   } catch (err) {
@@ -156,11 +155,12 @@ function* getProjectDetailSaga(action) {
   }
 }
 export function* theodoiGetProjectDetailSaga() {
-  yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
+  yield takeLatest("GET_PROJECT_DETAIL_SAGA", getProjectDetailSaga);
 }
 
 //get all project saga
 function* getAllProjectSaga(action) {
+  console.log("action get all project saga", action);
   try {
     const { data, status } = yield call(() => {
       return https.get("/api/Project/getAllProject");

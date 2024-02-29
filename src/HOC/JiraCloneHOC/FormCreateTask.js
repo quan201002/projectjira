@@ -40,7 +40,7 @@ const FormCreateTask = (props) => {
   const userOptions = arrUser.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
-
+  console.log("projectList", projectList);
   const [size, setSize] = useState("middle");
   const handleSizeChange = (e) => {
     setSize(e.target.value);
@@ -82,6 +82,7 @@ const FormCreateTask = (props) => {
           name="projectId"
           className="form-control"
           onChange={(e) => {
+            setFieldValue("projectId", e.target.value);
             let { value } = e.target;
             disp({
               type: GET_USER_BY_PROJECT_ID_SAGA,
@@ -293,7 +294,7 @@ const FormCreateTask = (props) => {
 const createTaskForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+    const { projectList, arrTaskType, arrPriority, arrStatus } = props;
 
     return {
       listUserAsign: [],
@@ -302,7 +303,7 @@ const createTaskForm = withFormik({
       originalEstimate: 0,
       timeTrackingSpent: 0,
       timeTrackingRemaining: 0,
-      projectId: arrProject[0]?.id,
+      projectId: projectList[0]?.projectId,
       typeId: arrTaskType[0]?.id,
       priorityId: arrPriority[0]?.priorityId,
       statusId: arrStatus[0]?.statusId,
@@ -328,7 +329,7 @@ const mapStatetoProps = (state) => {
   // console.log("arr status", arrStatus);
   // let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
   return {
-    arrProject: state.ProjectCyberBugsReducer.projectList,
+    projectList: state.ProjectCyberBugsReducer.projectList,
     arrTaskType: state.TaskTypeReducer.arrTaskType,
     arrPriority: state.PriorityReducer.arrPriority,
     arrStatus: state.StatusIdReducer.arrStatus,

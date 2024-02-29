@@ -12,6 +12,8 @@ import ProjectManagement from "./pages/ProjectManagement/ProjectManagement";
 import Modaljira from "./HOC/JiraCloneHOC/Modaljira";
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import ModalDetail from "./HOC/JiraCloneHOC/ModalDetail";
+import DemoDrag from "./pages/DemoDrag";
+import DragandDropDnd from "./pages/DragandDropDnd";
 
 function App() {
   return (
