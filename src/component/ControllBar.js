@@ -17,7 +17,7 @@ const { Content, Sider } = Layout;
 
 const ControllBar = () => {
   const dispatch = useDispatch();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();

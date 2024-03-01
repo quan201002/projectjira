@@ -106,3 +106,16 @@ p {
   display: flex;
  
 }
+
+.ant-select-selector{
+  display: none !important;
+}
+
+.tox.tox-tinymce{
+  height: 300px !important;
+}
+
+.form-group {
+  position: relative !important;
+  align-self: stretch !important;
+}

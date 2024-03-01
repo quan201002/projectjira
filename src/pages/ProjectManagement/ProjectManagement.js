@@ -308,6 +308,7 @@ const ProjectManagement = () => {
           dataSource={data}
           onChange={handleChange}
           rowKey={"id"}
+          pagination={{ pageSize: 5 }}
         />
       </div>
     </div>
