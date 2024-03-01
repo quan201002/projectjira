@@ -52,6 +52,7 @@ function CreateProject(props) {
       <div className="form-group">
         <p>Description</p>
         <Editor
+          style={{ heigth: "300px" }}
           value={values.description}
           name="description"
           apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
