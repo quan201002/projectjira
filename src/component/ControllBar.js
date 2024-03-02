@@ -68,7 +68,6 @@ const ControllBar = () => {
             className="d-flex justify-content-center "
             style={{
               background: colorBgContainer,
-              height: "100vh",
             }}
             width={200}
           >

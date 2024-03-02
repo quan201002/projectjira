@@ -4,7 +4,16 @@ import FormLogin from "./Formlogin";
 
 export default function Loginpage() {
   return (
-    <div style={{ backgroundColor: "#f0f2f5", height: "100vh" }}>
+    <div
+      style={{
+        backgroundColor: "#f0f2f5",
+        height: "100vh",
+        display: "flex",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <FormLogin />
     </div>
   );
