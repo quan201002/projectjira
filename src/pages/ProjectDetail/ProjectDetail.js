@@ -62,7 +62,7 @@ function ProjectDetail(props) {
             <Droppable droppableId={taskListDetail.statusId} key={index}>
               {(provided) => {
                 return (
-                  <div className="col-3 tasklist-bar">
+                  <div className="p-3 tasklist-bar">
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
@@ -70,7 +70,7 @@ function ProjectDetail(props) {
                       className="card pb-2"
                       style={{ width: "17rem" }}
                     >
-                      <div className=" card-header bg-gray-100   p-2 rounded flex flex-col  ">
+                      <div className=" card-header bg-gray-100 p-2 rounded flex flex-col  ">
                         {taskListDetail.statusName}
                       </div>
                       <ul
@@ -154,10 +154,7 @@ function ProjectDetail(props) {
     );
   };
   return projectDetail ? (
-    <div
-      style={{ padding: "0px", marginLeft: "110px" }}
-      className="content-container"
-    >
+    <div className="content-container">
       <div className="nav-crumb">
         <Breadcrumb
           className="bg-gray-100 p-2 rounded flex flex-col justify-between"
@@ -169,23 +166,17 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div style={{ display: "flex", width: "100%" }}>
-        <div style={{ marginRight: "150px" }}>
+      <div className="d-md-flex justify-content-between">
+        <div className="mr-md-5">
           <h1>Board</h1>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "23%",
-          }}
-        >
+        <div className="d-flex flex-column mt-md-0 mt-3">
           <h3>Members</h3>
           {renderAvatar()}
         </div>
       </div>
-      <div className="row">{renderCardTaskList()}</div>
+
+      <Row>{renderCardTaskList()}</Row>
     </div>
   ) : (
     <>

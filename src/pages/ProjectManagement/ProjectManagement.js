@@ -293,9 +293,24 @@ const ProjectManagement = () => {
   ];
   return (
     <div className="container1">
-      <div className="content-container" style={{ height: "100%" }}>
-        <Space style={{ width: "100%", justifyContent: "center", marginBottom: 16 }}>
-          <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
+      <div
+        className="content-container"
+        style={{
+          height: "100%",
+          position: "relative",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100%",
+          padding: " 10%",
+          backgroundImage: 'url("/background.jpg")',
+          backgroundSize: "cover",
+        }}
+      >
+        <Space
+          style={{ width: "100%", justifyContent: "center", marginBottom: 16 }}
+        >
+          <div className="title">Project Management</div>
         </Space>
         <Space style={{ marginBottom: 16 }}>
           <Button onClick={setAgeSort}>Sort age</Button>
@@ -303,7 +318,7 @@ const ProjectManagement = () => {
           <Button onClick={clearAll}>Clear filters and sorters</Button>
         </Space>
         <Table
-          style={{ width: "100%",}}
+          style={{ width: "100%" }}
           columns={columns}
           dataSource={data}
           onChange={handleChange}

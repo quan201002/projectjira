@@ -32,89 +32,110 @@ const Formlogin = (props) => {
     props;
 
   return (
-    <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
+    <div
+      style={{
+        backgroundImage: 'url("/background.jpg")',
+        width: "100%",
+        height: "100%",
+        backgroundSize: "cover",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{ textAlign: "center", width: "100%", height: "100%" }}
       >
-        <div style={{ width: "50%" }}>
-          {/* Phần hiển thị hình ảnh */}
-          <img
-            src="/HinhNenLogin.png"
-            alt="Login Image"
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
-        <div style={{ width: "50%" }}>
-          {/* Phần hiển thị form đăng nhập */}
-          <div style={{ width: "50%", margin: "0 auto" }}>
-            <h3 style={{ color: "#1890ff", marginBottom: "30px" }}></h3>
-            <Input
-              onChange={handleChange}
-              value={values.email}
-              size="large"
-              name="email"
-              placeholder="Email"
-              prefix={<UserOutlined />}
-              style={{ marginBottom: "20px" }}
-            />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
-            <Input
-              type="password"
-              onChange={handleChange}
-              value={values.passWord}
-              size="large"
-              name="passWord"
-              placeholder="Password"
-              prefix={<LockOutlined />}
-              style={{ marginBottom: "20px" }}
-            />
-            {errors.passWord && touched.passWord ? (
-              <div>{errors.passWord}</div>
-            ) : null}
-            <Button
-              htmlType="submit"
-              size="large"
-              className="btn btn-primary"
-              style={{
-                width: "100%",
-                backgroundColor: "#1890ff",
-                borderColor: "#1890ff",
-              }}
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              borderRadius: "25px",
+              padding: "30px",
+              position: "relative",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "fit-content",
+              boxShadow: '2px 3px 34px -8px rgba(0,0,0,0.78)',
+            }}
+          >
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              Login
-            </Button>
-            <div className="social mt-5" style={{ marginTop: "20px" }}>
-              <Button
-                className="bg-primary me-3"
-                type="primary"
-                shape="circle"
-                icon={<FacebookOutlined />}
-                size={"large"}
-              ></Button>
-              <Button
-                className="bg-primary me-3"
-                type="primary"
-                shape="circle"
-                icon={<TwitterOutlined />}
-                size={"large"}
-              ></Button>
-              <Button
-                className="bg-primary"
-                type="primary"
-                shape="circle"
-                icon={<GoogleOutlined />}
-                size={"large"}
-              ></Button>
+              <div className="title">Welcome!</div>
+              {/* Phần hiển thị form đăng nhập */}
+              <div style={{ width: "50%", margin: "0 auto" }}>
+                <h3 style={{ color: "#1890ff", marginBottom: "30px" }}></h3>
+                <Input
+                  onChange={handleChange}
+                  value={values.email}
+                  size="large"
+                  name="email"
+                  placeholder="Email"
+                  prefix={<UserOutlined />}
+                  style={{ marginBottom: "20px" }}
+                />
+                {errors.email && touched.email ? (
+                  <div>{errors.email}</div>
+                ) : null}
+                <Input
+                  type="password"
+                  onChange={handleChange}
+                  value={values.passWord}
+                  size="large"
+                  name="passWord"
+                  placeholder="Password"
+                  prefix={<LockOutlined />}
+                  style={{ marginBottom: "20px" }}
+                />
+                {errors.passWord && touched.passWord ? (
+                  <div>{errors.passWord}</div>
+                ) : null}
+                <Button
+                  htmlType="submit"
+                  size="large"
+                  className="btn btn-primary"
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#1890ff",
+                    borderColor: "#1890ff",
+                  }}
+                >
+                  Login
+                </Button>
+                <div className="social mt-5" style={{ marginTop: "20px" }}>
+                  <Button
+                    className="bg-primary me-3"
+                    type="primary"
+                    shape="circle"
+                    icon={<FacebookOutlined />}
+                    size={"large"}
+                  ></Button>
+                  <Button
+                    className="bg-primary me-3"
+                    type="primary"
+                    shape="circle"
+                    icon={<TwitterOutlined />}
+                    size={"large"}
+                  ></Button>
+                  <Button
+                    className="bg-primary"
+                    type="primary"
+                    shape="circle"
+                    icon={<GoogleOutlined />}
+                    size={"large"}
+                  ></Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

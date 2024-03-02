@@ -8,8 +8,17 @@ export default function Layout() {
   return (
     <div>
       <Modaljira />
-      <ControllBar />
-      <Outlet />
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <ControllBar />
+        <Outlet />
+      </div>
     </div>
   );
 }

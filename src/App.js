@@ -20,28 +20,27 @@ function App() {
     <>
       <ModalDetail />
       <LoadingComponent />
-      <>
-        <Routes>
-          <Route path="/login" element={<Loginpage />}></Route>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<ProjectManagement />}></Route>
-            <Route path="/createproject" element={<CreateProject />}></Route>
-            <Route path="/home" element={<Homepage />}></Route>
-            <Route
-              path="/projectmanagement"
-              element={<ProjectManagement />}
-            ></Route>
 
-            <Route
-              path="/projectdetail/:projectId"
-              element={<ProjectDetail />}
-            ></Route>
-          </Route>
+      <Routes>
+        <Route path="/login" element={<Loginpage />}></Route>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<ProjectManagement />}></Route>
+          <Route path="/createproject" element={<CreateProject />}></Route>
+          <Route path="/home" element={<Homepage />}></Route>
+          <Route
+            path="/projectmanagement"
+            element={<ProjectManagement />}
+          ></Route>
 
-          <Route path="/signup" element={<Signuppage />}></Route>
-          <Route path="/modalHOC" element={<Modaljira />}></Route>
-        </Routes>
-      </>
+          <Route
+            path="/projectdetail/:projectId"
+            element={<ProjectDetail />}
+          ></Route>
+        </Route>
+
+        <Route path="/signup" element={<Signuppage />}></Route>
+        <Route path="/modalHOC" element={<Modaljira />}></Route>
+      </Routes>
     </>
   );
 }

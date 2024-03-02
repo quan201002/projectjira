@@ -39,13 +39,11 @@
 .container1 {
   display: flex;
   justify-content: space-between;
-  
+  flex-grow: 1;
+  width: 100%;
+  background: #00152936,;
 }
 
 .sider-container {
   width: 30%; /* Điều chỉnh kích thước của div 1 */
-}
-
-.content-container {
-  width: 60%; /* Điều chỉnh kích thước của div 2 */
 }
