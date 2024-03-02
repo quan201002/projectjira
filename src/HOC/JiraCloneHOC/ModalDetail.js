@@ -21,10 +21,7 @@ export default function ModalDetail() {
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-  console.log("arrPriority", arrPriority);
-  console.log("task modal", taskModal);
-  console.log("arr task type", arrTaskType);
-  console.log("project detail", projectDetail);
+
   const [visibleEditor, setVisibleEditor] = useState(false);
   const [historyContent, setHistoryContet] = useState(taskModal.description);
   const [content, setContent] = useState("");
@@ -207,8 +204,9 @@ export default function ModalDetail() {
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
+      // style={{marginLeft:"24%",marginTop:"10px",height:"100%"}}
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog custom-modal " role="document">
         <div class="modal-content">
           <div className="modal-header">
             <div classame="task-title">
@@ -222,7 +220,7 @@ export default function ModalDetail() {
               </select>
               <span>{taskModal.taskName}</span>
             </div>
-            <div style={{ display: "flex" }} className="task-click">
+            <div className="task-click">
               <div>
                 <i className="fab fa-telegram-plane" />
                 <span style={{ paddingRight: 20 }}> Give feedback</span>
@@ -342,7 +340,7 @@ export default function ModalDetail() {
                     <div className="row">
                       {taskModal.assigness.map((user, index) => {
                         return (
-                          <div className="col-6 mt-2 mb-2">
+                          <div className=" mt-2 mb-2">
                             <div className="item" key={index}>
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar}></img>

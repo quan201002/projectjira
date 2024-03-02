@@ -46,7 +46,7 @@ const Modaljira = () => {
               }}
               type="primary"
             >
-              Submit12
+              Submit
             </Button>
           </Space>
         }
