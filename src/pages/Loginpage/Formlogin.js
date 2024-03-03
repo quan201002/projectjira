@@ -14,6 +14,7 @@ import { connect, useDispatch } from "react-redux";
 import { signinCyberbugAction } from "../../redux/actions/actions";
 import { UseDispatch } from "react-redux";
 import { USER_SIGIN_API } from "../../redux/constant/CyberBugsConstant";
+import { Link } from "react-router-dom";
 
 const Formlogin = (props) => {
   const dispatch = useDispatch();
@@ -78,10 +79,11 @@ const Formlogin = (props) => {
                   placeholder="Email"
                   prefix={<UserOutlined />}
                   style={{ marginBottom: "20px" }}
+                  className={errors.email && touched.email ? "error" : ""}
                 />
-                {errors.email && touched.email ? (
-                  <div>{errors.email}</div>
-                ) : null}
+                {errors.email && touched.email && (
+                  <div className="error">{errors.email}</div>
+                )}
                 <Input
                   type="password"
                   onChange={handleChange}
@@ -106,7 +108,19 @@ const Formlogin = (props) => {
                   }}
                 >
                   Login
-                </Button>
+                </Button >
+                <Link to="/signup">
+                  <Button
+                  size="large"
+                  className="btn btn-primary"
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#A3CBF1",
+                    borderColor: "#A3CBF1",
+                  }}>
+                    Sign Up
+                    </Button>
+                </Link>
                 <div className="social mt-5" style={{ marginTop: "20px" }}>
                   <Button
                     className="bg-primary me-3"
@@ -122,13 +136,7 @@ const Formlogin = (props) => {
                     icon={<TwitterOutlined />}
                     size={"large"}
                   ></Button>
-                  <Button
-                    className="bg-primary"
-                    type="primary"
-                    shape="circle"
-                    icon={<GoogleOutlined />}
-                    size={"large"}
-                  ></Button>
+                  
                 </div>
               </div>
             </div>
@@ -142,7 +150,7 @@ const Formlogin = (props) => {
 const LoginCyberBugs = withFormik({
   mapPropsToValues: () => ({ email: "", passWord: "" }),
   validationSchema: Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().email("Invalid email").required("*Email is required"),
     passWord: Yup.string()
       .min(6, "Password must have at least 6 characters")
       .max(32, "Password must have at most 32 characters"),

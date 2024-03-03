@@ -1,7 +1,8 @@
+// Formsignup.js
 import React from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Button, Form, Input } from "antd";
 import { https } from "../../service/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const Formsignup = () => {
@@ -21,88 +22,101 @@ const Formsignup = () => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <Form
-      name="basic"
-      layout="vertical"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
+    <div
       style={{
-        maxWidth: 600,
+        backgroundImage: 'url("/background.jpg")',
+        backgroundSize: "cover",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
     >
-      <Form.Item
-        label="email"
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: "Please input your username!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="password"
-        name="passWord"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        label="name"
-        name="name"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="phoneNumber"
-        name="phoneNumber"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
+      <Form
+        name="basic"
+        layout="vertical"
+        labelCol={{
+          span: 8,
+        }}
         wrapperCol={{
-          offset: 0,
           span: 16,
         }}
+        style={{
+          background: "white",
+          borderRadius: "25px",
+          padding: "30px",
+          width: "50%",
+          boxShadow: '2px 3px 34px -8px rgba(0,0,0,0.78)',
+        }}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Button className="bg-orange-400" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div className="title">Sign Up</div>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="passWord"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Phone Number"
+            name="phoneNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input your phone number!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Sign Up
+            </Button>
+          </Form.Item>
+          <Link to="/login"> {/* Link to Login page */}
+            <Button type="link">Login</Button>
+          </Link>
+        </div>
+      </Form>
+    </div>
   );
 };
+
 export default Formsignup;
