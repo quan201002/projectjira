@@ -3,6 +3,7 @@ import * as Cyberbugs from "./Cyberbugs/UserCyberBugsSaga";
 import { Axios } from "axios";
 import { GET_TASK_API } from "../constant/CyberBugsConstant";
 import { https } from "../../service/api";
+import { GET_TASK_SAGA } from "../constant/TaskConstants";
 
 function* getTaskApi(action) {
   console.log("actionSaga", action);
@@ -21,6 +22,6 @@ function* getTaskApi(action) {
 }
 
 export function* theoDoiActionGetTaskApi() {
-  yield takeLatest("getTaskApiAction", getTaskApi);
+  yield takeLatest(GET_TASK_SAGA, getTaskApi);
 }
 // file nay quan li nghiep vu cua action todolist

@@ -54,7 +54,7 @@ export default function ModalDetail() {
   };
   const renderDescription = () => {
     const handelEditorChange = (e) => {};
-    const jsxDescription = ReactHTMLparser(taskModal.description);
+    const jsxDescription = ReactHTMLparser(taskModal?.description);
     return (
       <div>
         {visibleEditor ? (

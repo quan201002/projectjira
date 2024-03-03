@@ -16,7 +16,6 @@ function ProjectDetail(props) {
   }, []);
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-  console.log("projectDetail: ", projectDetail);
 
   const { projectId } = useParams();
   console.log("project detaill", projectDetail);
