@@ -12,6 +12,7 @@ const stateDefault = {
 };
 
 const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
+  console.log("action get usereqweqweqweqweqwe", action.lstUserSearch);
   switch (action.type) {
     case "GET_USER_SEARCH":
       state.userSearch = action.lstUserSearch;

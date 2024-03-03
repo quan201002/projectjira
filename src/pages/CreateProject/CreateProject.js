@@ -54,7 +54,7 @@ function CreateProject(props) {
             <p>Name</p>
             <Input
               onChange={handleChange}
-              className="form-control"  
+              className="form-control"
               name="projectName"
               value={values.projectName}
             ></Input>
@@ -89,9 +89,9 @@ function CreateProject(props) {
           </div>
           <div className="form-group">
             <select
-              name="catergoryId"
+              name="categoryId"
               className="form-control"
-              value={values.catergoryId}
+              value={values.categoryId}
               onChange={handleChange}
             >
               {arrProjectCaterory.map((item, index) => {
@@ -123,7 +123,7 @@ const createProjectForm = withFormik({
     return {
       projectName: "",
       description: "",
-      catergoryId: props.arrProjectCaterory[0]?.id,
+      categoryId: props.arrProjectCaterory[0]?.id,
     };
   },
   validationSchema: Yup.object().shape({
@@ -135,6 +135,7 @@ const createProjectForm = withFormik({
 
   // Custom sync validation
   handleSubmit: (values, { props, setSubmitting }) => {
+    console.log("values", values);
     props.dispatch({ type: "CREATE_PROJECT_SAGA", newProject: values });
   },
   displayName: "create project",
