@@ -10,7 +10,7 @@ import {
   Popover,
   AutoComplete,
 } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
 import { useSelector, useDispatch } from "react-redux";
 import FormEditProject from "../../component/Forms/FormEditProject";
@@ -24,16 +24,19 @@ const ProjectManagement = () => {
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
+
   const content = (
     <div>
       <p>Content</p>
       <p>Content</p>
     </div>
   );
+
   const confirm = (e) => {
     console.log(e);
     message.success("Click on Yes");
   };
+
   const projectList = useSelector(
     (state) => state.ProjectCyberBugsReducer.projectList
   );
@@ -42,13 +45,13 @@ const ProjectManagement = () => {
 
   let dispatch = useDispatch();
 
-  //dung useDispatch de goi action
   useEffect(() => {
     dispatch({ type: "GET_LIST_PROJECT_SAGA" });
   }, []);
 
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+
   const handleChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
@@ -57,16 +60,19 @@ const ProjectManagement = () => {
   const clearFilters = () => {
     setFilteredInfo({});
   };
+
   const clearAll = () => {
     setFilteredInfo({});
     setSortedInfo({});
   };
+
   const setAgeSort = () => {
     setSortedInfo({
       order: "descend",
       columnKey: "age",
     });
   };
+
   const columns = [
     {
       title: "id",
@@ -92,7 +98,6 @@ const ProjectManagement = () => {
         return 1;
       },
     },
-
     {
       title: "category",
       dataIndex: "categoryName",
@@ -202,26 +207,14 @@ const ProjectManagement = () => {
                       };
                     })}
                     style={{ width: "100%" }}
-                    onSearch={(value) => {
-                      if (searchRef.current) {
-                        clearTimeout(searchRef.current);
-                      }
-
-                      searchRef.current = setTimeout(() => {
-                        dispatch({
-                          type: "GET_USER_API",
-                          keyWord: value,
-                        });
-                      }, 500);
-                    }}
                     value={value}
                     onChange={(text) => {
                       setValue(text);
                     }}
                     onSelect={(valueSelected, option) => {
-                      //set gia tri cua hop thoai = option.label
+                      // Set the label of the selected option to the input value
                       setValue(option.label);
-                      //goi api tra ve backend
+                      // Dispatch action to add user to the project
                       dispatch({
                         type: "ADD_USER_PROJECT_API",
                         userProject: {
@@ -230,11 +223,18 @@ const ProjectManagement = () => {
                         },
                       });
                     }}
+                    filterOption={(inputValue, option) =>
+                      option.label
+                        .toUpperCase()
+                        .indexOf(inputValue.toUpperCase()) !== -1
+                    }
+                    placeholder="Search users"
                   />
                 );
               }}
+              trigger="click"
             >
-              <Button>+</Button>
+              <Button type="primary" icon={<PlusOutlined />} />
             </Popover>
           </div>
         );
@@ -259,13 +259,13 @@ const ProjectManagement = () => {
               okText="Yes"
               cancelText="No"
             >
-              <button className="btn btn-primary">
-                <DeleteOutlined />
-              </button>
+              <Button type="primary" danger icon={<DeleteOutlined />} />
             </Popconfirm>
 
-            <button
-              className="ms-3 btn btn-danger"
+            <Button
+              type="primary"
+              className="ms-3"
+              icon={<EditOutlined />}
               onClick={() => {
                 const action = {
                   type: "OPEN_FORM_EDIT_PROJECT",
@@ -283,14 +283,13 @@ const ProjectManagement = () => {
                 };
                 dispatch(actionEditProject);
               }}
-            >
-              <EditOutlined />
-            </button>
+            />
           </>
         );
       },
     },
   ];
+
   return (
     <div className="container1">
       <div
@@ -329,4 +328,5 @@ const ProjectManagement = () => {
     </div>
   );
 };
+
 export default ProjectManagement;
