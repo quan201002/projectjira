@@ -24,6 +24,7 @@ const ProjectManagement = () => {
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
+  console.log("userSearch", userSearch);
   const content = (
     <div>
       <p>Content</p>
@@ -320,7 +321,7 @@ const ProjectManagement = () => {
         <Table
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={data.reverse()}
           onChange={handleChange}
           rowKey={"id"}
           pagination={{ pageSize: 5 }}

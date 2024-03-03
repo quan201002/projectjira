@@ -24,8 +24,10 @@ function ProjectDetail(props) {
     return projectDetail?.members?.map((user, index) => {
       console.log("user: ", user);
       return (
-        <div className="avatar" key={index}>
-          <img src={user.avatar} alt={user.avatar}></img>
+        <div className="d-flex">
+          <div className="avatar" key={index}>
+            <img src={user.avatar} alt={user.avatar}></img>
+          </div>
         </div>
       );
     });
@@ -62,7 +64,7 @@ function ProjectDetail(props) {
             <Droppable droppableId={taskListDetail.statusId} key={index}>
               {(provided) => {
                 return (
-                  <div className="p-3 tasklist-bar">
+                  <div className="col-3 tasklist-bar">
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
@@ -70,7 +72,7 @@ function ProjectDetail(props) {
                       className="card pb-2"
                       style={{ width: "17rem" }}
                     >
-                      <div className=" card-header bg-gray-100 p-2 rounded flex flex-col  ">
+                      <div className=" card-header bg-gray-100  p-2 rounded flex flex-col ">
                         {taskListDetail.statusName}
                       </div>
                       <ul
@@ -116,22 +118,24 @@ function ProjectDetail(props) {
                                           className="avatar-group"
                                           style={{ display: "flex" }}
                                         >
-                                          {task.assigness.map((mem, index) => {
-                                            return (
-                                              <div
-                                                className="avatar"
-                                                key={index}
-                                              >
-                                                <img
-                                                  src={mem.avatar}
-                                                  alt={mem.avatar}
-                                                  style={{
-                                                    borderRadius: "50%",
-                                                  }}
-                                                ></img>
-                                              </div>
-                                            );
-                                          })}
+                                          {task?.assigness?.map(
+                                            (mem, index) => {
+                                              return (
+                                                <div
+                                                  className="avatar"
+                                                  key={index}
+                                                >
+                                                  <img
+                                                    src={mem.avatar}
+                                                    alt={mem.avatar}
+                                                    style={{
+                                                      borderRadius: "50%",
+                                                    }}
+                                                  ></img>
+                                                </div>
+                                              );
+                                            }
+                                          )}
                                         </div>
                                       </div>
                                     </div>
@@ -154,7 +158,10 @@ function ProjectDetail(props) {
     );
   };
   return projectDetail ? (
-    <div className="content-container">
+    <div
+      style={{ padding: "0px", marginLeft: "110px" }}
+      className="content-container"
+    >
       <div className="nav-crumb">
         <Breadcrumb
           className="bg-gray-100 p-2 rounded flex flex-col justify-between"
@@ -166,17 +173,23 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div className="d-md-flex justify-content-between">
-        <div className="mr-md-5">
+      <div style={{ display: "flex", width: "100%" }}>
+        <div style={{ marginRight: "150px" }}>
           <h1>Board</h1>
         </div>
-        <div className="d-flex flex-column mt-md-0 mt-3">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "23%",
+          }}
+        >
           <h3>Members</h3>
           {renderAvatar()}
         </div>
       </div>
-
-      <Row>{renderCardTaskList()}</Row>
+      <div className="row">{renderCardTaskList()}</div>
     </div>
   ) : (
     <>
