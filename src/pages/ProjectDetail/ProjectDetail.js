@@ -81,6 +81,7 @@ function ProjectDetail(props) {
                         className="list-group list-group-flush"
                       >
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
+                          console.log("task", task);
                           return (
                             <Draggable
                               key={task.taskId.toString()}
@@ -93,6 +94,13 @@ function ProjectDetail(props) {
                               {(provided) => {
                                 return (
                                   <li
+                                    onClick={() => {
+                                      console.log("click");
+                                      dispatch({
+                                        type: "CHANGE_TASK_BY_ON_CLICK_TASK",
+                                        task: task,
+                                      });
+                                    }}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}

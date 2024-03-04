@@ -43,9 +43,11 @@ export const TaskReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TASK:
       return { ...state, taskModal: action.taskModal };
+      break;
     case CHANGE_TASK_MODEL:
       const { name, value } = action;
       return { ...state, taskModal: { ...state.taskModal, [name]: value } };
+      break;
     case CHANGE_ASSIGNESS:
       state.taskModal.assigness = [
         ...state.taskModal.assigness,
@@ -53,11 +55,16 @@ export const TaskReducer = (state = initialState, action) => {
       ];
       console.log("state", state);
       return { ...state };
+      break;
     case REMOVE_USER_ASSIGN:
       state.taskModal.assigness = [
         ...state.taskModal.assigness.filter((us) => us.id !== action.userId),
       ];
+      break;
+    case "CHANGE_TASK_BY_ON_CLICK_TASK":
+      state.taskModal = action.task;
       return { ...state };
+      break;
     default:
       return state;
   }

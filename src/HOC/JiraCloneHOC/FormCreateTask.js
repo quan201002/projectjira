@@ -37,7 +37,7 @@ const FormCreateTask = (props) => {
   let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
   let { arrUser } = useSelector((state) => state.UserLoginCyberBugsReducer);
 
-  const userOptions = arrUser.map((item, index) => {
+  const userOptions = arrUser?.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
   console.log("projectList", projectList);
