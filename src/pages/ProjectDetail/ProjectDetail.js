@@ -4,7 +4,10 @@ import { Breadcrumb } from "antd";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { UPDATE_TASK_STATUS_SAGA } from "../../redux/constant/TaskConstants";
+import {
+  GET_TASK_SAGA,
+  UPDATE_TASK_STATUS_SAGA,
+} from "../../redux/constant/TaskConstants";
 
 function ProjectDetail(props) {
   let dispatch = useDispatch();
@@ -94,13 +97,13 @@ function ProjectDetail(props) {
                               {(provided) => {
                                 return (
                                   <li
-                                    // onClick={() => {
-                                    //   console.log("click");
-                                    //   dispatch({
-                                    //     type: "CHANGE_TASK_BY_ON_CLICK_TASK",
-                                    //     task: task,
-                                    //   });
-                                    // }}
+                                    onClick={() => {
+                                      console.log("click");
+                                      dispatch({
+                                        type: GET_TASK_SAGA,
+                                        taskId: task.taskId,
+                                      });
+                                    }}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
