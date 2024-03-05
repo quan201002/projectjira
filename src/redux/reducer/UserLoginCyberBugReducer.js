@@ -1,5 +1,8 @@
 import { USER_LOGIN } from "../constant/SettingSystem";
-import { GET_USER_BY_PROJECT_ID } from "../constant/UserConstants";
+import {
+  GET_ALL_USER,
+  GET_USER_BY_PROJECT_ID,
+} from "../constant/UserConstants";
 
 let usLogin = {};
 if (localStorage.getItem(USER_LOGIN)) {
@@ -9,6 +12,7 @@ const stateDefault = {
   userLogin: usLogin,
   userSearch: [],
   arrUser: [],
+  listUsers: [],
 };
 
 const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
@@ -20,6 +24,8 @@ const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
       return { ...state };
     case GET_USER_BY_PROJECT_ID:
       return { ...state, arrUser: action.arrUser };
+    case GET_ALL_USER:
+      return { ...state, listUsers: action.userList };
     default:
       return { ...state };
   }

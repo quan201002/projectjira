@@ -19,6 +19,8 @@ import { STATUS_CODE, TOKEN, USER_LOGIN } from "../../constant/SettingSystem";
 import { message } from "antd";
 import { https } from "../../../service/api";
 import {
+  GET_ALL_USER,
+  GET_ALL_USER_SAGA,
   GET_USER_BY_PROJECT_ID,
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../../constant/UserConstants";
@@ -157,4 +159,23 @@ function* getUserByProjectIdSaga(action) {
 }
 export function* theoDoigetUserByProjectIdSaga() {
   yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectIdSaga);
+}
+
+function* getAllUsersSaga(action) {
+  console.log("action get user saga", action);
+  try {
+    const { data, status } = yield call(() => cyberbugsService.getAllUsers());
+    console.log("data", data);
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_ALL_USER,
+        userList: data.content,
+      });
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+export function* theoDoigetAllUsers() {
+  yield takeLatest(GET_ALL_USER_SAGA, getAllUsersSaga);
 }

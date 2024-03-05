@@ -376,7 +376,7 @@ export default function ModalDetail() {
 
                     <div className="col-6 mt-2 mb-2">
                       <i className="fa fa-plus" style={{ marginRight: 5 }}></i>
-                      {/* <Select
+                      <Select
                         // style={{ width: "100%" }}
                         name="lstUser"
                         value="+ Add more"
@@ -433,52 +433,7 @@ export default function ModalDetail() {
                               <option value={item.userId}>{item.name}</option>
                             );
                           })}
-                      </Select> */}
-                      <select
-                        style={{ width: "100%" }}
-                        name="lstUser"
-                        value="+ Add more"
-                        className="form-control"
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === "0") {
-                            return;
-                          }
-
-                          let userSelected = projectDetail.members.find(
-                            (mem) => mem.userId == value
-                          );
-                          userSelected = {
-                            ...userSelected,
-                            id: userSelected.userId,
-                          };
-                          dispatch({
-                            type: HANDLE_CHANGE_POST_API_SAGA,
-                            actionType: CHANGE_ASSIGNESS,
-                            userSelected,
-                          });
-                        }}
-                        P
-                      >
-                        <option value=" + Add more" disabled>
-                          + Add more
-                        </option>
-                        {projectDetail.members
-                          ?.filter((mem) => {
-                            let index = taskModal.assigness?.findIndex(
-                              (us) => us.id === mem.userId
-                            );
-                            if (index !== -1) {
-                              return false;
-                            }
-                            return true;
-                          })
-                          .map((item, index) => (
-                            <option key={index} value={item.userId}>
-                              {item.name}
-                            </option>
-                          ))}
-                      </select>
+                      </Select>
                     </div>
                   </div>
                   <div className="priority" style={{ marginBottom: 20 }}>

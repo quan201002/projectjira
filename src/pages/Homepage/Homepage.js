@@ -1,7 +1,7 @@
 import React from "react";
 import "./Homepage.css";
 import { useSelector } from "react-redux";
-import { Layout, theme } from "antd";
+import { AutoComplete, Layout, theme } from "antd";
 import UserList from "./UserList";
 import { Input, Space } from "antd";
 const { Search } = Input;
@@ -13,8 +13,10 @@ export default function Homepage() {
   const userLogin = useSelector(
     (state) => state.UserLoginCyberBugsReducer.userLogin
   );
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
-  console.log("user", userLogin);
+  const onSearch = (value, _e, info) => {
+    console.log("value", value);
+  };
+
   return (
     <div className="home-container">
       <Layout>
@@ -51,12 +53,13 @@ export default function Homepage() {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Search
+            {/* <Search
               placeholder="search user"
               onSearch={onSearch}
               enterButton
               className="mb-5"
-            />
+            /> */}
+
             <UserList />
           </div>
         </Content>

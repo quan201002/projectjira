@@ -15,6 +15,7 @@ export function* rootSaga() {
     // ToDoListSaga.theoDoiActionGetTaskApi(),
     //nghiep vu cyber bug
     CyberBugs.theoDoiSignin(),
+    CyberBugs.theoDoigetAllUsers(),
     CyberBugs.theoDoiGetUser(),
     CyberBugs.theoDoiAddUser(),
     CyberBugs.theoDoiRemoveUser(),

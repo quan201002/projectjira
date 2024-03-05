@@ -19,6 +19,9 @@ import {
 } from "../../constant/TaskConstants";
 
 function* createTaskSaga(action) {
+  yield put({
+    type: DISPLAY_LOADING,
+  });
   try {
     const { data, status } = yield call(() => {
       return https.post("/api/Project/createTask", action.taskObject);
@@ -33,6 +36,9 @@ function* createTaskSaga(action) {
   } catch (err) {
     console.log(err.response.data);
   }
+  yield put({
+    type: HIDE_LOADING,
+  });
 }
 export function* theoDoiCreateTaskSaga() {
   yield takeLatest("CREATE_TASK_SAGA", createTaskSaga);
