@@ -374,7 +374,7 @@ export default function ModalDetail() {
                       })}
                     </div>
 
-                    <div className="col-6 mt-2 mb-2">
+                    <div className="col-6 mt-2 mb-2 w-100">
                       <i className="fa fa-plus" style={{ marginRight: 5 }}></i>
                       <Select
                         // style={{ width: "100%" }}

@@ -50,20 +50,20 @@ function CreateProject(props) {
           className="content-container"
           onChange={handleChange}
         >
-          <div className="form-group">
+          <div className="form-group w-100">
             <p>Name</p>
             <Input
               onChange={handleChange}
-              className="form-control"
+              className="form-control "
               name="projectName"
               value={values.projectName}
             ></Input>
             <div style={{ color: "red" }}>{errors.projectName}</div>
           </div>
-          <div className="form-group">
+          <div className="form-group w-100">
             <p>Description</p>
             <Editor
-              style={{ heigth: "300px" }}
+              style={{ heigth: "300px", width: "100%" }}
               value={values.description}
               name="description"
               apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
@@ -87,7 +87,7 @@ function CreateProject(props) {
               onEditorChange={handelEditorChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group  w-100">
             <select
               name="categoryId"
               className="form-control"

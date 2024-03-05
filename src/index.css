@@ -1,4 +1,4 @@
-/* .content-container {
+  .content-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,11 +44,8 @@
   z-index: 1300;
   display: none !important;
 }
-@media (max-width: 768px) {
-  /* Add responsive styles here */
- 
-
-/* .nav-crumb {
+  
+ .nav-crumb {
   margin-bottom: 106px;
 }
 
@@ -104,18 +101,18 @@ p {
   display: flex;
 }
 
-.ant-select-selector {
+/* /* .ant-select-selector {
   display: none !important;
-}
+} */
 
-.tox.tox-tinymce {
+  .tox.tox-tinymce {
   height: 300px !important;
 }
 
 .form-group {
   position: relative !important;
   align-self: stretch !important;
-}
+}   
 
 .form-wrapper {
   flex-grow: 1;
@@ -159,10 +156,8 @@ p {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
   z-index: 1300;
   display: none !important;
-}
-@media (max-width: 768px) {
-  /* Add responsive styles here */
-/* }
+} 
+ 
 .content-container {
   padding: 20px;
 }
@@ -220,10 +215,9 @@ p {
 }
 .tasklist-bar{
   display: flex;
- 
 }
 /* styles.css */
-/* .container {
+ .container {
   margin-top: 50px;
 }
 
@@ -240,12 +234,12 @@ h3 {
   color: #fff;
   border: none;
 }
- */
+ 
 
 
 /* Add these styles to your existing CSS file or create a new one */
 
-/* .modal-content {
+.modal-content {
   border-radius: 10px;
 }
 
@@ -366,29 +360,5 @@ h3 {
   .container1{
     display: none;
   }
-} */  
-.content-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-:where(.css-dev-only-do-not-override-1b0bdye).ant-layout.ant-layout-has-sider >.ant-layout-content {
-  width: 0;
-  padding: 0 20px !important;
-}
-
+}  
  
-.sider-container{
-  display: flex;
-  align-items:flex-start;
-   
-}
- 
-.tox-notifications-container{
-  display: none!important ;
-}
- 
-.tox-tinymce-aux {
-  display: none!important ;
-}
