@@ -342,8 +342,8 @@ export default function ModalDetail() {
                     <div className="row">
                       {taskModal?.assigness?.map((user, index) => {
                         return (
-                          <div className="mt-2 mb-2">
-                            <div className="item" key={index}>
+                          <div className="mt-2 mb-2" key={index}>
+                            <div className="item">
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar}></img>
                               </div>

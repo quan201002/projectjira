@@ -94,13 +94,13 @@ function ProjectDetail(props) {
                               {(provided) => {
                                 return (
                                   <li
-                                    onClick={() => {
-                                      console.log("click");
-                                      dispatch({
-                                        type: "CHANGE_TASK_BY_ON_CLICK_TASK",
-                                        task: task,
-                                      });
-                                    }}
+                                    // onClick={() => {
+                                    //   console.log("click");
+                                    //   dispatch({
+                                    //     type: "CHANGE_TASK_BY_ON_CLICK_TASK",
+                                    //     task: task,
+                                    //   });
+                                    // }}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}

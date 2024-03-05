@@ -60,12 +60,13 @@ export const TaskReducer = (state = initialState, action) => {
       state.taskModal.assigness = [
         ...state.taskModal.assigness.filter((us) => us.id !== action.userId),
       ];
+      return { ...state };
       break;
     case "CHANGE_TASK_BY_ON_CLICK_TASK":
       state.taskModal = action.task;
       return { ...state };
       break;
     default:
-      return state;
+      return { ...state };
   }
 };
