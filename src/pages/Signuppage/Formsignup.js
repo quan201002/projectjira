@@ -46,7 +46,8 @@ const Formsignup = () => {
           borderRadius: "25px",
           padding: "30px",
           width: "50%",
-          boxShadow: '2px 3px 34px -8px rgba(0,0,0,0.78)',
+          boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
+          alignItems: "center",
         }}
         initialValues={{
           remember: true,
@@ -110,7 +111,9 @@ const Formsignup = () => {
               Sign Up
             </Button>
           </Form.Item>
-          <Link to="/login"> {/* Link to Login page */}
+          <Link to="/login">
+            {" "}
+            {/* Link to Login page */}
             <Button type="link">Login</Button>
           </Link>
         </div>

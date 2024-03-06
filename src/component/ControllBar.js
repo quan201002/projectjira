@@ -97,6 +97,18 @@ const ControllBar = () => {
                   User management
                 </NavLink>
               </p>
+              <p>
+                <SettingFilled />
+                <NavLink className="menu-item" to="/login">
+                  Login
+                </NavLink>
+              </p>
+              <p>
+                <SettingFilled />
+                <NavLink className="menu-item" to="/signup">
+                  Signup
+                </NavLink>
+              </p>
               <Divider type="horizontal" />
             </Sider>
           </div>

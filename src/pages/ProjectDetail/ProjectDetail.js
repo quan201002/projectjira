@@ -107,17 +107,19 @@ function ProjectDetail(props) {
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    className="list-group-item "
+                                    className="list-group-item draggable-task "
                                     data-toggle="modal"
                                     data-target="#exampleModal"
                                   >
-                                    <p>{task.taskName}</p>
+                                    <h4 className="text-info">
+                                      {task.taskName}
+                                    </h4>
                                     <div
                                       className="block"
                                       style={{ display: "flex" }}
                                     >
                                       <div className="block-left">
-                                        <i className="fa fa-bookmark"></i>
+                                        <i className="fa fa-bookmark mr-1"></i>
                                         <i className="fa fa-arrow-up"></i>
                                         <p className="text-danger">
                                           {task.priorityTask.priority}
@@ -132,10 +134,11 @@ function ProjectDetail(props) {
                                             (mem, index) => {
                                               return (
                                                 <div
-                                                  className="avatar"
+                                                  className="avatar "
                                                   key={index}
                                                 >
                                                   <img
+                                                    className="assigness-avatar"
                                                     src={mem.avatar}
                                                     alt={mem.avatar}
                                                     style={{
@@ -174,7 +177,7 @@ function ProjectDetail(props) {
     >
       <div className="nav-crumb">
         <Breadcrumb
-          className="bg-gray-100 p-2 rounded flex flex-col justify-between"
+          className="breadcrumb-projectdetail bg-gray-100 p-2 rounded flex"
           items={[
             { title: "Project" },
             { title: "Cyber Learn" },
@@ -183,7 +186,7 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div style={{ display: "flex", width: "100%" }}>
+      <div style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}>
         <div style={{ marginRight: "150px" }}>
           <h1>Board</h1>
         </div>
@@ -195,7 +198,7 @@ function ProjectDetail(props) {
             width: "23%",
           }}
         >
-          <h3>Members</h3>
+          <h3 className="mr-4">Members</h3>
           {renderAvatar()}
         </div>
       </div>

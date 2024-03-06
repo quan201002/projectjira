@@ -13,7 +13,7 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
 import { Editor } from "@tinymce/tinymce-react";
 import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
-import { Select } from "antd";
+import { Select, Tag } from "antd";
 export default function ModalDetail() {
   let { taskModal } = useSelector((state) => state.TaskReducer);
   let { arrStatus } = useSelector((state) => state.StatusIdReducer);
@@ -124,12 +124,13 @@ export default function ModalDetail() {
           </div>
         ) : (
           <div
+            className="btn btn-primary mb-3"
             onClick={() => {
               setHistoryContet(taskModal.description);
               setVisibleEditor(!visibleEditor);
             }}
           >
-            jsxDescription
+            Add description
           </div>
         )}
       </div>
@@ -213,13 +214,14 @@ export default function ModalDetail() {
             <div classame="task-title">
               <i className="fa fa-bookmark" />
               <select
+                className="task-type-selector m-2"
                 name="typeId"
                 value={taskModal.typeId}
                 onChange={handleChange}
               >
                 {renderTaskType()}
               </select>
-              <span>{taskModal.taskName}</span>
+              <span className="">{taskModal.taskName}</span>
             </div>
             <div className="task-click">
               <div>
@@ -248,13 +250,12 @@ export default function ModalDetail() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-8">
-                  <p className="issue">This is an issue of type: Task</p>
-                  <div className="description">
-                    <p>Description</p>
-                    {renderDescription()}
-                  </div>
+                  <p className="issue text-success">
+                    This is an issue of type: Task
+                  </p>
+                  <div className="description">{renderDescription()}</div>
                   <div className="comment">
-                    <h6>COMMENT</h6>
+                    <h6 className="text-success">COMMENT</h6>
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
                         <img></img>
@@ -310,7 +311,7 @@ export default function ModalDetail() {
                 </div>
                 <div className="col-4">
                   <div className="status">
-                    <h6>Status</h6>
+                    <h6 className="text-detail">Status</h6>
                     <select
                       onChange={(e) => {
                         const action = {
@@ -324,7 +325,7 @@ export default function ModalDetail() {
 
                         dispatch(action);
                       }}
-                      className="custom-select"
+                      className="custom-select mt-3 mb-3"
                       name="statusId"
                       value={taskModal.statusId}
                     >
@@ -338,35 +339,40 @@ export default function ModalDetail() {
                     </select>
                   </div>
                   <div className="assignees">
-                    <h6>Assignees</h6>
-                    <div className="row">
+                    <h6 className="text-detail">Assignees</h6>
+                    <div className="row w-100">
                       {taskModal?.assigness?.map((user, index) => {
                         return (
-                          <div className="mt-2 mb-2" key={index}>
+                          <div className="mt-2 mb-2 " key={index}>
                             <div className="item">
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar}></img>
                               </div>
-                              <p className="name mt-1 ml-1">
-                                {user.name}
-                                <span
-                                  onClick={() => {
-                                    dispatch({
-                                      type: HANDLE_CHANGE_POST_API_SAGA,
-                                      actionType: REMOVE_USER_ASSIGN,
-                                      userId: user.id,
-                                    });
-                                    // dispatch({
-                                    //   type: REMOVE_USER_ASSIGN,
-                                    //   userId: user.id,
-                                    // });
-                                  }}
-                                >
-                                  <i
-                                    className="fa fa-times"
-                                    style={{ marginLeft: 5, cursor: "pointer" }}
-                                  ></i>
-                                </span>
+                              <p className="assigness-name mt-1 ml-1">
+                                <Tag color="cyan">
+                                  {user.name}
+                                  <span
+                                    onClick={() => {
+                                      dispatch({
+                                        type: HANDLE_CHANGE_POST_API_SAGA,
+                                        actionType: REMOVE_USER_ASSIGN,
+                                        userId: user.id,
+                                      });
+                                      // dispatch({
+                                      //   type: REMOVE_USER_ASSIGN,
+                                      //   userId: user.id,
+                                      // });
+                                    }}
+                                  >
+                                    <i
+                                      className="fa fa-times"
+                                      style={{
+                                        marginLeft: 5,
+                                        cursor: "pointer",
+                                      }}
+                                    ></i>
+                                  </span>
+                                </Tag>
                               </p>
                             </div>
                           </div>
@@ -374,13 +380,12 @@ export default function ModalDetail() {
                       })}
                     </div>
 
-                    <div className="col-6 mt-2 mb-2 w-100">
-                      <i className="fa fa-plus" style={{ marginRight: 5 }}></i>
+                    <div className="col-6 mt-2 mb-2  p-0">
                       <Select
                         // style={{ width: "100%" }}
                         name="lstUser"
                         value="+ Add more"
-                        className="form-control"
+                        className="form-control assigness-selector"
                         option={projectDetail?.members
                           ?.filter((mem) => {
                             let index = taskModal?.assigness?.findIndex(
@@ -437,7 +442,7 @@ export default function ModalDetail() {
                     </div>
                   </div>
                   <div className="priority" style={{ marginBottom: 20 }}>
-                    <h6>PRIORITY</h6>
+                    <h6 className="text-detail">PRIORITY</h6>
                     <select
                       name="priorityId"
                       className="form-control"
@@ -456,7 +461,7 @@ export default function ModalDetail() {
                     </select>
                   </div>
                   <div className="estimate">
-                    <h6>ORIGINAL ESTIMATE (HOURS)</h6>
+                    <h6 className="text-detail">ORIGINAL ESTIMATE (HOURS)</h6>
                     <input
                       name="originalEstimate"
                       type="text"
@@ -468,12 +473,14 @@ export default function ModalDetail() {
                     ></input>
                   </div>
                   <div className="time-tracking">
-                    <h6>ITME TRACKING</h6>
+                    <h6 className="text-detail">ITME TRACKING</h6>
                     {renderTimeTracking()}
                   </div>
-                  <div style={{ color: "#929398" }}>Create at a month ago</div>
-                  <div style={{ color: "#929398" }}>
-                    Update at a few seconds ago
+                  <div className="d-flex justify-content-between">
+                    <div style={{ color: "#929398" }}>logged</div>
+                    <div className="text-right" style={{ color: "#929398" }}>
+                      remaining
+                    </div>
                   </div>
                 </div>
               </div>
