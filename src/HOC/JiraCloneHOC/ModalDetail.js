@@ -6,6 +6,7 @@ import { GET_ALL_PRIORITY_SAGA } from "../../redux/constant/PriorityConstants";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODEL,
+  DELETE_TASK_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
   REMOVE_USER_ASSIGN,
   UPDATE_TASK_STATUS_SAGA,
@@ -13,7 +14,8 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
 import { Editor } from "@tinymce/tinymce-react";
 import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
-import { Select, Tag } from "antd";
+import { Button, Popconfirm, Select, Tag } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 export default function ModalDetail() {
   let { taskModal } = useSelector((state) => state.TaskReducer);
   let { arrStatus } = useSelector((state) => state.StatusIdReducer);
@@ -221,7 +223,24 @@ export default function ModalDetail() {
               >
                 {renderTaskType()}
               </select>
-              <span className="">{taskModal.taskName}</span>
+              <span className="mr-2">{taskModal.taskName}</span>
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure to delete this task?"
+                onConfirm={() => {
+                  dispatch({
+                    type: DELETE_TASK_SAGA,
+                    taskId: taskModal.taskId,
+                    projectId: taskModal.projectId,
+                  });
+                }}
+                okText="Yes"
+                cancelText="No"
+              >
+                <button className="btn  btn-danger">
+                  <DeleteOutlined />
+                </button>
+              </Popconfirm>
             </div>
             <div className="task-click">
               <div>

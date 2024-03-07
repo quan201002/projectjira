@@ -10,6 +10,7 @@ import { https } from "../../../service/api";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODEL,
+  DELETE_TASK_SAGA,
   GET_TASK,
   GET_TASK_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
@@ -28,6 +29,10 @@ function* createTaskSaga(action) {
     });
     console.log("data", data);
     if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: "GET_PROJECT_DETAIL_SAGA",
+        projectId: action.projectId,
+      });
       notifiFunction("success", "crete task successfully");
     }
     yield put({
@@ -167,4 +172,31 @@ function* handelChangePostApi(action) {
 
 export function* theoDoiHandelChangePostApi() {
   yield takeLatest(HANDLE_CHANGE_POST_API_SAGA, handelChangePostApi);
+}
+
+function* deleteTaskSaga(action) {
+  const { taskId, projectId } = action;
+  console.log("action", action);
+  try {
+    const { status } = yield call(() => {
+      return TaskService.deleteTask(taskId);
+    });
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "Delete task successfully!");
+      yield put({
+        type: "GET_PROJECT_DETAIL_SAGA",
+        projectId: projectId,
+      });
+      const taskModalform = document.getElementById("exampleModal");
+      taskModalform.classList.remove("show");
+    }
+  } catch (err) {
+    console.log(err.response);
+    yield put({
+      type: HIDE_LOADING,
+    });
+  }
+}
+export function* theoDoiDeleteTaskSaga() {
+  yield takeLatest(DELETE_TASK_SAGA, deleteTaskSaga);
 }

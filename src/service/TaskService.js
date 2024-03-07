@@ -14,4 +14,9 @@ export const TaskService = {
   updateTaskSaga: (taskUpdate) => {
     return https.post(`/api/Project/updateTask`, taskUpdate);
   },
+  deleteTask: (taskId) => {
+    return https.delete(
+      `https://jiranew.cybersoft.edu.vn/api/Project/removeTask?taskId=${taskId}`
+    );
+  },
 };

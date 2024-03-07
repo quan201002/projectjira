@@ -24,6 +24,14 @@ const ControllBar = () => {
   return (
     <>
       <Layout style={{ height: "100%" }}>
+        {/* <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          Launch demo modal
+        </button> */}
         <div className="container1">
           <div className="sider-container">
             <Sider

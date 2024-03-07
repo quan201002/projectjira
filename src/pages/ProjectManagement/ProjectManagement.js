@@ -263,7 +263,7 @@ const ProjectManagement = () => {
             </button>
             <Popconfirm
               title="Delete the task"
-              description="Are you sure to delete this task?"
+              description="Are you sure to delete this project ?"
               onConfirm={() => {
                 dispatch({
                   type: "DELETE_PROJECT_SAGA",
@@ -290,7 +290,6 @@ const ProjectManagement = () => {
         >
           <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
         </Space>
-
         <Table
           style={{ width: "100%" }}
           columns={columns}

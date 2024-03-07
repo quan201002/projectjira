@@ -74,14 +74,15 @@ function FormEditProject(props) {
               name="categoryId"
             /> */}
             <select
-              name="catergoryId"
+              name="categoryId"
               className="form-control"
-              value={values.catergoryId}
+              value={values.categoryId}
               onChange={handleChange}
             >
               {arrProjectCaterory?.map((item, index) => {
+                console.log("item cate", item);
                 return (
-                  <option value={item.categoryId} key={index}>
+                  <option value={item.id} key={index}>
                     {item.projectCategoryName}
                   </option>
                 );
@@ -126,6 +127,7 @@ const editProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { projectEdit } = props;
+    console.log("projectEdit", projectEdit);
     return {
       id: projectEdit?.id,
       projectName: projectEdit.projectName,

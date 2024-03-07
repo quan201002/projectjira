@@ -89,6 +89,7 @@ const FormCreateTask = (props) => {
               idProject: value,
             });
           }}
+          P
         >
           {projectList.map((item, index) => {
             return (
@@ -317,6 +318,7 @@ const createTaskForm = withFormik({
     props.dispatch({
       type: "CREATE_TASK_SAGA",
       taskObject: values,
+      projectId: values.projectId,
     });
   },
 })(FormCreateTask);
