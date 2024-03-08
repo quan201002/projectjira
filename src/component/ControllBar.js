@@ -1,4 +1,5 @@
 import {
+  LogoutOutlined,
   MenuOutlined,
   PlusOutlined,
   SearchOutlined,
@@ -6,10 +7,11 @@ import {
 } from "@ant-design/icons";
 import React, { useState } from "react";
 
-import { Button, Divider, Layout, Menu, theme } from "antd";
+import { Button, Divider, Layout, Menu, Popconfirm, theme } from "antd";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
+import { TOKEN, USER_LOGIN } from "../redux/constant/SettingSystem";
 
 const { Content, Sider } = Layout;
 
@@ -117,6 +119,20 @@ const ControllBar = () => {
                   Signup
                 </NavLink>
               </p>
+              <Popconfirm
+                title="Delete the task"
+                description="Are you sure to logout ?"
+                onConfirm={() => {
+                  localStorage.removeItem(TOKEN);
+                  localStorage.removeItem(USER_LOGIN);
+                  window.location.replace("/login");
+                }}
+              >
+                <p className="menu-item ml-0" style={{ cursor: "pointer" }}>
+                  <LogoutOutlined className="mr-1" />
+                  Log out
+                </p>
+              </Popconfirm>
               <Divider type="horizontal" />
             </Sider>
           </div>

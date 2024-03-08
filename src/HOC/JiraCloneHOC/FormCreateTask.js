@@ -16,7 +16,7 @@ import {
 } from "../../redux/constant/StatusConstants";
 import { select } from "redux-saga/effects";
 import { GET_USER_BY_PROJECT_ID_SAGA } from "../../redux/constant/UserConstants";
-
+import { USER_LOGIN } from "../../redux/constant/SettingSystem";
 const FormCreateTask = (props) => {
   const {
     values,
@@ -28,7 +28,8 @@ const FormCreateTask = (props) => {
     setValues,
     setFieldValue,
   } = props;
-
+  let userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+  console.log("user login", userLogin);
   //do kết nối với withFormmik nên sinh ra những props này
   let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
   let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
@@ -89,15 +90,16 @@ const FormCreateTask = (props) => {
               idProject: value,
             });
           }}
-          P
         >
-          {projectList.map((item, index) => {
-            return (
-              <option key={index} value={item.id}>
-                {item.projectName}
-              </option>
-            );
-          })}
+          {projectList
+            .filter((item) => item.creator.name === userLogin.name)
+            .map((item, index) => {
+              return (
+                <option key={index} value={item.id}>
+                  {item.projectName}
+                </option>
+              );
+            })}
         </select>
       </div>
       <div className="form-group">

@@ -14,13 +14,13 @@ import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import ModalDetail from "./HOC/JiraCloneHOC/ModalDetail";
 import DemoDrag from "./pages/DemoDrag";
 import DragandDropDnd from "./pages/DragandDropDnd";
+import SecureGate from "./component/GlobalSetting/SecureGate";
 
 function App() {
   return (
     <>
       <ModalDetail />
       <LoadingComponent />
-
       <Routes>
         <Route path="/login" element={<Loginpage />}></Route>
         <Route path="/" element={<Layout />}>

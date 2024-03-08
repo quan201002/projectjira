@@ -16,19 +16,29 @@ import { Editor } from "@tinymce/tinymce-react";
 import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
 import { Button, Popconfirm, Select, Tag } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import {
+  GET_COMMENTS_SAGA,
+  INSERT_COMMENT_SAGA,
+  UPDATE_COMMENT_SAGA,
+} from "../../redux/constant/CommentConstant";
 export default function ModalDetail() {
+  const [commentValue, setCommentValue] = useState("");
+  const [editCmtValue, setEditCmtValue] = useState("");
   let { taskModal } = useSelector((state) => state.TaskReducer);
   let { arrStatus } = useSelector((state) => state.StatusIdReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
-
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-
-  const [visibleEditor, setVisibleEditor] = useState(false);
+  let { comments } = useSelector((state) => state.CommentReducer);
+  const [visibleDesEditor, setVisibleDesEditor] = useState(false);
+  const [visibleCommentEditor, setVisibleCommentEditor] = useState(false);
+  const [targetComment, setTargetComment] = useState("");
   const [historyContent, setHistoryContet] = useState(taskModal.description);
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   console.log("task model", taskModal);
+  console.log("comments", comments);
+  console.log("task id", taskModal.taskId);
   useEffect(() => {
     dispatch({
       type: GET_ALL_STATUS_SAGA,
@@ -40,6 +50,7 @@ export default function ModalDetail() {
       type: GET_ALL_TASK_TYPE_SAGA,
     });
   }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch({
@@ -59,7 +70,7 @@ export default function ModalDetail() {
     const jsxDescription = ReactHTMLparser(taskModal?.description);
     return (
       <div>
-        {visibleEditor ? (
+        {visibleDesEditor ? (
           <div>
             <Editor
               initialValue={taskModal.description}
@@ -99,7 +110,7 @@ export default function ModalDetail() {
                 //   name: "description",
                 //   value: content,
                 // });
-                setVisibleEditor(false);
+                setVisibleDesEditor(false);
               }}
             >
               Save
@@ -118,21 +129,108 @@ export default function ModalDetail() {
                 //   name: "description",
                 //   value: historyContent,
                 // });
-                setVisibleEditor(false);
+                setVisibleDesEditor(false);
               }}
             >
               Close
             </button>
           </div>
         ) : (
-          <div
-            className="btn btn-primary mb-3"
-            onClick={() => {
-              setHistoryContet(taskModal.description);
-              setVisibleEditor(!visibleEditor);
-            }}
-          >
-            Add description
+          <div>
+            <p className="text-primary mb-1">Description:</p>
+            {jsxDescription}
+            <div
+              className="btn btn-primary mb-3"
+              onClick={() => {
+                setHistoryContet(taskModal.description);
+                setVisibleDesEditor(!visibleDesEditor);
+              }}
+            >
+              Add description
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+  const settingCommentEditor = (e) => {
+    console.log(e.target.dataset.id);
+    setTargetComment(e.target.dataset.id);
+    setVisibleCommentEditor(!visibleCommentEditor);
+  };
+  const renderCommentEditor = (cmt, index) => {
+    return (
+      <div>
+        {visibleCommentEditor && cmt.id == targetComment ? (
+          <div>
+            <Editor
+              initialValue={cmt.contentComment}
+              name="description"
+              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
+              init={{
+                plugins:
+                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                toolbar:
+                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                tinycomments_mode: "embedded",
+                tinycomments_author: "Author name",
+                mergetags_list: [
+                  { value: "First.Name", title: "First Name" },
+                  { value: "Email", title: "Email" },
+                ],
+                ai_request: (request, respondWith) =>
+                  respondWith.string(() =>
+                    Promise.reject("See docs to implement AI Assistant")
+                  ),
+              }}
+              onEditorChange={(content, editor) => {
+                setEditCmtValue(content);
+                console.log(content);
+                console.log("cmt", editCmtValue);
+              }}
+            />
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: UPDATE_COMMENT_SAGA,
+                  updateDetail: {
+                    taskId: cmt.taskId,
+                    id: cmt.id,
+                    contentComment: editCmtValue,
+                  },
+                });
+                setVisibleCommentEditor(false);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                // dispatch({
+                //   type: CHANGE_TASK_MODEL,
+                //   name: "description",
+                //   value: historyContent,
+                // });
+
+                setVisibleCommentEditor(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div>
+            <p className="text-primary mb-1"></p>
+            <div
+              data-id={cmt.id}
+              key={index}
+              className="btn btn-primary mb-3"
+              onClick={settingCommentEditor}
+            >
+              Edit
+            </div>
           </div>
         )}
       </div>
@@ -281,9 +379,28 @@ export default function ModalDetail() {
                       </div>
                       <div className="input-comment">
                         <input
+                          value={commentValue}
                           type="text"
                           placeholder="Add a comment .. "
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setCommentValue(e.target.value);
+                          }}
                         ></input>
+                        <button
+                          className="btn btn-primary mt-2 mb-2"
+                          onClick={() => {
+                            dispatch({
+                              type: INSERT_COMMENT_SAGA,
+                              insertDetail: {
+                                taskId: taskModal.taskId,
+                                contentComment: commentValue,
+                              },
+                            });
+                          }}
+                        >
+                          Add comment
+                        </button>
                         <p>
                           <span style={{ fontWeight: 500, color: "gray" }}>
                             Protip:
@@ -306,24 +423,36 @@ export default function ModalDetail() {
                     </div>
                     <div className="latest-comment">
                       <div className="comment-item">
-                        <div
-                          className="display-comment"
-                          style={{ display: "flex" }}
-                        >
-                          <div className="avatar">
-                            <img></img>
-                          </div>
-                          <div>
-                            <p style={{ marginBottom: 5 }}>
-                              Lord Gaben <span>a month ago</span>
-                            </p>
-                            <p style={{ marginBottom: 5 }}>gsdfsddsfsdasd</p>
-                            <div>
-                              <span style={{ color: "#929398" }}>Edit</span>
-                              <span style={{ color: "#929398" }}>Delete</span>
+                        {comments?.map((cmt, index) => {
+                          return (
+                            <div
+                              key={index}
+                              className="display-comment"
+                              style={{ display: "flex" }}
+                            >
+                              <div className="avatar">
+                                <img
+                                  src={cmt.user.avatar}
+                                  alt={cmt.user.avatar}
+                                ></img>
+                              </div>
+                              <div>
+                                <p style={{ marginBottom: 5, color: "navy" }}>
+                                  {ReactHTMLparser(cmt.contentComment)}
+                                </p>
+                                <div>
+                                  <span
+                                    className="mr-2"
+                                    style={{ color: "green" }}
+                                  >
+                                    {renderCommentEditor(cmt, index)}
+                                  </span>
+                                  <span style={{ color: "red" }}>Delete</span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

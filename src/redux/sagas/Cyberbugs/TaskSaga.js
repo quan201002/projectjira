@@ -18,6 +18,7 @@ import {
   UPDATE_TASK_SAGA,
   UPDATE_TASK_STATUS_SAGA,
 } from "../../constant/TaskConstants";
+import { GET_COMMENTS_SAGA } from "../../constant/CommentConstant";
 
 function* createTaskSaga(action) {
   yield put({
@@ -62,8 +63,12 @@ function* getTaskSaga(action) {
       taskModal: data.content,
     });
   } catch (err) {
-    console.log(err.response.data);
+    console.log(err.response);
   }
+  yield put({
+    type: GET_COMMENTS_SAGA,
+    taskId: taskId,
+  });
 }
 export function* theoDoiGetTaskSaga() {
   yield takeLatest(GET_TASK_SAGA, getTaskSaga);
