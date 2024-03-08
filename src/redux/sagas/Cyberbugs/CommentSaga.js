@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { commentService } from "../../../service/CommentService";
 import { STATUS_CODE } from "../../constant/SettingSystem";
 import {
+  DELETE_COMMENT_SAGA,
   GET_COMMENTS,
   GET_COMMENTS_SAGA,
   INSERT_COMMENT_SAGA,
@@ -68,4 +69,25 @@ function* updateCommentSaga(action) {
 }
 export function* theoDoiUpdateCommentSaga() {
   yield takeLatest(UPDATE_COMMENT_SAGA, updateCommentSaga);
+}
+
+function* deleteCommentSaga(action) {
+  console.log("action delete", action);
+  try {
+    const { data, status } = yield call(() => {
+      return commentService.deleteComment(action.deleteDetail);
+    });
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log("data delete", data);
+      yield put({
+        type: GET_TASK_SAGA,
+        taskId: action.deleteDetail.taskId,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* theoDoiDeleteCommentSaga() {
+  yield takeLatest(DELETE_COMMENT_SAGA, deleteCommentSaga);
 }

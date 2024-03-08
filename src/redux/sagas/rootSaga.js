@@ -39,6 +39,7 @@ export function* rootSaga() {
     CommentSaga.theoDoiGetCommetsSaga(),
     CommentSaga.theoDoiInsertCommentSaga(),
     CommentSaga.theoDoiUpdateCommentSaga(),
+    CommentSaga.theoDoiDeleteCommentSaga(),
   ]);
 }
 //dua vao action type de quan li

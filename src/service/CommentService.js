@@ -13,4 +13,9 @@ export const commentService = {
       `/api/Comment/updateComment?id=${updateDetail.id}&contentComment=${updateDetail.contentComment}`
     );
   },
+  deleteComment: (deleteDetail) => {
+    return https.delete(
+      `/api/Comment/deleteComment?idComment=${deleteDetail.id}`
+    );
+  },
 };

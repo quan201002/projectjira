@@ -49,17 +49,10 @@ export default function Homepage() {
             style={{
               padding: 24,
               minHeight: 360,
-              background: colorBgContainer,
+              background: " #17a2b8",
               borderRadius: borderRadiusLG,
             }}
           >
-            {/* <Search
-              placeholder="search user"
-              onSearch={onSearch}
-              enterButton
-              className="mb-5"
-            /> */}
-
             <UserList />
           </div>
         </Content>

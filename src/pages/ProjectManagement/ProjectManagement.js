@@ -105,14 +105,6 @@ const ProjectManagement = () => {
       render: (text, record, index) => {
         return <Tag color="#2db7f5">{record.creator?.name}</Tag>;
       },
-      sorter: (item2, item1) => {
-        let creator1 = item1.creator?.trim().toLowerCase();
-        let creator2 = item2.creator?.trim().toLowerCase();
-        if (creator2 < creator1) {
-          return -1;
-        }
-        return 1;
-      },
     },
     {
       title: "members",
@@ -262,7 +254,7 @@ const ProjectManagement = () => {
               <EditOutlined />
             </button>
             <Popconfirm
-              title="Delete the task"
+              title="Delete project"
               description="Are you sure to delete this project ?"
               onConfirm={() => {
                 dispatch({

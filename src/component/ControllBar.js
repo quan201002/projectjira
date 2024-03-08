@@ -120,7 +120,7 @@ const ControllBar = () => {
                 </NavLink>
               </p>
               <Popconfirm
-                title="Delete the task"
+                title="Log out"
                 description="Are you sure to logout ?"
                 onConfirm={() => {
                   localStorage.removeItem(TOKEN);

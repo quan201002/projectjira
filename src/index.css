@@ -441,3 +441,31 @@ h3 {
 .assigness-selector{
  padding: 0  !important;
 }
+/* comment */
+.display-comment{
+  border:4px solid rgba(128, 128, 128,0.6);
+  padding:0.5rem;
+  border-radius:3px;
+  margin-bottom:1rem;
+}
+/* user management */
+.home-container{
+  /* background-image: url("./../public/background.jpg"); */
+  background-color: #17a2b8!important;
+}
+.ant-layout-header{
+  background-color: #17a2b8!important;
+  padding:0.5rem !important;
+}
+.home-container{
+  position:absolute;
+  top:0 ;
+  left:22vw;
+  height: 100vh;
+  width: 70vw;
+  ;
+  
+}
+ .user-table{
+  
+ }

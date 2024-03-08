@@ -17,6 +17,7 @@ import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
 import { Button, Popconfirm, Select, Tag } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import {
+  DELETE_COMMENT_SAGA,
   GET_COMMENTS_SAGA,
   INSERT_COMMENT_SAGA,
   UPDATE_COMMENT_SAGA,
@@ -221,17 +222,18 @@ export default function ModalDetail() {
             </button>
           </div>
         ) : (
-          <div>
-            <p className="text-primary mb-1"></p>
+          <>
             <div
+              style={{
+                cursor: "pointer",
+              }}
               data-id={cmt.id}
               key={index}
-              className="btn btn-primary mb-3"
               onClick={settingCommentEditor}
             >
               Edit
             </div>
-          </div>
+          </>
         )}
       </div>
     );
@@ -397,6 +399,7 @@ export default function ModalDetail() {
                                 contentComment: commentValue,
                               },
                             });
+                            setCommentValue("");
                           }}
                         >
                           Add comment
@@ -440,14 +443,27 @@ export default function ModalDetail() {
                                 <p style={{ marginBottom: 5, color: "navy" }}>
                                   {ReactHTMLparser(cmt.contentComment)}
                                 </p>
-                                <div>
+                                <div className="d-flex">
                                   <span
                                     className="mr-2"
                                     style={{ color: "green" }}
                                   >
                                     {renderCommentEditor(cmt, index)}
                                   </span>
-                                  <span style={{ color: "red" }}>Delete</span>
+                                  <span
+                                    style={{ color: "red", cursor: "pointer" }}
+                                    onClick={() => {
+                                      dispatch({
+                                        type: DELETE_COMMENT_SAGA,
+                                        deleteDetail: {
+                                          taskId: cmt.taskId,
+                                          id: cmt.id,
+                                        },
+                                      });
+                                    }}
+                                  >
+                                    Delete
+                                  </span>
                                 </div>
                               </div>
                             </div>

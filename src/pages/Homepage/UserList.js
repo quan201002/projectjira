@@ -62,8 +62,9 @@ const UserList = () => {
   }, []);
   return (
     <>
-      <h3 className="text-center pb-5">User Management</h3>
+      <h3 className="text-center pb-5 ">User Management</h3>
       <AutoComplete
+        className="mb-5"
         options={userSearch?.map((user, index) => {
           return {
             label: user.name,
@@ -90,8 +91,9 @@ const UserList = () => {
           //set gia tri cua hop thoai = option.label
           setValue(option.label);
         }}
+        placeholder="search user"
       />
-      <Table columns={columns} dataSource={data} />
+      <Table className="user-table" columns={columns} dataSource={data} />
     </>
   );
 };
