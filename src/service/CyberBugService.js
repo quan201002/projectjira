@@ -53,4 +53,12 @@ export const cyberbugsService = {
   getAllUsers: () => {
     return https.get(`/api/Users/getUser`);
   },
+  editUserSaga: (editUser) => {
+    return https.put("/api/Users/editUser", editUser);
+  },
+  deleteUserSaga: (userId) => {
+    return https.delete(
+      `https://jiranew.cybersoft.edu.vn/api/Users/deleteUser?id=${userId}`
+    );
+  },
 };

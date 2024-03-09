@@ -32,6 +32,7 @@ const ProjectManagement = () => {
 
   const data = projectList;
 
+  console.log("data", data);
   let dispatch = useDispatch();
 
   //dung useDispatch de goi action
@@ -46,19 +47,6 @@ const ProjectManagement = () => {
     setSortedInfo(sorter);
   };
 
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
-    });
-  };
   const columns = [
     {
       title: "id",
@@ -276,18 +264,23 @@ const ProjectManagement = () => {
   ];
   return (
     <div className="container1">
-      <div className="content-container" style={{ height: "100%" }}>
+      <div className="content-container">
         <Space
           style={{ width: "100%", justifyContent: "center", marginBottom: 16 }}
         >
           <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
         </Space>
         <Table
-          style={{ width: "100%" }}
+          style={{
+            width: "100%",
+          }}
           columns={columns}
           dataSource={data.reverse()}
           onChange={handleChange}
           rowKey={"id"}
+          pagination={{
+            pageSize: 8,
+          }}
         />
       </div>
     </div>

@@ -19,11 +19,14 @@ import { STATUS_CODE, TOKEN, USER_LOGIN } from "../../constant/SettingSystem";
 import { message } from "antd";
 import { https } from "../../../service/api";
 import {
+  DELETE_USER_SAGA,
+  EDIT_USER_SAGA,
   GET_ALL_USER,
   GET_ALL_USER_SAGA,
   GET_USER_BY_PROJECT_ID,
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../../constant/UserConstants";
+import { notifiFunction } from "../../../component/Notification/Notification";
 
 function* siginSaga(action) {
   yield delay(500);
@@ -178,4 +181,48 @@ function* getAllUsersSaga(action) {
 }
 export function* theoDoigetAllUsers() {
   yield takeLatest(GET_ALL_USER_SAGA, getAllUsersSaga);
+}
+
+function* editUsersSaga(action) {
+  console.log("action edit user saga", action);
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.editUserSaga(action.editUser)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "user edited");
+      console.log("data edit", data);
+      yield put({
+        type: "GET_USER_API",
+        keyWord: "",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* theoDoiEditUser() {
+  yield takeLatest(EDIT_USER_SAGA, editUsersSaga);
+}
+
+function* deleteUserSaga(action) {
+  console.log("action delete user saga", action);
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.deleteUserSaga(action.userId)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "user deleted");
+      console.log("data delete", data);
+      yield put({
+        type: "GET_USER_API",
+        keyWord: "",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* theoDoiDeleteUser() {
+  yield takeLatest(DELETE_USER_SAGA, deleteUserSaga);
 }

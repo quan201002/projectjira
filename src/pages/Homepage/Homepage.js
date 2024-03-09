@@ -18,45 +18,19 @@ export default function Homepage() {
   };
 
   return (
-    <div className="home-container">
-      <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            height: "auto",
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <div className="text-right  ">
-            <span>
-              Hello, {userLogin.name}{" "}
-              <img
-                style={{ borderRadius: "50%", backgroundSize: "80%" }}
-                src={userLogin.avatar}
-              ></img>
-            </span>
-          </div>
-        </Header>
-
-        <Content
-          style={{
-            margin: "24px 16px 0",
-            height: "auto",
-          }}
-        >
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: " #17a2b8",
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <UserList />
-          </div>
-        </Content>
-      </Layout>
+    <div className="container1">
+      <div className="content-container">
+        <div className="text-right">
+          <span>
+            Hello, {userLogin.name}
+            <img
+              style={{ borderRadius: "50%", backgroundSize: "80%" }}
+              src={userLogin.avatar}
+            ></img>
+          </span>
+        </div>
+        <UserList />
+      </div>
     </div>
   );
 }

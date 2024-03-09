@@ -14,6 +14,7 @@ import PriorityReducer from "./reducer/PriorityReducer";
 import { StatusIdReducer } from "./reducer/StatusIdReducer";
 import { TaskReducer } from "./reducer/TaskReducer";
 import { CommentReducer } from "./reducer/CommentReducer";
+import { UserReducer } from "./reducer/UserReducer";
 const rootReducer = combineReducers({
   LoadingReducer,
   UserLoginCyberBugsReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   StatusIdReducer,
   TaskReducer,
   CommentReducer,
+  UserReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
