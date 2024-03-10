@@ -9,6 +9,7 @@ import {
 } from "../../redux/constant/UserConstants";
 import FormEditProject from "../../component/Forms/FormEditProject";
 import MyEnhancedForm from "../../HOC/JiraCloneHOC/FormEditUser";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 const UserList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState("");
@@ -70,7 +71,7 @@ const UserList = () => {
                 dispatch(actionEditUser);
               }}
             >
-              edit
+              <EditOutlined />
             </button>
             <button
               className="btn btn-danger"
@@ -81,7 +82,7 @@ const UserList = () => {
                 });
               }}
             >
-              x
+              <DeleteOutlined />
             </button>
           </>
         );
@@ -107,9 +108,12 @@ const UserList = () => {
   }, []);
   return (
     <div style={{ width: "100%" }}>
-      <h3 className="text-center pb-5 ">User Management</h3>
+      <h3 className="text-center pb-3 ">User Management</h3>
+      <div className="create-user-buton mb-5">
+        <button className="btn btn-primary">Create user</button>
+      </div>
       <AutoComplete
-        className="mb-5"
+        className="mb-3"
         options={userSearch?.map((user, index) => {
           return {
             label: user.name,
@@ -142,6 +146,7 @@ const UserList = () => {
         }}
         placeholder="search user"
       />
+
       <Table
         style={{
           width: "100%",

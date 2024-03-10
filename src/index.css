@@ -8,8 +8,6 @@ html,body{
 }
 .content-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
   flex-direction: column;
   width: 100%;

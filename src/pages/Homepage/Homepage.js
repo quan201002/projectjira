@@ -20,11 +20,15 @@ export default function Homepage() {
   return (
     <div className="container1">
       <div className="content-container">
-        <div className="text-right">
+        <div>
           <span>
             Hello, {userLogin.name}
             <img
-              style={{ borderRadius: "50%", backgroundSize: "80%" }}
+              style={{
+                borderRadius: "50%",
+                backgroundSize: "80%",
+                marginLeft: "0.5rem",
+              }}
               src={userLogin.avatar}
             ></img>
           </span>

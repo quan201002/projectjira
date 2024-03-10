@@ -266,7 +266,12 @@ const ProjectManagement = () => {
     <div className="container1">
       <div className="content-container">
         <Space
-          style={{ width: "100%", justifyContent: "center", marginBottom: 16 }}
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            marginBottom: 16,
+            marginTop: 48,
+          }}
         >
           <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
         </Space>

@@ -91,7 +91,7 @@ const FormCreateTask = (props) => {
             });
           }}
         >
-          {projectList
+          {/* {projectList
             .filter((item) => item.creator.name === userLogin.name)
             .map((item, index) => {
               return (
@@ -99,7 +99,14 @@ const FormCreateTask = (props) => {
                   {item.projectName}
                 </option>
               );
-            })}
+            })} */}
+          {projectList?.map((item, index) => {
+            return (
+              <option key={index} value={item.id}>
+                {item.projectName}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div className="form-group">
