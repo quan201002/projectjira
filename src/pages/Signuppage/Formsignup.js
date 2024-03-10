@@ -48,6 +48,7 @@ const Formsignup = () => {
           width: "50%",
           boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
           alignItems: "center",
+          textAlign: "center",
         }}
         initialValues={{
           remember: true,
