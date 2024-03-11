@@ -172,7 +172,7 @@ function ProjectDetail(props) {
   };
   return projectDetail ? (
     <div
-      style={{ padding: "0px", marginLeft: "110px" }}
+      style={{ padding: "0px", paddingLeft: "2rem", paddingTop: "5rem" }}
       className="content-container"
     >
       <div className="nav-crumb">

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AutoComplete, Space, Table, Tag } from "antd";
+import { AutoComplete, Popconfirm, Space, Table, Tag } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
@@ -73,17 +73,22 @@ const UserList = () => {
             >
               <EditOutlined />
             </button>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
+            <Popconfirm
+              title="Delete user"
+              description="Are you sure to delete this user ?"
+              onConfirm={() => {
                 dispatch({
                   type: DELETE_USER_SAGA,
                   userId: record.userId,
                 });
               }}
+              okText="Yes"
+              cancelText="No"
             >
-              <DeleteOutlined />
-            </button>
+              <button className="btn  btn-danger">
+                <DeleteOutlined />
+              </button>
+            </Popconfirm>
           </>
         );
       },
@@ -109,9 +114,6 @@ const UserList = () => {
   return (
     <div style={{ width: "100%" }}>
       <h3 className="text-center pb-3 ">User Management</h3>
-      <div className="create-user-buton mb-5">
-        <button className="btn btn-primary">Create user</button>
-      </div>
       <AutoComplete
         className="mb-3"
         options={userSearch?.map((user, index) => {

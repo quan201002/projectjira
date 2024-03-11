@@ -219,9 +219,6 @@ const FormCreateTask = (props) => {
               }
               value={timeTracking.timeTrackingSpent}
               defaultValue={30}
-              tooltip={{
-                open: true,
-              }}
             />
             <div className="row" style={{ marginTop: 5 }}>
               <div className="col-6 text-left">

@@ -34,7 +34,7 @@ function CreateProject(props) {
   };
 
   return (
-    <div className="form-wrapper">
+    <div className="form-wrapper container1 content-container">
       <div
         style={{
           width: "80%",

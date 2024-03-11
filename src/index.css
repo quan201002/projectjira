@@ -466,3 +466,13 @@ h3 {
   flex: 0 0 66.66666666666666%;
   max-width: 100%;
 }
+/* controll bar responsive */
+
+@media (max-width:992px){
+  .ant-layout-sider.ant-layout-sider-dark.d-flex.justify-content-center {
+    height: 100%;
+    padding: 0;
+   width:50px !important;
+   min-width: 0px !important;
+}
+}
