@@ -43,6 +43,9 @@ function* siginSaga(action) {
     localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
 
     console.log(data);
+    if (status === STATUS_CODE.SUCCESS) {
+      window.location.replace("/");
+    }
     yield put({
       type: HIDE_LOADING,
     });
@@ -53,7 +56,6 @@ function* siginSaga(action) {
       type: HIDE_LOADING,
     });
   }
-  window.location.replace("/");
 }
 
 export function* theoDoiSignin() {
