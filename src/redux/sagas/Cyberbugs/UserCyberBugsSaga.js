@@ -48,7 +48,7 @@ function* siginSaga(action) {
     });
   } catch (err) {
     console.log(err.response.data);
-
+    notifiFunction("error", "Login fail, check your email or password");
     yield put({
       type: HIDE_LOADING,
     });
@@ -69,7 +69,6 @@ function* getUserSaga(action) {
   try {
     const res = yield call(() => {
       return https.get(`/api/Users/getUser?keyword=${action.keyWord}`);
-      // cyberbugsService.getUserfromAPI(action.keyWord);
     });
 
     yield put({

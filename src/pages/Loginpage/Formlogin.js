@@ -61,7 +61,7 @@ const Formlogin = (props) => {
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "fit-content",
-              boxShadow: '2px 3px 34px -8px rgba(0,0,0,0.78)',
+              boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
             }}
           >
             <div
@@ -108,18 +108,20 @@ const Formlogin = (props) => {
                   }}
                 >
                   Login
-                </Button >
+                </Button>
+
                 <Link to="/signup">
                   <Button
-                  size="large"
-                  className="btn btn-primary"
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#A3CBF1",
-                    borderColor: "#A3CBF1",
-                  }}>
+                    size="large"
+                    className="btn btn-primary"
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#A3CBF1",
+                      borderColor: "#A3CBF1",
+                    }}
+                  >
                     Sign Up
-                    </Button>
+                  </Button>
                 </Link>
                 <div className="social mt-5" style={{ marginTop: "20px" }}>
                   <Button
@@ -136,7 +138,6 @@ const Formlogin = (props) => {
                     icon={<TwitterOutlined />}
                     size={"large"}
                   ></Button>
-                  
                 </div>
               </div>
             </div>

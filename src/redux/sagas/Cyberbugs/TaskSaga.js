@@ -194,12 +194,11 @@ function* deleteTaskSaga(action) {
       });
       const taskModalform = document.getElementById("exampleModal");
       taskModalform.classList.remove("show");
+      const modalBackDrop = document.querySelector(".modal-backdrop");
+      modalBackDrop.classList.remove("show");
     }
   } catch (err) {
     console.log(err.response);
-    yield put({
-      type: HIDE_LOADING,
-    });
   }
 }
 export function* theoDoiDeleteTaskSaga() {

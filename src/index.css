@@ -476,3 +476,28 @@ h3 {
    min-width: 0px !important;
 }
 }
+/* comment */
+.latest-comment{
+ 
+ }
+.comment-item{
+  height: 500px;
+  overflow: scroll;
+}
+.login-notification{
+  width: 100vw;
+  height: 100vh;
+  position: fixed ;
+  top:0;
+  left:0;
+  z-index:10000;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+}
+.card-notification{
+  background-color: #ccc;
+  width: 25vw  ;  
+  height:25vh;
+}

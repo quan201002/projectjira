@@ -12,9 +12,25 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
 import { TOKEN, USER_LOGIN } from "../redux/constant/SettingSystem";
-
+import { Card, Space } from "antd";
 const { Content, Sider } = Layout;
 
+const renderLoginRequireMent = () => {
+  return localStorage.getItem(USER_LOGIN) ? (
+    <></>
+  ) : (
+    <div className="login-notification">
+      <Space direction="vertical" size={16}>
+        <Card className="card-notification text-center " title="Login require">
+          <h3>Login your account to continue</h3>
+          <Button className="bg-primary text-light mt-4">
+            <NavLink to="/login">Login here</NavLink>
+          </Button>
+        </Card>
+      </Space>
+    </div>
+  );
+};
 //menu items
 
 const ControllBar = () => {
@@ -26,16 +42,9 @@ const ControllBar = () => {
   return (
     <>
       <Layout style={{ height: "100%" }}>
-        {/* <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModal"
-        >
-          Launch demo modal
-        </button> */}
         <div className="container1">
           <div className="sider-container">
+            {renderLoginRequireMent()}
             <Sider
               style={{ height: "100%" }}
               trigger={null}
