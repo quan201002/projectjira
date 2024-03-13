@@ -83,7 +83,6 @@ const FormEditUser = (props) => {
         </div>
       </div>
       {errors.name && touched.name && <div id="feedback">{errors.name}</div>}
-      <button type="submit">Submit</button>
     </form>
   );
 };

@@ -117,20 +117,30 @@ export function* theoDoiAddUser() {
 
 //remove user
 function* removeUserSaga(action) {
-  console.log("action", action);
-
+  yield put({
+    type: DISPLAY_LOADING,
+  });
   try {
-    yield call(() => {
+    const { data, status } = yield call(() => {
       return https.post(
         "/api/Project/removeUserFromProject",
         action.userProject
       );
     });
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "User removed");
+      yield put({
+        type: "GET_LIST_PROJECT_SAGA",
+      });
+    }
     yield put({
-      type: "GET_LIST_PROJECT_SAGA",
+      type: HIDE_LOADING,
     });
   } catch (err) {
     console.log(err);
+    yield put({
+      type: HIDE_LOADING,
+    });
   }
 }
 

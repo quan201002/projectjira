@@ -132,8 +132,10 @@ const ProjectManagement = () => {
                                 </td>
                                 <td>{item.name}</td>
                                 <td>
-                                  <button
-                                    onClick={() => {
+                                  <Popconfirm
+                                    title="Remove assignee"
+                                    description="Are you sure to remove this user from project ?"
+                                    onConfirm={() => {
                                       dispatch({
                                         type: "REMOVE_USER_PROJECT_API",
                                         userProject: {
@@ -142,11 +144,16 @@ const ProjectManagement = () => {
                                         },
                                       });
                                     }}
-                                    style={{ borderRadius: "50%" }}
-                                    className="btn btn-danger"
+                                    okText="Yes"
+                                    cancelText="No"
                                   >
-                                    X
-                                  </button>
+                                    <button
+                                      style={{ borderRadius: "50%" }}
+                                      className="btn btn-danger"
+                                    >
+                                      X
+                                    </button>
+                                  </Popconfirm>
                                 </td>
                               </tr>
                             );

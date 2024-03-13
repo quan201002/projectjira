@@ -12,7 +12,7 @@ import MyEnhancedForm from "../../HOC/JiraCloneHOC/FormEditUser";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 const UserList = () => {
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState("");
+  const [page, setPage] = useState(1);
   const [value, setValue] = useState("");
   const searchRef = useRef(null);
   const [filteredInfo, setFilteredInfo] = useState({});
@@ -159,7 +159,9 @@ const UserList = () => {
         columns={columns}
         dataSource={data.reverse()}
         pagination={{
-          current: JSON.parse(localStorage.getItem("PAGE")),
+          current: localStorage.getItem("PAGE")
+            ? JSON.parse(localStorage.getItem("PAGE"))
+            : 1,
           pageSize: 7,
           onChange: (page) => {
             setPage(page);

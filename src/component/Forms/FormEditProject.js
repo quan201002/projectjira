@@ -4,6 +4,9 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { withFormik } from "formik";
 
 import * as Yup from "yup";
+
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 function FormEditProject(props) {
   let arrProjectCaterory = useSelector(
     (state) => state.ProjectCateroryReducer.arrProjectCaterory
@@ -32,10 +35,6 @@ function FormEditProject(props) {
     dispatch({ type: "SET_SUBMIT_EDIT_PROJECT", submitFunction: handleSubmit });
   }, []);
 
-  const handelEditorChange = (content, editor) => {
-    setFieldValue("description", content);
-    // console.log(content);
-  };
   const [state, setState] = useState();
   return (
     <form onSubmit={handleSubmit}>
@@ -94,7 +93,7 @@ function FormEditProject(props) {
         <div className="col-12">
           <div className="form-group">
             <h4 className="font-weight-bold">Description</h4>
-            <Editor
+            {/* <Editor
               value={values.description}
               name="description123"
               apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
@@ -116,6 +115,30 @@ function FormEditProject(props) {
               }}
               initialValue={values.description}
               onEditorChange={handelEditorChange}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              data={values.description}
+              onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "200px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                console.log("data", data);
+                setFieldValue("description", data);
+              }}
+              onBlur={(event, editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log("Focus.", editor);
+              }}
             />
           </div>
         </div>
