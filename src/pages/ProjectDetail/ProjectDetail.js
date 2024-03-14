@@ -40,7 +40,7 @@ function ProjectDetail(props) {
                                         <i class="fa-solid fa-arrow-right"></i>
                                         <i class="fa-solid fa-arrow-turn-down"></i> */
   }
-  const renderPrioritySign = (priorityId) => {
+  const renderPrioritySign = (priorityId, projectId) => {
     switch (priorityId) {
       case 1:
         return <i className="fa fa-arrow-up "></i>;
@@ -138,10 +138,11 @@ function ProjectDetail(props) {
                                     >
                                       <div className="block-left">
                                         <span className="mr-1">
-                                          <i className="fa fa-bookmark"></i>
+                                          <i className="fa fa-bookmark text-success"></i>
                                         </span>
                                         {renderPrioritySign(
-                                          task.priorityTask.priorityId
+                                          task.priorityTask.priorityId,
+                                          projectId
                                         )}
                                         <p className="text-danger task-priority">
                                           {task.priorityTask.priority}

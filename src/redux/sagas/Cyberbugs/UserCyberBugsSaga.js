@@ -138,6 +138,7 @@ function* removeUserSaga(action) {
     });
   } catch (err) {
     console.log(err);
+    notifiFunction("error", "Unauthorized");
     yield put({
       type: HIDE_LOADING,
     });
