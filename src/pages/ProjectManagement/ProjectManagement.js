@@ -119,9 +119,10 @@ const ProjectManagement = () => {
                         </thead>
                         <tbody>
                           {record.members?.map((item, index) => {
+                            console.log("user  ", item);
                             return (
                               <tr key={index}>
-                                <td>{item.id}</td>
+                                <td>{item.userId}</td>
                                 <td>
                                   <img
                                     style={{ borderRadius: "50%" }}
@@ -167,7 +168,70 @@ const ProjectManagement = () => {
                 </Popover>
               );
             })}
-            {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+            <Popover
+              key={index}
+              placement="topLeft"
+              title="Members"
+              content={() => {
+                return (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>avatar</th>
+                        <th>name</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {record.members?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{item.userId}</td>
+                            <td>
+                              <img
+                                style={{ borderRadius: "50%" }}
+                                src={item.avatar}
+                                width="50"
+                                height="50"
+                              ></img>
+                            </td>
+                            <td>{item.name}</td>
+                            <td>
+                              <Popconfirm
+                                title="Remove assignee"
+                                description="Are you sure to remove this user from project ?"
+                                onConfirm={() => {
+                                  dispatch({
+                                    type: "REMOVE_USER_PROJECT_API",
+                                    userProject: {
+                                      projectId: record.id,
+                                      userId: item.userId,
+                                    },
+                                  });
+                                }}
+                                okText="Yes"
+                                cancelText="No"
+                              >
+                                <button
+                                  style={{ borderRadius: "50%" }}
+                                  className="btn btn-danger"
+                                >
+                                  X
+                                </button>
+                              </Popconfirm>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                );
+              }}
+            >
+              {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+            </Popover>
+
             <Popover
               placement="right"
               title={"add user"}

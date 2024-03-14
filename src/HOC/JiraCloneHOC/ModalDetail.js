@@ -22,6 +22,9 @@ import {
   INSERT_COMMENT_SAGA,
   UPDATE_COMMENT_SAGA,
 } from "../../redux/constant/CommentConstant";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 export default function ModalDetail() {
   const [commentValue, setCommentValue] = useState("");
   const [editCmtValue, setEditCmtValue] = useState("");
@@ -73,7 +76,7 @@ export default function ModalDetail() {
       <div>
         {visibleDesEditor ? (
           <div>
-            <Editor
+            {/* <Editor
               initialValue={taskModal.description}
               name="description"
               apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
@@ -95,6 +98,28 @@ export default function ModalDetail() {
               }}
               onEditorChange={(content, editor) => {
                 setContent(content);
+              }}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              data={taskModal.description}
+              onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "200px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+              onChange={(event, editor) => {
+                setContent(editor.getData());
+              }}
+              onBlur={(event, editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log("Focus.", editor);
               }}
             />
             <button
@@ -164,7 +189,7 @@ export default function ModalDetail() {
       <div>
         {visibleCommentEditor && cmt.id == targetComment ? (
           <div>
-            <Editor
+            {/* <Editor
               initialValue={cmt.contentComment}
               name="description"
               apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
@@ -188,6 +213,30 @@ export default function ModalDetail() {
                 setEditCmtValue(content);
                 console.log(content);
                 console.log("cmt", editCmtValue);
+              }}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              data={cmt.contentComment}
+              onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "200px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+              onChange={(event, editor) => {
+                setEditCmtValue(editor.getData());
+                console.log(content);
+                console.log("cmt", editCmtValue);
+              }}
+              onBlur={(event, editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log("Focus.", editor);
               }}
             />
             <button
@@ -277,6 +326,7 @@ export default function ModalDetail() {
               className="form-control"
               name="timeTrackingSpent"
               onChange={handleChange}
+              defaultValue={timeTrackingSpent}
             ></input>
           </div>
 
@@ -285,6 +335,7 @@ export default function ModalDetail() {
               className="form-control"
               name="timeTrackingRemaining"
               onChange={handleChange}
+              defaultValue={timeTrackingRemaining}
             ></input>
           </div>
         </div>

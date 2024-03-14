@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import { https } from "../../service/api";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 function CreateProject(props) {
   let arrProjectCaterory = useSelector(
@@ -62,7 +64,7 @@ function CreateProject(props) {
           </div>
           <div className="form-group w-100">
             <p>Description</p>
-            <Editor
+            {/* <Editor
               style={{ heigth: "300px", width: "100%" }}
               value={values.description}
               name="description"
@@ -85,6 +87,30 @@ function CreateProject(props) {
               }}
               initialValue="Welcome to TinyMCE!"
               onEditorChange={handelEditorChange}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              data={values.description}
+              onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "200px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                console.log("data", data);
+                setFieldValue("description", data);
+              }}
+              onBlur={(event, editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log("Focus.", editor);
+              }}
             />
           </div>
           <div className="form-group  w-100">

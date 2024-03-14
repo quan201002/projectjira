@@ -19,7 +19,7 @@ function ProjectDetail(props) {
   }, []);
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-
+  console.log("project detail", projectDetail);
   const { projectId } = useParams();
   console.log("project detaill", projectDetail);
   const renderAvatar = () => {
@@ -33,6 +33,24 @@ function ProjectDetail(props) {
         </div>
       );
     });
+  };
+  {
+    /* <i className="fa fa-arrow-up "></i>
+                                        <i class="fa-solid fa-arrow-down"></i>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                        <i class="fa-solid fa-arrow-turn-down"></i> */
+  }
+  const renderPrioritySign = (priorityId) => {
+    switch (priorityId) {
+      case 1:
+        return <i className="fa fa-arrow-up "></i>;
+      case 2:
+        return <i class="fa-solid fa-arrow-right"></i>;
+      case 3:
+        return <i class="fa-solid fa-arrow-turn-down"></i>;
+      case 4:
+        return <i class="fa-solid fa-arrow-down"></i>;
+    }
   };
   const handleDragEnd = (result) => {
     console.log("result", result);
@@ -119,13 +137,17 @@ function ProjectDetail(props) {
                                       style={{ display: "flex" }}
                                     >
                                       <div className="block-left">
-                                        <i className="fa fa-bookmark mr-1"></i>
-                                        <i className="fa fa-arrow-up"></i>
-                                        <p className="text-danger">
+                                        <span className="mr-1">
+                                          <i className="fa fa-bookmark"></i>
+                                        </span>
+                                        {renderPrioritySign(
+                                          task.priorityTask.priorityId
+                                        )}
+                                        <p className="text-danger task-priority">
                                           {task.priorityTask.priority}
                                         </p>
                                       </div>
-                                      <div className="block-right">
+                                      <div className="block-right ml-2">
                                         <div
                                           className="avatar-group"
                                           style={{ display: "flex" }}

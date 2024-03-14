@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Radio, Select, Slider, Space } from "antd";
+import { AutoComplete, Radio, Select, Slider, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_PROJECT_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
@@ -17,6 +17,9 @@ import {
 import { select } from "redux-saga/effects";
 import { GET_USER_BY_PROJECT_ID_SAGA } from "../../redux/constant/UserConstants";
 import { USER_LOGIN } from "../../redux/constant/SettingSystem";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 const FormCreateTask = (props) => {
   const {
     values,
@@ -100,7 +103,7 @@ const FormCreateTask = (props) => {
                 </option>
               );
             })} */}
-          {projectList?.map((item, index) => {
+          {projectList.map((item, index) => {
             return (
               <option key={index} value={item.id}>
                 {item.projectName}
@@ -269,7 +272,7 @@ const FormCreateTask = (props) => {
       </div>
       <div className="form-group">
         <p>description</p>
-        <Editor
+        {/* <Editor
           name="description"
           apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
           init={{
@@ -290,6 +293,28 @@ const FormCreateTask = (props) => {
           }}
           onEditorChange={(content, editor) => {
             setFieldValue("description", content);
+          }}
+        /> */}
+        <CKEditor
+          editor={ClassicEditor}
+          data="<p>Hello from CKEditor&nbsp;5!</p>"
+          onReady={(editor) => {
+            editor.editing.view.change((writer) => {
+              writer.setStyle(
+                "height",
+                "200px",
+                editor.editing.view.document.getRoot()
+              );
+            });
+          }}
+          onChange={(event, editor) => {
+            setFieldValue("description", editor.getData());
+          }}
+          onBlur={(event, editor) => {
+            console.log("Blur.", editor);
+          }}
+          onFocus={(event, editor) => {
+            console.log("Focus.", editor);
           }}
         />
       </div>

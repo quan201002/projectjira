@@ -155,6 +155,8 @@ function* handelChangePostApi(action) {
 
   const taskModalUpdate = { ...taskModal, listUserAsign };
   console.log("object sau khi xu li", taskModal);
+  console.log("task Modal update", taskModalUpdate);
+
   try {
     const { data, status } = yield call(() => {
       return TaskService.updateTaskSaga(taskModalUpdate);
