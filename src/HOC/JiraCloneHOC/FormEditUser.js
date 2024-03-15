@@ -3,6 +3,7 @@ import { withFormik } from "formik";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { EDIT_USER_SAGA } from "../../redux/constant/UserConstants";
+import * as Yup from "yup";
 
 const FormEditUser = (props) => {
   let dispatch = useDispatch();
@@ -37,6 +38,11 @@ const FormEditUser = (props) => {
               value={values.passWord}
               name="passWord"
             />
+            {errors.passWord && touched.passWord && (
+              <div id="feedback " className="error">
+                {errors.passWord}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -52,6 +58,11 @@ const FormEditUser = (props) => {
               value={values.email}
               name="email"
             />
+            {errors.email && touched.email && (
+              <div id="feedback " className="error">
+                {errors.email}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -73,7 +84,7 @@ const FormEditUser = (props) => {
             <h4 className="font-weight-bold">Phone number</h4>
             <input
               className="form-control"
-              type="text"
+              type="number"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.phoneNumber}
@@ -82,7 +93,11 @@ const FormEditUser = (props) => {
           </div>
         </div>
       </div>
-      {errors.name && touched.name && <div id="feedback">{errors.name}</div>}
+      {errors.name && touched.name && (
+        <div id="feedback " className="error">
+          {errors.name}
+        </div>
+      )}
     </form>
   );
 };
@@ -111,6 +126,13 @@ const EditForm = withFormik({
 
     return errors;
   },
+
+  validationSchema: Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("*Email is required"),
+    passWord: Yup.string()
+      .min(6, "Password must have at least 6 characters")
+      .max(32, "Password must have at most 32 characters"),
+  }),
 
   handleSubmit: (values, { props, setSubmitting }) => {
     props.dispatch({

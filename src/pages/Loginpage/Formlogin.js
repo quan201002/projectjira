@@ -69,33 +69,40 @@ const Formlogin = (props) => {
             >
               <div className="title">Welcome!</div>
               {/* Phần hiển thị form đăng nhập */}
-              <div style={{ width: "50%", margin: "0 auto" }}>
+              <div style={{ width: "100%", margin: "0 auto" }}>
                 <h3 style={{ color: "#1890ff", marginBottom: "30px" }}></h3>
-                <Input
+                <input
                   onChange={handleChange}
                   value={values.email}
-                  size="large"
                   name="email"
                   placeholder="Email"
                   prefix={<UserOutlined />}
                   style={{ marginBottom: "20px" }}
-                  className={errors.email && touched.email ? "error" : ""}
+                  className={
+                    errors.email && touched.email
+                      ? "error form-control login-input"
+                      : "form-control login-input"
+                  }
                 />
                 {errors.email && touched.email && (
                   <div className="error">{errors.email}</div>
                 )}
-                <Input
+                <input
                   type="password"
                   onChange={handleChange}
                   value={values.passWord}
-                  size="large"
                   name="passWord"
                   placeholder="Password"
                   prefix={<LockOutlined />}
                   style={{ marginBottom: "20px" }}
+                  className={
+                    errors.passWord && touched.passWord
+                      ? "error form-control login-input"
+                      : "form-control login-input"
+                  }
                 />
                 {errors.passWord && touched.passWord ? (
-                  <div>{errors.passWord}</div>
+                  <div className="error">{errors.passWord}</div>
                 ) : null}
                 <Button
                   htmlType="submit"

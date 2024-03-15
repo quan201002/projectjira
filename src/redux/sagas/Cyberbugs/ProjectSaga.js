@@ -82,7 +82,7 @@ function* updateProjectSaga(action) {
     console.log(data);
     //gọi api thành công thì dispatch lên reducer
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data update", data);
+      notifiFunction("success", "Project edited");
     }
     yield call(getListProjectSaga);
     yield put({

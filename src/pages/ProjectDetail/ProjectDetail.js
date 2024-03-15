@@ -8,6 +8,7 @@ import {
   GET_TASK_SAGA,
   UPDATE_TASK_STATUS_SAGA,
 } from "../../redux/constant/TaskConstants";
+import { BugOutlined } from "@ant-design/icons";
 
 function ProjectDetail(props) {
   let dispatch = useDispatch();
@@ -50,6 +51,16 @@ function ProjectDetail(props) {
         return <i class="fa-solid fa-arrow-turn-down"></i>;
       case 4:
         return <i class="fa-solid fa-arrow-down"></i>;
+    }
+  };
+  const renderTaskTypeIcon = (taskType) => {
+    {
+      switch (taskType) {
+        case 1:
+          return <i class="fa-solid fa-bug text-danger"></i>;
+        case 2:
+          return <i className="fa fa-bookmark text-success"></i>;
+      }
     }
   };
   const handleDragEnd = (result) => {
@@ -138,13 +149,15 @@ function ProjectDetail(props) {
                                     >
                                       <div className="block-left">
                                         <span className="mr-1">
-                                          <i className="fa fa-bookmark text-success"></i>
+                                          {renderTaskTypeIcon(
+                                            task.taskTypeDetail.id
+                                          )}
                                         </span>
                                         {renderPrioritySign(
                                           task.priorityTask.priorityId,
                                           projectId
                                         )}
-                                        <p className="text-danger task-priority">
+                                        <p className="text-warning task-priority">
                                           {task.priorityTask.priority}
                                         </p>
                                       </div>

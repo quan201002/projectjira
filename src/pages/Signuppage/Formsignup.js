@@ -1,9 +1,10 @@
 // Formsignup.js
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 import { https } from "../../service/api";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { notifiFunction } from "../../component/Notification/Notification";
 
 const Formsignup = () => {
   let navigate = useNavigate();
@@ -12,7 +13,7 @@ const Formsignup = () => {
     https
       .post("/api/Users/signup", values)
       .then((res) => {
-        alert("congrate");
+        notifiFunction("success", "Sign up successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -64,8 +65,20 @@ const Formsignup = () => {
             name="email"
             rules={[
               {
-                required: true,
-                message: "Please input your email!",
+                validator(rule, value) {
+                  return new Promise((resolve, reject) => {
+                    const re =
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    const isValid = re.test(value);
+                    if (value.trim() == "") {
+                      reject("please input your email");
+                    } else if (isValid) {
+                      return resolve();
+                    } else {
+                      reject("email invalid");
+                    }
+                  });
+                },
               },
             ]}
           >
@@ -76,8 +89,17 @@ const Formsignup = () => {
             name="passWord"
             rules={[
               {
-                required: true,
-                message: "Please input your password!",
+                validator(rule, value) {
+                  return new Promise((resolve, reject) => {
+                    if (value.trim() == "") {
+                      reject("Please input your password");
+                    } else if (value.length < 6 && value.length > 0) {
+                      reject("password must have at least 6 characters");
+                    } else {
+                      return resolve();
+                    }
+                  });
+                },
               },
             ]}
           >
@@ -105,7 +127,7 @@ const Formsignup = () => {
               },
             ]}
           >
-            <Input />
+            <InputNumber style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -113,8 +135,6 @@ const Formsignup = () => {
             </Button>
           </Form.Item>
           <Link to="/login">
-            {" "}
-            {/* Link to Login page */}
             <Button type="link">Login</Button>
           </Link>
         </div>

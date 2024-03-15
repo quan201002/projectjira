@@ -107,7 +107,7 @@ export default function ModalDetail() {
                 editor.editing.view.change((writer) => {
                   writer.setStyle(
                     "height",
-                    "200px",
+                    "150px",
                     editor.editing.view.document.getRoot()
                   );
                 });
@@ -222,7 +222,7 @@ export default function ModalDetail() {
                 editor.editing.view.change((writer) => {
                   writer.setStyle(
                     "height",
-                    "200px",
+                    "100px",
                     editor.editing.view.document.getRoot()
                   );
                 });
@@ -421,7 +421,8 @@ export default function ModalDetail() {
               <div className="row">
                 <div className="col-8">
                   <p className="issue text-success">
-                    This is an issue of type: Task
+                    This is an issue of type:
+                    {taskModal.taskTypeDetail.taskType}
                   </p>
                   <div className="description">{renderDescription()}</div>
                   <div className="comment">

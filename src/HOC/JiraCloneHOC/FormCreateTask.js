@@ -213,7 +213,7 @@ const FormCreateTask = (props) => {
             </div>
           </div>
           <div className="col-6">
-            <p>Time tracking</p>
+            <p>Time tracking (hours)</p>
             <Slider
               onChange={handleChange}
               max={

@@ -72,11 +72,12 @@ function* getUserSaga(action) {
     const res = yield call(() => {
       return https.get(`/api/Users/getUser?keyword=${action.keyWord}`);
     });
-
     yield put({
       type: "GET_USER_SEARCH",
       lstUserSearch: res.data.content,
     });
+    if (res.status === STATUS_CODE.SUCCESS) {
+    }
   } catch (err) {
     console.log(err);
   }
@@ -94,17 +95,22 @@ function* addUserProjectSaga(action) {
 
   yield delay(500);
   try {
-    yield call(() => {
-      cyberbugsService.addUserProject(action.userProject);
+    const { status } = yield call(() => {
+      return cyberbugsService.addUserProject(action.userProject);
     });
-    yield put({
-      type: "GET_LIST_PROJECT_SAGA",
-    });
+
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: "GET_LIST_PROJECT_SAGA",
+      });
+      notifiFunction("success", "User added");
+    }
   } catch (err) {
     console.log(err);
     yield put({
       type: HIDE_LOADING,
     });
+    notifiFunction("error", "Unauthorized");
   }
   yield put({
     type: HIDE_LOADING,
