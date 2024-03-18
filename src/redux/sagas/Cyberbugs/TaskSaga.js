@@ -19,6 +19,7 @@ import {
   UPDATE_TASK_STATUS_SAGA,
 } from "../../constant/TaskConstants";
 import { GET_COMMENTS_SAGA } from "../../constant/CommentConstant";
+import $ from "jquery";
 
 function* createTaskSaga(action) {
   console.log("action create task saga", action);
