@@ -21,6 +21,7 @@ import {
 import { GET_COMMENTS_SAGA } from "../../constant/CommentConstant";
 
 function* createTaskSaga(action) {
+  console.log("action create task saga", action);
   yield put({
     type: DISPLAY_LOADING,
   });
@@ -194,10 +195,11 @@ function* deleteTaskSaga(action) {
         type: "GET_PROJECT_DETAIL_SAGA",
         projectId: projectId,
       });
-      const taskModalform = document.getElementById("exampleModal");
-      taskModalform.classList.remove("show");
-      const modalBackDrop = document.querySelector(".modal-backdrop");
-      modalBackDrop.classList.remove("show");
+      // const taskModalform = document.getElementById("exampleModal");
+      // taskModalform.classList.remove("show");
+      // const modalBackDrop = document.querySelector(".modal-backdrop");
+      // modalBackDrop.classList.remove("show");
+      $("#taskDetailModal").modal("hide");
     }
   } catch (err) {
     console.log(err.response);

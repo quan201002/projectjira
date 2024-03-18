@@ -1,5 +1,5 @@
 // Formsignup.js
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, InputNumber } from "antd";
 import { https } from "../../service/api";
 import { useNavigate, Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { notifiFunction } from "../../component/Notification/Notification";
 
 const Formsignup = () => {
+  const [passWord, setPassWord] = useState("");
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const onFinish = (values) => {
@@ -22,6 +23,7 @@ const Formsignup = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  console.log("password", passWord);
   return (
     <div
       style={{
@@ -95,6 +97,30 @@ const Formsignup = () => {
                       reject("Please input your password");
                     } else if (value.length < 6 && value.length > 0) {
                       reject("password must have at least 6 characters");
+                    } else {
+                      setPassWord(value);
+                      return resolve();
+                    }
+                  });
+                },
+              },
+            ]}
+          >
+            <Input.Password className="signup-password" />
+          </Form.Item>
+          <Form.Item
+            label="Confirm password"
+            name="confirmPassword"
+            rules={[
+              {
+                validator(rule, value) {
+                  return new Promise((resolve, reject) => {
+                    if (value.trim() == "") {
+                      reject("Please confirm your password");
+                    } else if (value.length < 6 && value.length > 0) {
+                      reject("password must have at least 6 characters");
+                    } else if (value !== passWord) {
+                      reject("incorrect password");
                     } else {
                       return resolve();
                     }

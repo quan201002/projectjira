@@ -1,6 +1,8 @@
 // Formlogin.js
 import React, { useEffect } from "react";
 import { Input, Button } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+
 import {
   FacebookOutlined,
   TwitterOutlined,
@@ -18,6 +20,15 @@ import { Link } from "react-router-dom";
 
 const Formlogin = (props) => {
   const dispatch = useDispatch();
+  const onToggleMaskChange = () => {
+    const checkbox = document.querySelector(".toggleMask");
+    console.log("check box", checkbox);
+    // checkbox.addEventListener("change", () => {
+    //   return (document.querySelector(".password-input").type = checkbox.checked
+    //     ? "text"
+    //     : "password");
+    // });
+  };
   const getTaskList = () => {
     dispatch({
       type: "getTaskApiAction",
@@ -70,37 +81,36 @@ const Formlogin = (props) => {
               <div className="title">Welcome!</div>
               {/* Phần hiển thị form đăng nhập */}
               <div style={{ width: "100%", margin: "0 auto" }}>
-                <h3 style={{ color: "#1890ff", marginBottom: "30px" }}></h3>
-                <input
+                <Input
                   onChange={handleChange}
                   value={values.email}
                   name="email"
                   placeholder="Email"
-                  prefix={<UserOutlined />}
-                  style={{ marginBottom: "20px" }}
-                  className={
-                    errors.email && touched.email
-                      ? "error form-control login-input"
-                      : "form-control login-input"
-                  }
+                  className={errors.email && touched.email ? "error " : ""}
                 />
                 {errors.email && touched.email && (
                   <div className="error">{errors.email}</div>
                 )}
-                <input
-                  type="password"
+
+                <Input.Password
+                  style={{
+                    marginTop: "25px",
+                    marginBottom: "25px",
+                  }}
                   onChange={handleChange}
                   value={values.passWord}
                   name="passWord"
-                  placeholder="Password"
-                  prefix={<LockOutlined />}
-                  style={{ marginBottom: "20px" }}
-                  className={
+                  classNames={
                     errors.passWord && touched.passWord
-                      ? "error form-control login-input"
-                      : "form-control login-input"
+                      ? "mb-5 mt-5 error login-input password-input"
+                      : "mb-5 mt-5  login-input  password-input "
+                  }
+                  placeholder="Password"
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
                 />
+
                 {errors.passWord && touched.passWord ? (
                   <div className="error">{errors.passWord}</div>
                 ) : null}

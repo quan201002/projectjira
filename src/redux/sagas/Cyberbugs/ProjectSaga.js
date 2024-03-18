@@ -42,6 +42,9 @@ function* createProjectSaga(action) {
 
 //get all project
 function* getListProjectSaga(action) {
+  yield put({
+    type: DISPLAY_LOADING,
+  });
   try {
     const { data, status } = yield call(() =>
       cyberbugsService.getListProject()
@@ -51,9 +54,15 @@ function* getListProjectSaga(action) {
         type: "GET_LIST_PROJECT",
         projectList: data.content,
       });
+      yield put({
+        type: HIDE_LOADING,
+      });
     }
   } catch (err) {
     console.log("rr", err);
+    yield put({
+      type: HIDE_LOADING,
+    });
   }
 }
 
@@ -114,12 +123,13 @@ function* deleteProjectSaga(action) {
       cyberbugsService.deleteProject(action.idProject)
     );
     console.log(data);
+
     //gọi api thành công thì dispatch lên reducer
     if (status === STATUS_CODE.SUCCESS) {
       console.log("data update", data);
       notifiFunction("success", "Delete project successfully!");
-    } else {
-      notifiFunction("error", "Delete project fail!");
+    } else if (status === STATUS_CODE.UNAUTHORIZED) {
+      notifiFunction("error", "Unauthorized!");
     }
     yield call(getListProjectSaga);
     yield put({
@@ -128,6 +138,9 @@ function* deleteProjectSaga(action) {
   } catch (err) {
     console.log(err);
     notifiFunction("error", "Delete project fail!");
+    if (err.response.data.statusCode === 403) {
+      notifiFunction("error", "Unauthorized!");
+    }
   }
   yield put({
     type: HIDE_LOADING,

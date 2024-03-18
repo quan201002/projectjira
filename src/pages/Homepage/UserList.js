@@ -143,7 +143,13 @@ const UserList = () => {
         }}
         onSelect={(valueSelected, option) => {
           //set gia tri cua hop thoai = option.label
-
+          if (searchRef.current) {
+            clearTimeout(searchRef.current);
+          }
+          dispatch({
+            type: "GET_USER_API",
+            keyWord: valueSelected,
+          });
           setValue(option.label);
         }}
         placeholder="search user"

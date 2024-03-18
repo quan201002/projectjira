@@ -19,6 +19,7 @@ import { GET_USER_BY_PROJECT_ID_SAGA } from "../../redux/constant/UserConstants"
 import { USER_LOGIN } from "../../redux/constant/SettingSystem";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import * as Yup from "yup";
 
 const FormCreateTask = (props) => {
   const {
@@ -51,6 +52,7 @@ const FormCreateTask = (props) => {
   };
 
   const [timeTracking, setTimeTracking] = useState({
+    originalEstimate: 0,
     timeTrackingSpent: 0,
     timeTrackingRemaining: 0,
   });
@@ -121,6 +123,9 @@ const FormCreateTask = (props) => {
               className="form-control"
               onChange={handleChange}
             ></input>
+            {errors.taskName && touched.taskName && (
+              <div id="feedback">{errors.taskName}</div>
+            )}
           </div>
           <div className="col-6">
             <p>Status</p>
@@ -183,7 +188,7 @@ const FormCreateTask = (props) => {
       <div className="form-group">
         <div className="row">
           <div className="col-6">
-            <p>Asignees</p>
+            <p>Assignees</p>
             <Select
               mode="multiple"
               options={userOptions}
@@ -197,18 +202,22 @@ const FormCreateTask = (props) => {
                 width: "100%",
               }}
             />
-
+            {errors.listUserAsign && touched.listUserAsign && (
+              <div id="feedback">{errors.listUserAsign}</div>
+            )}
             <div className="row mt-2">
               <div className="col-12 mt-1">
-                <p>Original estimate</p>
+                <p>Original estimate (hours)</p>
                 <input
                   onChange={handleChange}
                   className="form-control"
                   type="number"
-                  defaultValue="0"
                   name="originalEstimate"
                   min="0"
                 ></input>
+                {errors.originalEstimate && touched.originalEstimate && (
+                  <div id="feedback">{errors.originalEstimate}</div>
+                )}
               </div>
             </div>
           </div>
@@ -240,14 +249,16 @@ const FormCreateTask = (props) => {
                       ...timeTracking,
                       timeTrackingSpent: e.target.value,
                     });
-                    setFieldValue(`timeTrackingSpent`, e.target.value);
+                    setFieldValue("timeTrackingSpent", e.target.value);
                   }}
                   type="number"
-                  defaultValue="0"
                   className="form-control"
                   name="timeTrackingSpent"
                   min="0"
                 ></input>
+                {errors.timeTrackingSpent && touched.timeTrackingSpent && (
+                  <div id="feedback">{errors.timeTrackingSpent}</div>
+                )}
               </div>
               <div className="col-6">
                 <p>Time remaining</p>
@@ -257,14 +268,18 @@ const FormCreateTask = (props) => {
                       ...timeTracking,
                       timeTrackingRemaining: e.target.value,
                     });
-                    setFieldValue(`timeTrackingRemaining`, e.target.value);
+                    setFieldValue("timeTrackingRemaining", e.target.value);
                   }}
                   type="number"
-                  defaultValue="0"
                   className="form-control"
                   name="timeTrackingRemaining"
                   min="0"
+                  max={values.originalEstimate}
                 ></input>
+                {errors.timeTrackingRemaining &&
+                  touched.timeTrackingRemaining && (
+                    <div id="feedback">{errors.timeTrackingRemaining}</div>
+                  )}
               </div>
             </div>
           </div>
@@ -340,12 +355,48 @@ const createTaskForm = withFormik({
       statusId: arrStatus[0]?.statusId,
     };
   },
+  validate: (values) => {
+    const errors = {};
+
+    if (!values.taskName) {
+      errors.taskName = "Required";
+    }
+    if (values.listUserAsign.length === 0) {
+      errors.listUserAsign = "Required";
+    }
+    if (values.originalEstimate == "") {
+      errors.originalEstimate = "Required";
+    } else if (values.originalEstimate <= 0) {
+      errors.originalEstimate = "Must greater than 0";
+    }
+    if (values.timeTrackingSpent == "") {
+      errors.timeTrackingSpent = "Required";
+    } else if (values.timeTrackingSpent < 0) {
+      errors.timeTrackingSpent = "Must greater than 0";
+    } else if (values.timeTrackingSpent > values.originalEstimate) {
+      errors.timeTrackingSpent = "Can not greater than original estimate";
+    }
+    if (values.timeTrackingRemaining == "") {
+      errors.timeTrackingRemaining = "Required";
+    } else if (values.timeTrackingRemaining < 0) {
+      errors.timeTrackingRemaining = "Must greater than 0";
+    }
+
+    if (
+      Number(values.timeTrackingRemaining) +
+        Number(values.timeTrackingSpent) !==
+      Number(values.originalEstimate)
+    ) {
+      errors.originalEstimate = "Wrong";
+    }
+    return errors;
+  },
   mapPropsToTouched: (values) => {
     return values;
   },
   enableReinitialize: true,
   handleSubmit: (values, { props, setSubmitting }) => {
-    console.log("values", values);
+    console.log("values create task", values);
     props.dispatch({
       type: "CREATE_TASK_SAGA",
       taskObject: values,

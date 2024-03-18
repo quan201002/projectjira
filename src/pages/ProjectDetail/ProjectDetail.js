@@ -8,6 +8,7 @@ import {
   GET_TASK_SAGA,
   UPDATE_TASK_STATUS_SAGA,
 } from "../../redux/constant/TaskConstants";
+import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
 import { BugOutlined } from "@ant-design/icons";
 
 function ProjectDetail(props) {
@@ -25,7 +26,6 @@ function ProjectDetail(props) {
   console.log("project detaill", projectDetail);
   const renderAvatar = () => {
     return projectDetail?.members?.map((user, index) => {
-      console.log("user: ", user);
       return (
         <div className="d-flex">
           <div className="avatar" key={index}>
@@ -53,16 +53,17 @@ function ProjectDetail(props) {
         return <i class="fa-solid fa-arrow-down"></i>;
     }
   };
-  const renderTaskTypeIcon = (taskType) => {
-    {
-      switch (taskType) {
-        case 1:
-          return <i class="fa-solid fa-bug text-danger"></i>;
-        case 2:
-          return <i className="fa fa-bookmark text-success"></i>;
-      }
-    }
-  };
+  // const renderTaskTypeIcon = (taskType) => {
+  //   {
+  //     switch (taskType) {
+  //       case 1:
+  //         return <i class="fa-solid fa-bug text-danger"></i>;
+  //       case 2:
+  //         return <i className="fa fa-bookmark text-success"></i>;
+  //     }
+  //   }
+  // };
+
   const handleDragEnd = (result) => {
     console.log("result", result);
     let { projectId, taskId } = JSON.parse(result.draggableId);
@@ -138,7 +139,7 @@ function ProjectDetail(props) {
                                     {...provided.dragHandleProps}
                                     className="list-group-item draggable-task "
                                     data-toggle="modal"
-                                    data-target="#exampleModal"
+                                    data-target="#taskDetailModal"
                                   >
                                     <h4 className="text-info">
                                       {task.taskName}

@@ -24,6 +24,7 @@ import {
 } from "../../redux/constant/CommentConstant";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
 
 export default function ModalDetail() {
   const [commentValue, setCommentValue] = useState("");
@@ -57,6 +58,54 @@ export default function ModalDetail() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let isValid = true;
+    console.log("value", value);
+    console.log("name", name);
+    console.log(taskModal.timeTrackingRemaining);
+    console.log(taskModal.timeTrackingSpent);
+
+    switch (name) {
+      case "originalEstimate":
+        if (value <= 0) {
+          document.querySelector(".validate-original-estimate").innerText =
+            "Must greater than 0";
+        } else if (
+          taskModal.timeTrackingRemaining + taskModal.timeTrackingSpent !==
+          value * 1
+        ) {
+          document.querySelector(".validate-original-estimate").innerText =
+            "equal to logged hours plus remaining hours";
+        } else {
+          document.querySelector(".validate-original-estimate").innerText = "";
+        }
+        break;
+      case "timeTrackingSpent":
+        if (value < 0) {
+          document.querySelector(".validate-timetrackingspent").innerText =
+            "Must >= 0";
+        } else {
+          document.querySelector(".validate-timetrackingspent").innerText = " ";
+        }
+        break;
+      case "timeTrackingRemaining":
+        if (value < 0) {
+          document.querySelector(".validate-timetrackingremaining").innerText =
+            "Must >= 0";
+        } else {
+          document.querySelector(".validate-timetrackingremaining").innerText =
+            " ";
+        }
+        break;
+    }
+    // if (
+    //   taskModal.timeTrackingRemaining * 1 + taskModal.timeTrackingSpent * 1 !==
+    //   taskModal.originalEstimate * 1
+    // ) {
+    //   document.querySelector(".validate-original-estimate").innerText =
+    //     "equal to logged hours plus remaining hours";
+    // } else {
+    //   document.querySelector(".validate-original-estimate").innerText = "";
+    // }
     dispatch({
       type: HANDLE_CHANGE_POST_API_SAGA,
       actionType: CHANGE_TASK_MODEL,
@@ -313,9 +362,10 @@ export default function ModalDetail() {
                 justifyContent: "space-between",
               }}
             >
-              <p className="logged">{Number(timeTrackingRemaining)}h logged</p>
+              <p className="logged">{Number(timeTrackingSpent)}h logged</p>
+
               <p className="estimate-time">
-                {Number(timeTrackingRemaining)}h remaining
+                {Number(taskModal.timeTrackingRemaining)}h remaining
               </p>
             </div>
           </div>
@@ -323,20 +373,25 @@ export default function ModalDetail() {
         <div className="row">
           <div className="col-6">
             <input
+              type="number"
               className="form-control"
               name="timeTrackingSpent"
+              value={taskModal.timeTrackingSpent}
               onChange={handleChange}
-              defaultValue={timeTrackingSpent}
             ></input>
+            <p className="validate-text validate-timetrackingspent"></p>
           </div>
 
           <div className="col-6">
             <input
+              type="number"
               className="form-control"
               name="timeTrackingRemaining"
+              value={taskModal.timeTrackingRemaining}
               onChange={handleChange}
-              defaultValue={timeTrackingRemaining}
+              defaultValue=""
             ></input>
+            <p className="validate-text validate-timetrackingremaining"></p>
           </div>
         </div>
       </div>
@@ -354,18 +409,26 @@ export default function ModalDetail() {
   return (
     <div
       class="modal fade"
-      id="exampleModal"
+      id="taskDetailModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="TaskDetailModalLabel"
       aria-hidden="true"
       // style={{marginLeft:"24%",marginTop:"10px",height:"100%"}}
     >
       <div class="modal-dialog custom-modal " role="document">
         <div class="modal-content">
           <div className="modal-header">
-            <div classame="task-title">
-              <i className="fa fa-bookmark" />
+            <div classame="task-title w-100">
+              <span
+                style={{
+                  width: "16px",
+                  display: "inline-block",
+                  height: "20px",
+                }}
+              >
+                {renderTaskTypeIcon(taskModal.typeId)}
+              </span>
               <select
                 className="task-type-selector m-2"
                 name="typeId"
@@ -388,8 +451,8 @@ export default function ModalDetail() {
                 okText="Yes"
                 cancelText="No"
               >
-                <button className="btn  btn-danger">
-                  <DeleteOutlined />
+                <button className="btn btn-danger ">
+                  <DeleteOutlined className="text-light" />
                 </button>
               </Popconfirm>
             </div>
@@ -680,13 +743,14 @@ export default function ModalDetail() {
                     <h6 className="text-detail">ORIGINAL ESTIMATE (HOURS)</h6>
                     <input
                       name="originalEstimate"
-                      type="text"
+                      type="number"
                       className="estimate-hours"
                       value={taskModal.originalEstimate}
                       onChange={(e) => {
                         handleChange(e);
                       }}
                     ></input>
+                    <p className="validate-text validate-original-estimate"></p>
                   </div>
                   <div className="time-tracking">
                     <h6 className="text-detail">ITME TRACKING</h6>

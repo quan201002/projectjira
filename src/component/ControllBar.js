@@ -1,9 +1,14 @@
 import {
+  AppstoreOutlined,
+  BuildOutlined,
+  FormOutlined,
+  LoginOutlined,
   LogoutOutlined,
   MenuOutlined,
   PlusOutlined,
   SearchOutlined,
   SettingFilled,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
 
@@ -91,7 +96,7 @@ const ControllBar = () => {
               />
             </Sider>
             <Sider
-              className="d-flex justify-content-center "
+              className="d-flex justify-content-center menu-sider"
               style={{
                 background: colorBgContainer,
                 height: "100vh",
@@ -99,31 +104,31 @@ const ControllBar = () => {
               width={200}
             >
               <p>
-                <SettingFilled />
+                <BuildOutlined />
                 <NavLink className="  menu-item" to="/createproject">
                   Createproject
                 </NavLink>
               </p>
               <p>
-                <SettingFilled />
+                <AppstoreOutlined />
                 <NavLink className="  menu-item" to="/projectmanagement">
                   Project management
                 </NavLink>
               </p>
               <p>
-                <SettingFilled />
+                <UserSwitchOutlined />
                 <NavLink className=" menu-item" to="/Home">
                   User management
                 </NavLink>
               </p>
               <p>
-                <SettingFilled />
+                <LoginOutlined />
                 <NavLink className="menu-item" to="/login">
                   Login
                 </NavLink>
               </p>
               <p>
-                <SettingFilled />
+                <FormOutlined />
                 <NavLink className="menu-item" to="/signup">
                   Signup
                 </NavLink>

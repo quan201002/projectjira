@@ -239,6 +239,7 @@ function* deleteUserSaga(action) {
     }
   } catch (err) {
     console.log(err);
+    notifiFunction("error", "Unauthorized");
   }
 }
 export function* theoDoiDeleteUser() {

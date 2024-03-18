@@ -519,3 +519,30 @@ h3 {
 .arrow-display{
   display: block;
 }
+/* .toggleMask{
+  position: absolute;
+  top:-20px;
+  right: 40px;
+  text-indent: -30px;
+  height:100%;
+  line-height: 2;
+  pointer-events: auto;
+  z-index: 5;
+  cursor: pointer;
+}
+.toggleMask ~ input{
+  padding-right: 30px;
+}
+  */
+#feedback{
+  color:red;
+}
+.anticon svg {
+  display: inline-block;
+  
+  font-size: 20px;
+  
+}
+.validate-text {
+  color:red;
+}
