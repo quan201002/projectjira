@@ -6,6 +6,7 @@ import {
   DELETE_USER_SAGA,
   EDIT_USER,
   GET_ALL_USER_SAGA,
+  GET_USER_API,
 } from "../../redux/constant/UserConstants";
 import FormEditProject from "../../component/Forms/FormEditProject";
 import MyEnhancedForm from "../../HOC/JiraCloneHOC/FormEditUser";
@@ -107,7 +108,7 @@ const UserList = () => {
 
   useEffect(() => {
     dispatch({
-      type: "GET_USER_API",
+      type: GET_USER_API,
       keyWord: "",
     });
   }, []);
@@ -131,7 +132,7 @@ const UserList = () => {
           }
           searchRef.current = setTimeout(() => {
             dispatch({
-              type: "GET_USER_API",
+              type: GET_USER_API,
               keyWord: value,
             });
           }, 500);
@@ -147,7 +148,7 @@ const UserList = () => {
             clearTimeout(searchRef.current);
           }
           dispatch({
-            type: "GET_USER_API",
+            type: GET_USER_API,
             keyWord: valueSelected,
           });
           setValue(option.label);

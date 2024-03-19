@@ -93,7 +93,7 @@ const Formsignup = () => {
               {
                 validator(rule, value) {
                   return new Promise((resolve, reject) => {
-                    if (value.trim() == "") {
+                    if (value == "") {
                       reject("Please input your password");
                     } else if (value.length < 6 && value.length > 0) {
                       reject("password must have at least 6 characters");
@@ -115,9 +115,9 @@ const Formsignup = () => {
               {
                 validator(rule, value) {
                   return new Promise((resolve, reject) => {
-                    if (value.trim() == "") {
+                    if (value == "") {
                       reject("Please confirm your password");
-                    } else if (value.length < 6 && value.length > 0) {
+                    } else if (value?.length < 6 && value?.length > 0) {
                       reject("password must have at least 6 characters");
                     } else if (value !== passWord) {
                       reject("incorrect password");

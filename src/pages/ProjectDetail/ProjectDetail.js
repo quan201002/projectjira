@@ -10,12 +10,13 @@ import {
 } from "../../redux/constant/TaskConstants";
 import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
 import { BugOutlined } from "@ant-design/icons";
+import { GET_PROJECT_DETAIL_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 
 function ProjectDetail(props) {
   let dispatch = useDispatch();
   useEffect(() => {
     dispatch({
-      type: "GET_PROJECT_DETAIL_SAGA",
+      type: GET_PROJECT_DETAIL_SAGA,
       projectId,
     });
   }, []);
@@ -149,7 +150,7 @@ function ProjectDetail(props) {
                                       style={{ display: "flex" }}
                                     >
                                       <div className="block-left">
-                                        <span className="mr-1">
+                                        <span className="mr-2">
                                           {renderTaskTypeIcon(
                                             task.taskTypeDetail.id
                                           )}

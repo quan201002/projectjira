@@ -2,6 +2,7 @@ import { USER_LOGIN } from "../constant/SettingSystem";
 import {
   GET_ALL_USER,
   GET_USER_BY_PROJECT_ID,
+  GET_USER_SEARCH,
 } from "../constant/UserConstants";
 
 let usLogin = {};
@@ -17,7 +18,7 @@ const stateDefault = {
 
 const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
   switch (action.type) {
-    case "GET_USER_SEARCH":
+    case GET_USER_SEARCH:
       state.userSearch = action.lstUserSearch;
       // console.log("stateUser", state);
       return { ...state };

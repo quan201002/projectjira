@@ -5,3 +5,7 @@ export const GET_ALL_USER = "GET_ALL_USER";
 export const EDIT_USER_SAGA = "EDIT_USER_SAGA";
 export const EDIT_USER = "EDIT_USER";
 export const DELETE_USER_SAGA = "DELETE_USER_SAGA";
+export const GET_USER_API = "GET_USER_API";
+export const REMOVE_USER_PROJECT_API = "REMOVE_USER_PROJECT_API";
+export const ADD_USER_PROJECT_API = "ADD_USER_PROJECT_API";
+export const GET_USER_SEARCH = "GET_USER_SEARCH";

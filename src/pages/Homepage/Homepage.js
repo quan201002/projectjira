@@ -1,5 +1,4 @@
 import React from "react";
-import "./Homepage.css";
 import { useSelector } from "react-redux";
 import { AutoComplete, Layout, theme } from "antd";
 import UserList from "./UserList";

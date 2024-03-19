@@ -19,14 +19,19 @@ import { STATUS_CODE, TOKEN, USER_LOGIN } from "../../constant/SettingSystem";
 import { message } from "antd";
 import { https } from "../../../service/api";
 import {
+  ADD_USER_PROJECT_API,
   DELETE_USER_SAGA,
   EDIT_USER_SAGA,
   GET_ALL_USER,
   GET_ALL_USER_SAGA,
+  GET_USER_API,
   GET_USER_BY_PROJECT_ID,
   GET_USER_BY_PROJECT_ID_SAGA,
+  GET_USER_SEARCH,
+  REMOVE_USER_PROJECT_API,
 } from "../../constant/UserConstants";
 import { notifiFunction } from "../../../component/Notification/Notification";
+import { GET_LIST_PROJECT_SAGA } from "../../constant/ProjectCyberBugsConstant";
 
 function* siginSaga(action) {
   yield delay(500);
@@ -73,7 +78,7 @@ function* getUserSaga(action) {
       return https.get(`/api/Users/getUser?keyword=${action.keyWord}`);
     });
     yield put({
-      type: "GET_USER_SEARCH",
+      type: GET_USER_SEARCH,
       lstUserSearch: res.data.content,
     });
     if (res.status === STATUS_CODE.SUCCESS) {
@@ -84,7 +89,7 @@ function* getUserSaga(action) {
 }
 
 export function* theoDoiGetUser() {
-  yield takeLatest("GET_USER_API", getUserSaga);
+  yield takeLatest(GET_USER_API, getUserSaga);
 }
 
 //add user saga
@@ -101,7 +106,7 @@ function* addUserProjectSaga(action) {
 
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
-        type: "GET_LIST_PROJECT_SAGA",
+        type: GET_LIST_PROJECT_SAGA,
       });
       notifiFunction("success", "User added");
     }
@@ -118,7 +123,7 @@ function* addUserProjectSaga(action) {
 }
 
 export function* theoDoiAddUser() {
-  yield takeLatest("ADD_USER_PROJECT_API", addUserProjectSaga);
+  yield takeLatest(ADD_USER_PROJECT_API, addUserProjectSaga);
 }
 
 //remove user
@@ -136,7 +141,7 @@ function* removeUserSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       notifiFunction("success", "User removed");
       yield put({
-        type: "GET_LIST_PROJECT_SAGA",
+        type: GET_LIST_PROJECT_SAGA,
       });
     }
     yield put({
@@ -152,7 +157,7 @@ function* removeUserSaga(action) {
 }
 
 export function* theoDoiRemoveUser() {
-  yield takeLatest("REMOVE_USER_PROJECT_API", removeUserSaga);
+  yield takeLatest(REMOVE_USER_PROJECT_API, removeUserSaga);
 }
 
 function* getUserByProjectIdSaga(action) {
@@ -211,7 +216,7 @@ function* editUsersSaga(action) {
       notifiFunction("success", "user edited");
       console.log("data edit", data);
       yield put({
-        type: "GET_USER_API",
+        type: GET_USER_API,
         keyWord: "",
       });
     }
@@ -233,7 +238,7 @@ function* deleteUserSaga(action) {
       notifiFunction("success", "user deleted");
       console.log("data delete", data);
       yield put({
-        type: "GET_USER_API",
+        type: GET_USER_API,
         keyWord: "",
       });
     }

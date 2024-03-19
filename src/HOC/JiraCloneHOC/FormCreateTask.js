@@ -15,11 +15,14 @@ import {
   GET_ALL_STATUS_SAGA,
 } from "../../redux/constant/StatusConstants";
 import { select } from "redux-saga/effects";
-import { GET_USER_BY_PROJECT_ID_SAGA } from "../../redux/constant/UserConstants";
+import {
+  GET_USER_API,
+  GET_USER_BY_PROJECT_ID_SAGA,
+} from "../../redux/constant/UserConstants";
 import { USER_LOGIN } from "../../redux/constant/SettingSystem";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import * as Yup from "yup";
+import { CREATE_TASK_SAGA } from "../../redux/constant/TaskConstants";
 
 const FormCreateTask = (props) => {
   const {
@@ -69,7 +72,7 @@ const FormCreateTask = (props) => {
       type: GET_ALL_PRIORITY_SAGA,
     });
     disp({
-      type: "GET_USER_API",
+      type: GET_USER_API,
     });
     disp({
       type: GET_ALL_STATUS_SAGA,
@@ -122,6 +125,7 @@ const FormCreateTask = (props) => {
               name="taskName"
               className="form-control"
               onChange={handleChange}
+              value={values.taskName}
             ></input>
             {errors.taskName && touched.taskName && (
               <div id="feedback">{errors.taskName}</div>
@@ -148,7 +152,7 @@ const FormCreateTask = (props) => {
       <div className="form-group">
         <div className="row">
           <div className="col-6">
-            <p>priority</p>
+            <p>Priority</p>
             <select
               name="priorityId"
               className="form-control"
@@ -286,30 +290,8 @@ const FormCreateTask = (props) => {
         </div>
       </div>
       <div className="form-group">
-        <p>description</p>
-        {/* <Editor
-          name="description"
-          apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-          init={{
-            plugins:
-              "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-            toolbar:
-              "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-            tinycomments_mode: "embedded",
-            tinycomments_author: "Author name",
-            mergetags_list: [
-              { value: "First.Name", title: "First Name" },
-              { value: "Email", title: "Email" },
-            ],
-            ai_request: (request, respondWith) =>
-              respondWith.string(() =>
-                Promise.reject("See docs to implement AI Assistant")
-              ),
-          }}
-          onEditorChange={(content, editor) => {
-            setFieldValue("description", content);
-          }}
-        /> */}
+        <p>Description</p>
+
         <CKEditor
           editor={ClassicEditor}
           data="<p>Hello from CKEditor&nbsp;5!</p>"
@@ -344,8 +326,8 @@ const createTaskForm = withFormik({
 
     return {
       listUserAsign: [],
-      taskName: " ",
-      description: " ",
+      taskName: "",
+      description: "",
       originalEstimate: 0,
       timeTrackingSpent: 0,
       timeTrackingRemaining: 0,
@@ -358,7 +340,7 @@ const createTaskForm = withFormik({
   validate: (values) => {
     const errors = {};
 
-    if (!values.taskName) {
+    if (values.taskName == "") {
       errors.taskName = "Required";
     }
     if (values.listUserAsign.length === 0) {
@@ -378,6 +360,8 @@ const createTaskForm = withFormik({
     }
     if (values.timeTrackingRemaining == "") {
       errors.timeTrackingRemaining = "Required";
+    } else if (values.timeTrackingRemaining > values.originalEstimate) {
+      errors.timeTrackingRemaining = "Can not greater than original estimate";
     } else if (values.timeTrackingRemaining < 0) {
       errors.timeTrackingRemaining = "Must greater than 0";
     }
@@ -398,7 +382,7 @@ const createTaskForm = withFormik({
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("values create task", values);
     props.dispatch({
-      type: "CREATE_TASK_SAGA",
+      type: CREATE_TASK_SAGA,
       taskObject: values,
       projectId: values.projectId,
     });
@@ -406,11 +390,6 @@ const createTaskForm = withFormik({
 })(FormCreateTask);
 const mapStatetoProps = (state) => {
   // let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
-  // let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
-  // let { arrPriority } = useSelector((state) => state.PriorityReducer);
-  // let { arrStatus } = useSelector((state) => state.StatusIdReducer);
-  // console.log("arr status", arrStatus);
-  // let { userSearch } = useSelector((state) => state.UserLoginCyberBugsReducer);
   return {
     projectList: state.ProjectCyberBugsReducer.projectList,
     arrTaskType: state.TaskTypeReducer.arrTaskType,

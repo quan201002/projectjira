@@ -18,6 +18,15 @@ import FormEditProject from "../../component/Forms/FormEditProject";
 import { NavLink } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import {
+  DELETE_PROJECT_SAGA,
+  EDIT_PROJECT,
+  GET_LIST_PROJECT_SAGA,
+} from "../../redux/constant/ProjectCyberBugsConstant";
+import {
+  ADD_USER_PROJECT_API,
+  GET_USER_API,
+} from "../../redux/constant/UserConstants";
 
 const ProjectManagement = () => {
   const searchRef = useRef(null);
@@ -27,7 +36,6 @@ const ProjectManagement = () => {
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
-  console.log("userSearch", userSearch);
 
   const projectList = useSelector(
     (state) => state.ProjectCyberBugsReducer.projectList
@@ -40,7 +48,7 @@ const ProjectManagement = () => {
 
   //dung useDispatch de goi action
   useEffect(() => {
-    dispatch({ type: "GET_LIST_PROJECT_SAGA" });
+    dispatch({ type: GET_LIST_PROJECT_SAGA });
   }, []);
 
   const [filteredInfo, setFilteredInfo] = useState({});
@@ -375,7 +383,7 @@ const ProjectManagement = () => {
 
                       searchRef.current = setTimeout(() => {
                         dispatch({
-                          type: "GET_USER_API",
+                          type: GET_USER_API,
                           keyWord: value,
                         });
                       }, 500);
@@ -389,7 +397,7 @@ const ProjectManagement = () => {
                       setValue(option.label);
                       //goi api tra ve backend
                       dispatch({
-                        type: "ADD_USER_PROJECT_API",
+                        type: ADD_USER_PROJECT_API,
                         userProject: {
                           projectId: record.id,
                           userId: option.value,
@@ -411,6 +419,7 @@ const ProjectManagement = () => {
       dataIndex: "",
       key: "x",
       render: (text, record) => {
+        console.log("record", record);
         return (
           <>
             <button
@@ -440,7 +449,7 @@ const ProjectManagement = () => {
               description="Are you sure to delete this project ?"
               onConfirm={() => {
                 dispatch({
-                  type: "DELETE_PROJECT_SAGA",
+                  type: DELETE_PROJECT_SAGA,
                   idProject: record.id,
                 });
               }}

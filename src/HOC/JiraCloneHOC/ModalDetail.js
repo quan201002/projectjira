@@ -25,6 +25,8 @@ import {
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
+import { USER_LOGIN } from "../../redux/constant/SettingSystem";
+import UserLoginCyberBugsReducer from "../../redux/reducer/UserLoginCyberBugReducer";
 
 export default function ModalDetail() {
   const [commentValue, setCommentValue] = useState("");
@@ -40,10 +42,11 @@ export default function ModalDetail() {
   const [targetComment, setTargetComment] = useState("");
   const [historyContent, setHistoryContet] = useState(taskModal.description);
   const [content, setContent] = useState("");
+  const userLogin = localStorage.getItem(USER_LOGIN)
+    ? JSON.parse(localStorage.getItem(USER_LOGIN))
+    : "";
   const dispatch = useDispatch();
-  console.log("task model", taskModal);
-  console.log("comments", comments);
-  console.log("task id", taskModal.taskId);
+
   useEffect(() => {
     dispatch({
       type: GET_ALL_STATUS_SAGA,
@@ -69,12 +72,17 @@ export default function ModalDetail() {
         if (value <= 0) {
           document.querySelector(".validate-original-estimate").innerText =
             "Must greater than 0";
-        } else if (
-          taskModal.timeTrackingRemaining + taskModal.timeTrackingSpent !==
+        } else {
+          document.querySelector(".validate-original-estimate").innerText = "";
+        }
+
+        if (
+          taskModal.timeTrackingRemaining * 1 +
+            taskModal.timeTrackingSpent * 1 !==
           value * 1
         ) {
           document.querySelector(".validate-original-estimate").innerText =
-            "equal to logged hours plus remaining hours";
+            "Equal to logged hours plus remaining hours";
         } else {
           document.querySelector(".validate-original-estimate").innerText = "";
         }
@@ -86,6 +94,16 @@ export default function ModalDetail() {
         } else {
           document.querySelector(".validate-timetrackingspent").innerText = " ";
         }
+        if (
+          value * 1 + taskModal.timeTrackingRemaining * 1 ===
+          taskModal.originalEstimate * 1
+        ) {
+          document.querySelector(".validate-original-estimate").innerText = "";
+        } else {
+          document.querySelector(".validate-original-estimate").innerText =
+            "Equal to logged hours plus remaining hours";
+        }
+
         break;
       case "timeTrackingRemaining":
         if (value < 0) {
@@ -95,17 +113,18 @@ export default function ModalDetail() {
           document.querySelector(".validate-timetrackingremaining").innerText =
             " ";
         }
+        if (
+          value * 1 + taskModal.timeTrackingSpent * 1 ===
+          taskModal.originalEstimate * 1
+        ) {
+          document.querySelector(".validate-original-estimate").innerText = "";
+        } else {
+          document.querySelector(".validate-original-estimate").innerText =
+            "Equal to logged hours plus remaining hours";
+        }
         break;
     }
-    // if (
-    //   taskModal.timeTrackingRemaining * 1 + taskModal.timeTrackingSpent * 1 !==
-    //   taskModal.originalEstimate * 1
-    // ) {
-    //   document.querySelector(".validate-original-estimate").innerText =
-    //     "equal to logged hours plus remaining hours";
-    // } else {
-    //   document.querySelector(".validate-original-estimate").innerText = "";
-    // }
+
     dispatch({
       type: HANDLE_CHANGE_POST_API_SAGA,
       actionType: CHANGE_TASK_MODEL,
@@ -125,30 +144,6 @@ export default function ModalDetail() {
       <div>
         {visibleDesEditor ? (
           <div>
-            {/* <Editor
-              initialValue={taskModal.description}
-              name="description"
-              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-              init={{
-                plugins:
-                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                tinycomments_mode: "embedded",
-                tinycomments_author: "Author name",
-                mergetags_list: [
-                  { value: "First.Name", title: "First Name" },
-                  { value: "Email", title: "Email" },
-                ],
-                ai_request: (request, respondWith) =>
-                  respondWith.string(() =>
-                    Promise.reject("See docs to implement AI Assistant")
-                  ),
-              }}
-              onEditorChange={(content, editor) => {
-                setContent(content);
-              }}
-            /> */}
             <CKEditor
               editor={ClassicEditor}
               data={taskModal.description}
@@ -212,7 +207,7 @@ export default function ModalDetail() {
           </div>
         ) : (
           <div>
-            <p className="text-primary mb-1">Description:</p>
+            <p className="text-detail mb-1">Description:</p>
             {jsxDescription}
             <div
               className="btn btn-primary mb-3"
@@ -238,32 +233,6 @@ export default function ModalDetail() {
       <div>
         {visibleCommentEditor && cmt.id == targetComment ? (
           <div>
-            {/* <Editor
-              initialValue={cmt.contentComment}
-              name="description"
-              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-              init={{
-                plugins:
-                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                tinycomments_mode: "embedded",
-                tinycomments_author: "Author name",
-                mergetags_list: [
-                  { value: "First.Name", title: "First Name" },
-                  { value: "Email", title: "Email" },
-                ],
-                ai_request: (request, respondWith) =>
-                  respondWith.string(() =>
-                    Promise.reject("See docs to implement AI Assistant")
-                  ),
-              }}
-              onEditorChange={(content, editor) => {
-                setEditCmtValue(content);
-                console.log(content);
-                console.log("cmt", editCmtValue);
-              }}
-            /> */}
             <CKEditor
               editor={ClassicEditor}
               data={cmt.contentComment}
@@ -492,7 +461,7 @@ export default function ModalDetail() {
                     <h6 className="text-success">COMMENT</h6>
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
-                        <img></img>
+                        <img src={userLogin.ava}></img>
                       </div>
                       <div className="input-comment">
                         <input
@@ -519,24 +488,6 @@ export default function ModalDetail() {
                         >
                           Add comment
                         </button>
-                        <p>
-                          <span style={{ fontWeight: 500, color: "gray" }}>
-                            Protip:
-                          </span>
-                          <span>
-                            press
-                            <span
-                              style={{
-                                fontWeight: "bold",
-                                background: "#ecedf0",
-                                color: "#b4bac6",
-                              }}
-                            >
-                              M
-                            </span>
-                            to comment
-                          </span>
-                        </p>
                       </div>
                     </div>
                     <div className="latest-comment">

@@ -8,6 +8,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { https } from "../../service/api";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CREATE_PROJECT_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 
 function CreateProject(props) {
   let arrProjectCaterory = useSelector(
@@ -162,7 +163,7 @@ const createProjectForm = withFormik({
   // Custom sync validation
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("values", values);
-    props.dispatch({ type: "CREATE_PROJECT_SAGA", newProject: values });
+    props.dispatch({ type: CREATE_PROJECT_SAGA, newProject: values });
   },
   displayName: "create project",
 })(CreateProject);

@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { UPDATE_PROJECT_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 function FormEditProject(props) {
   let arrProjectCaterory = useSelector(
     (state) => state.ProjectCateroryReducer.arrProjectCaterory
@@ -93,29 +94,7 @@ function FormEditProject(props) {
         <div className="col-12">
           <div className="form-group">
             <h4 className="font-weight-bold">Description</h4>
-            {/* <Editor
-              value={values.description}
-              name="description123"
-              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-              init={{
-                plugins:
-                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                tinycomments_mode: "embedded",
-                tinycomments_author: "Author name",
-                mergetags_list: [
-                  { value: "First.Name", title: "First Name" },
-                  { value: "Email", title: "Email" },
-                ],
-                ai_request: (request, respondWith) =>
-                  respondWith.string(() =>
-                    Promise.reject("See docs to implement AI Assistant")
-                  ),
-              }}
-              initialValue={values.description}
-              onEditorChange={handelEditorChange}
-            /> */}
+
             <CKEditor
               editor={ClassicEditor}
               data={values.description}
@@ -153,9 +132,9 @@ const editProjectForm = withFormik({
     console.log("projectEdit", projectEdit);
     return {
       id: projectEdit?.id,
-      projectName: projectEdit.projectName,
-      description: projectEdit.description,
-      categoryId: projectEdit.categoryId,
+      projectName: projectEdit?.projectName,
+      description: projectEdit?.description,
+      categoryId: projectEdit?.categoryId,
     };
   },
   validationSchema: Yup.object().shape({
@@ -168,7 +147,7 @@ const editProjectForm = withFormik({
   // Custom sync validation
   handleSubmit: (values, { props, setSubmitting }) => {
     const action = {
-      type: "UPDATE_PROJECT_SAGA",
+      type: UPDATE_PROJECT_SAGA,
       projectUpdate: values,
     };
     //call saga dinh nghia mot ham vi khong sai dc hook nen sai mapdispatchtoprops

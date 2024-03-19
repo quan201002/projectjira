@@ -71,7 +71,7 @@ const Formlogin = (props) => {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: "fit-content",
+              width: "33vw",
               boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
             }}
           >
@@ -94,8 +94,8 @@ const Formlogin = (props) => {
 
                 <Input.Password
                   style={{
-                    marginTop: "25px",
-                    marginBottom: "25px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
                   }}
                   onChange={handleChange}
                   value={values.passWord}
@@ -170,6 +170,7 @@ const LoginCyberBugs = withFormik({
   validationSchema: Yup.object().shape({
     email: Yup.string().email("Invalid email").required("*Email is required"),
     passWord: Yup.string()
+      .required("*Password is required")
       .min(6, "Password must have at least 6 characters")
       .max(32, "Password must have at most 32 characters"),
   }),

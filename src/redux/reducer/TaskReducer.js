@@ -39,7 +39,6 @@ const initialState = {
 };
 
 export const TaskReducer = (state = initialState, action) => {
-  console.log("action reducer", action);
   switch (action.type) {
     case GET_TASK:
       return { ...state, taskModal: action.taskModal };

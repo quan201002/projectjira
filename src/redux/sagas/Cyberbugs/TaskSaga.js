@@ -10,6 +10,7 @@ import { https } from "../../../service/api";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODEL,
+  CREATE_TASK_SAGA,
   DELETE_TASK_SAGA,
   GET_TASK,
   GET_TASK_SAGA,
@@ -19,7 +20,10 @@ import {
   UPDATE_TASK_STATUS_SAGA,
 } from "../../constant/TaskConstants";
 import { GET_COMMENTS_SAGA } from "../../constant/CommentConstant";
-import $ from "jquery";
+import {
+  CLOSE_DRAWER,
+  GET_PROJECT_DETAIL_SAGA,
+} from "../../constant/ProjectCyberBugsConstant";
 
 function* createTaskSaga(action) {
   console.log("action create task saga", action);
@@ -33,13 +37,13 @@ function* createTaskSaga(action) {
     console.log("data", data);
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
-        type: "GET_PROJECT_DETAIL_SAGA",
+        type: GET_PROJECT_DETAIL_SAGA,
         projectId: action.projectId,
       });
       notifiFunction("success", "crete task successfully");
     }
     yield put({
-      type: "CLOSE_DRAWER",
+      type: CLOSE_DRAWER,
     });
   } catch (err) {
     console.log(err.response.data);
@@ -49,7 +53,7 @@ function* createTaskSaga(action) {
   });
 }
 export function* theoDoiCreateTaskSaga() {
-  yield takeLatest("CREATE_TASK_SAGA", createTaskSaga);
+  yield takeLatest(CREATE_TASK_SAGA, createTaskSaga);
 }
 
 function* getTaskSaga(action) {
@@ -88,7 +92,7 @@ function* updateTaskStatusSaga(action) {
     //sau khi thành công gọi lại get project detail saga để sắp xếp lại thông tin các task
 
     yield put({
-      type: "GET_PROJECT_DETAIL_SAGA",
+      type: GET_PROJECT_DETAIL_SAGA,
       projectId: taskUpdateStatus.projectId,
     });
     yield put({
@@ -166,7 +170,7 @@ function* handelChangePostApi(action) {
     console.log("data", data);
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
-        type: "GET_PROJECT_DETAIL_SAGA",
+        type: GET_PROJECT_DETAIL_SAGA,
         projectId: taskModalUpdate.projectId,
       });
       yield put({
@@ -193,7 +197,7 @@ function* deleteTaskSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       notifiFunction("success", "Delete task successfully!");
       yield put({
-        type: "GET_PROJECT_DETAIL_SAGA",
+        type: GET_PROJECT_DETAIL_SAGA,
         projectId: projectId,
       });
       // const taskModalform = document.getElementById("exampleModal");

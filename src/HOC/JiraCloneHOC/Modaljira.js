@@ -13,6 +13,10 @@ import {
   Space,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  CLOSE_DRAWER,
+  OPEN_DRAWER,
+} from "../../redux/constant/ProjectCyberBugsConstant";
 const { Option } = Select;
 const Modaljira = () => {
   let dispatch = useDispatch();
@@ -20,10 +24,10 @@ const Modaljira = () => {
     (state) => state.drawerReducer
   );
   const showDrawer = () => {
-    dispatch({ type: "OPEN_DRAWER", open: true });
+    dispatch({ type: OPEN_DRAWER, open: true });
   };
   const onClose = () => {
-    dispatch({ type: "CLOSE_DRAWER", open: false });
+    dispatch({ type: CLOSE_DRAWER, open: false });
   };
   return (
     <>

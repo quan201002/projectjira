@@ -10,8 +10,16 @@ import {
 import { notifiFunction } from "../../../component/Notification/Notification";
 import { https } from "../../../service/api";
 import {
+  CLOSE_DRAWER,
+  CREATE_PROJECT_SAGA,
+  DELETE_PROJECT_SAGA,
   GET_ALL_PROJECT,
   GET_ALL_PROJECT_SAGA,
+  GET_LIST_PROJECT,
+  GET_LIST_PROJECT_SAGA,
+  GET_PROJECT_DETAIL_SAGA,
+  PUT_PROJECT_DETAIL,
+  UPDATE_PROJECT_SAGA,
 } from "../../constant/ProjectCyberBugsConstant";
 import { GET_USER_BY_PROJECT_ID_SAGA } from "../../constant/UserConstants";
 
@@ -33,13 +41,19 @@ function* createProjectSaga(action) {
       window.location.replace("/projectmanagement");
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.response.data);
+    if (err.response.data.statusCode === STATUS_CODE.SERVER_ERROR) {
+      notifiFunction("error", "Project name has been used");
+    }
   }
   yield put({
     type: HIDE_LOADING,
   });
 }
 
+export function* theodoiCreateProjectSaga() {
+  yield takeLatest(CREATE_PROJECT_SAGA, createProjectSaga);
+}
 //get all project
 function* getListProjectSaga(action) {
   yield put({
@@ -51,7 +65,7 @@ function* getListProjectSaga(action) {
     );
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
-        type: "GET_LIST_PROJECT",
+        type: GET_LIST_PROJECT,
         projectList: data.content,
       });
       yield put({
@@ -67,12 +81,9 @@ function* getListProjectSaga(action) {
 }
 
 export function* theodoiGetListProjectSaga() {
-  yield takeLatest("GET_LIST_PROJECT_SAGA", getListProjectSaga);
+  yield takeLatest(GET_LIST_PROJECT_SAGA, getListProjectSaga);
 }
 
-export function* theodoiCreateProjectSaga() {
-  yield takeLatest("CREATE_PROJECT_SAGA", createProjectSaga);
-}
 //Update Project
 
 function* updateProjectSaga(action) {
@@ -95,7 +106,7 @@ function* updateProjectSaga(action) {
     }
     yield call(getListProjectSaga);
     yield put({
-      type: "CLOSE_DRAWER",
+      type: CLOSE_DRAWER,
     });
   } catch (err) {
     console.log(err);
@@ -105,7 +116,7 @@ function* updateProjectSaga(action) {
   });
 }
 export function* theodoiUpdateProjectSaga() {
-  yield takeLatest("UPDATE_PROJECT_SAGA", updateProjectSaga);
+  yield takeLatest(UPDATE_PROJECT_SAGA, updateProjectSaga);
 }
 
 //xoa project
@@ -133,7 +144,7 @@ function* deleteProjectSaga(action) {
     }
     yield call(getListProjectSaga);
     yield put({
-      type: "CLOSE_DRAWER",
+      type: CLOSE_DRAWER,
     });
   } catch (err) {
     console.log(err);
@@ -147,7 +158,7 @@ function* deleteProjectSaga(action) {
   });
 }
 export function* theodoiDeleteProjectSaga() {
-  yield takeLatest("DELETE_PROJECT_SAGA", deleteProjectSaga);
+  yield takeLatest(DELETE_PROJECT_SAGA, deleteProjectSaga);
 }
 
 //get project detail
@@ -159,7 +170,7 @@ function* getProjectDetailSaga(action) {
       https.get(`/api/Project/getProjectDetail?id=${action.projectId}`)
     );
     yield put({
-      type: "PUT_PROJECT_DETAIL",
+      type: PUT_PROJECT_DETAIL,
       projectDetail: data.content,
     });
     console.log(data);
@@ -168,7 +179,7 @@ function* getProjectDetailSaga(action) {
   }
 }
 export function* theodoiGetProjectDetailSaga() {
-  yield takeLatest("GET_PROJECT_DETAIL_SAGA", getProjectDetailSaga);
+  yield takeLatest(GET_PROJECT_DETAIL_SAGA, getProjectDetailSaga);
 }
 
 //get all project saga
@@ -180,7 +191,7 @@ function* getAllProjectSaga(action) {
     });
     console.log("data list project", data);
     yield put({
-      type: "GET_LIST_PROJECT",
+      type: GET_LIST_PROJECT,
       projectList: data.content,
     });
     yield put({

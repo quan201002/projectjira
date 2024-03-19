@@ -1,3 +1,8 @@
+import {
+  CLOSE_DRAWER,
+  OPEN_DRAWER,
+} from "../constant/ProjectCyberBugsConstant";
+
 const initialState = {
   open: false,
   ComponentContentDrawer: () => {},
@@ -9,9 +14,9 @@ const initialState = {
 
 export const drawerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "OPEN_DRAWER":
+    case OPEN_DRAWER:
       return { ...state, open: true };
-    case "CLOSE_DRAWER":
+    case CLOSE_DRAWER:
       return { ...state, open: false };
     case "OPEN_FORM_EDIT_PROJECT":
       return {
