@@ -24,7 +24,7 @@ import {
   CLOSE_DRAWER,
   GET_PROJECT_DETAIL_SAGA,
 } from "../../constant/ProjectCyberBugsConstant";
-
+import $ from "jquery";
 function* createTaskSaga(action) {
   console.log("action create task saga", action);
   yield put({
