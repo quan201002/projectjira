@@ -114,9 +114,8 @@ const UserList = () => {
   }, []);
   return (
     <div style={{ width: "100%" }}>
-      <h3 className="text-center pb-3 ">User Management</h3>
       <AutoComplete
-        className="mb-3"
+        className="mt-lg-5 mb-lg-5 mb-md-1 mt-md-1 mt-sm-0 mb-sm-0"
         options={userSearch?.map((user, index) => {
           return {
             label: user.name,
@@ -169,7 +168,7 @@ const UserList = () => {
           current: localStorage.getItem("PAGE")
             ? JSON.parse(localStorage.getItem("PAGE"))
             : 1,
-          pageSize: 7,
+          pageSize: 6,
           onChange: (page) => {
             setPage(page);
             localStorage.setItem("PAGE", JSON.stringify(page));

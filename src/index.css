@@ -19,6 +19,112 @@ html,body{
 .login-input{
   width: 25vw !important;
 }
+.login-form{
+  background : white;
+  border-radius : 25px ;
+  padding:  30px ;
+  position:  relative ;
+  top:  50% ;
+  left:   50% ;
+  transform: translate(-50%, -50%) ;
+  width:  33vw ;
+  box-shadow:  2px 3px 34px -8px rgba(0,0,0,0.78) ;
+  transition: 1s ease-in;
+} 
+.signup-page{
+  background-image: url(".././public/background.jpg") ;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form{
+  background: white;
+          border-radius: 25px;
+          padding: 30px;
+          width: 50%;
+          box-shadow: 2px 3px 34px -8px rgba(0,0,0,0.78);
+          align-items: center;
+          text-align: center;
+          transition: 1s ease-in;
+}
+:where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark>.ant-menu .ant-menu-item-selected {
+  background-color: #001529;
+}
+.dropdown-bar{
+  position:absolute;
+  top:50px;
+  left:50px;
+  display: none;
+  z-index:10000;
+}
+.dark-sider-button{
+  font-size: 16px;
+  width: 100%;
+  height: 64;
+  padding: 18px;
+  padding-right: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+:where(.css-dev-only-do-not-override-1b0bdye).ant-btn.ant-btn-icon-only {
+  width:50px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+.dropdown-menu.controller-menu{
+    box-shadow:8px 8px 16px rgba(0, 0, 0, 0.5);
+    transition: all 1s !important;
+    padding-left:15px;
+}
+@media (max-width:1280px) {
+  .login-form{
+    width: 50vw ;
+  }
+  
+}
+
+@media (max-width:992px) {
+  .login-form{
+    width: 76vw ;
+  }
+  .signup-form{
+    width:80vw;
+  }
+  .dark-sider{
+    width: 40px !important;
+    max-width: 40px !important;
+    min-width: 40px !important;
+  }
+  .dark-sider-button{
+    display: none !important;
+  }
+  :where(.css-dev-only-do-not-override-1b0bdye).ant-btn.ant-btn-icon-only {
+    width: 40px;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+  .dropdown-bar{
+    display: block;
+  }
+  .white-sider{
+    display: none !important;
+  }
+  
+}
+@media (max-width:667px) {
+  .login-form{
+    width: 100vw;
+  }
+}
+ 
+.homepage-header{
+  display: flex;
+  justify-content: space-between;
+}
 .error{
   color:red;
 }
@@ -481,14 +587,9 @@ h3 {
 }
 /* controll bar responsive */
 
-@media (max-width:992px){
-  .ant-layout-sider.ant-layout-sider-dark.d-flex.justify-content-center {
-    height: 100%;
-    padding: 0;
-   width:50px !important;
-   min-width: 0px !important;
-}
-}
+
+
+
 /* comment */
  
 .comment-item{

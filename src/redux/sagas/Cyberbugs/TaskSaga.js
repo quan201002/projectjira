@@ -47,6 +47,9 @@ function* createTaskSaga(action) {
     });
   } catch (err) {
     console.log(err.response.data);
+    if (err.response.data.statusCode === STATUS_CODE.SERVER_ERROR) {
+      notifiFunction("error", "Task name has been used");
+    }
   }
   yield put({
     type: HIDE_LOADING,

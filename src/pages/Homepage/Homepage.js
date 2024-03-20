@@ -19,7 +19,8 @@ export default function Homepage() {
   return (
     <div className="container1">
       <div className="content-container">
-        <div>
+        <div className="homepage-header">
+          <h3>USER MANAGEMENT</h3>
           <span>
             Hello, {userLogin.name}
             <img

@@ -62,19 +62,7 @@ const Formlogin = (props) => {
             height: "100%",
           }}
         >
-          <div
-            style={{
-              background: "white",
-              borderRadius: "25px",
-              padding: "30px",
-              position: "relative",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "33vw",
-              boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
-            }}
-          >
+          <div className="login-form">
             <div
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >

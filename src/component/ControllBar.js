@@ -55,21 +55,13 @@ const ControllBar = () => {
               trigger={null}
               collapsible
               collapsed={collapsed}
+              className="dark-sider"
             >
               <Button
+                className="dark-sider-button"
                 type="text"
                 icon={<MenuOutlined style={{ color: "white" }} />}
                 onClick={() => setCollapsed(!collapsed)}
-                style={{
-                  fontSize: "16px",
-                  width: "100%",
-                  height: 64,
-                  padding: "18px",
-                  paddingRight: "30px",
-                  display: "flex",
-                  justifyContent: "right",
-                  alignItems: "center",
-                }}
               />
               <Menu
                 theme="dark"
@@ -96,7 +88,7 @@ const ControllBar = () => {
               />
             </Sider>
             <Sider
-              className="d-flex justify-content-center menu-sider"
+              className="d-flex justify-content-center menu-sider white-sider"
               style={{
                 background: colorBgContainer,
                 height: "100vh",
@@ -117,7 +109,7 @@ const ControllBar = () => {
               </p>
               <p>
                 <UserSwitchOutlined />
-                <NavLink className=" menu-item" to="/Home">
+                <NavLink className=" menu-item" to="/">
                   User management
                 </NavLink>
               </p>
@@ -149,6 +141,67 @@ const ControllBar = () => {
               </Popconfirm>
               <Divider type="horizontal" />
             </Sider>
+            <div class="dropdown dropdown-bar">
+              <button
+                class="btn btn-primary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Menu
+              </button>
+              <div
+                class="dropdown-menu controller-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <p>
+                  <BuildOutlined />
+                  <NavLink className="  menu-item" to="/createproject">
+                    Createproject
+                  </NavLink>
+                </p>
+                <p>
+                  <AppstoreOutlined />
+                  <NavLink className="  menu-item" to="/projectmanagement">
+                    Project management
+                  </NavLink>
+                </p>
+                <p>
+                  <UserSwitchOutlined />
+                  <NavLink className=" menu-item" to="/">
+                    User management
+                  </NavLink>
+                </p>
+                <p>
+                  <LoginOutlined />
+                  <NavLink className="menu-item" to="/login">
+                    Login
+                  </NavLink>
+                </p>
+                <p>
+                  <FormOutlined />
+                  <NavLink className="menu-item" to="/signup">
+                    Signup
+                  </NavLink>
+                </p>
+                <Popconfirm
+                  title="Log out"
+                  description="Are you sure to logout ?"
+                  onConfirm={() => {
+                    localStorage.removeItem(TOKEN);
+                    localStorage.removeItem(USER_LOGIN);
+                    window.location.replace("/login");
+                  }}
+                >
+                  <p className="menu-item ml-0" style={{ cursor: "pointer" }}>
+                    <LogoutOutlined className="mr-1" />
+                    Log out
+                  </p>
+                </Popconfirm>
+              </div>
+            </div>
           </div>
         </div>
       </Layout>

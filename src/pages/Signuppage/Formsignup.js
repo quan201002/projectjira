@@ -25,16 +25,7 @@ const Formsignup = () => {
   };
   console.log("password", passWord);
   return (
-    <div
-      style={{
-        backgroundImage: 'url("/background.jpg")',
-        backgroundSize: "cover",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="signup-page">
       <Form
         name="basic"
         layout="vertical"
@@ -44,15 +35,7 @@ const Formsignup = () => {
         wrapperCol={{
           span: 16,
         }}
-        style={{
-          background: "white",
-          borderRadius: "25px",
-          padding: "30px",
-          width: "50%",
-          boxShadow: "2px 3px 34px -8px rgba(0,0,0,0.78)",
-          alignItems: "center",
-          textAlign: "center",
-        }}
+        className="signup-form"
         initialValues={{
           remember: true,
         }}
