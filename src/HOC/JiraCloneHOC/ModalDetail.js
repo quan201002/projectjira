@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHTMLparser from "html-react-parser";
 import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstants";
@@ -375,6 +375,7 @@ export default function ModalDetail() {
       );
     });
   };
+  const childRef = useRef(null);
   return (
     <div
       class="modal fade"
@@ -411,6 +412,7 @@ export default function ModalDetail() {
                 title="Delete the task"
                 description="Are you sure to delete this task?"
                 onConfirm={() => {
+                  childRef.current.click();
                   dispatch({
                     type: DELETE_TASK_SAGA,
                     taskId: taskModal.taskId,
@@ -443,6 +445,7 @@ export default function ModalDetail() {
                 className="close"
                 data-dismiss="modal"
                 data-label="Close"
+                ref={childRef}
               >
                 <span aria-hidden="true">x</span>
               </button>

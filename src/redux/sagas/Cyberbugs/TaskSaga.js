@@ -24,6 +24,7 @@ import {
   CLOSE_DRAWER,
   GET_PROJECT_DETAIL_SAGA,
 } from "../../constant/ProjectCyberBugsConstant";
+
 // import $ from "jquery";
 function* createTaskSaga(action) {
   console.log("action create task saga", action);
@@ -203,11 +204,15 @@ function* deleteTaskSaga(action) {
         type: GET_PROJECT_DETAIL_SAGA,
         projectId: projectId,
       });
-      const taskModalform = document.getElementById("taskDetailModal");
-      taskModalform.classList.remove("show");
-      const modalBackDrop = document.querySelector(".modal-backdrop");
-      modalBackDrop.classList.remove("show");
-      // $("#taskDetailModal").modal("hide");
+      // const taskModalform = document.getElementById("taskDetailModal");
+      // taskModalform.classList.remove("show");
+      // taskModalform.style.display = "none";
+
+      // const modalBackDrop = document.querySelector(".modal-backdrop");
+      // modalBackDrop.classList.remove("show");
+      // modalBackDrop.style.display = "none";
+      // // $("#taskDetailModal").modal("hide");
+      // document.querySelector("body").classList.remove("modal-open");
     }
   } catch (err) {
     console.log(err.response);

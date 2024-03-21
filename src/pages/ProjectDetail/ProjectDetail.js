@@ -129,7 +129,15 @@ function ProjectDetail(props) {
                                 return (
                                   <li
                                     onClick={() => {
-                                      console.log("click");
+                                      const taskModalform =
+                                        document.getElementById(
+                                          "taskDetailModal"
+                                        );
+
+                                      taskModalform.style.display = "block";
+                                      document
+                                        .querySelector("body")
+                                        .classList.add("modal-open");
                                       dispatch({
                                         type: GET_TASK_SAGA,
                                         taskId: task.taskId,
