@@ -49,7 +49,7 @@ function* siginSaga(action) {
 
     console.log(data);
     if (status === STATUS_CODE.SUCCESS) {
-      window.location.replace("/");
+      window.location = "./";
     }
     yield put({
       type: HIDE_LOADING,

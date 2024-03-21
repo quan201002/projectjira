@@ -50,9 +50,9 @@ html,body{
           text-align: center;
           transition: 1s ease-in;
 }
-:where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark>.ant-menu .ant-menu-item-selected {
+/* :where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1b0bdye).ant-menu-dark>.ant-menu .ant-menu-item-selected {
   background-color: #001529;
-}
+} */
 .dropdown-bar{
   position:absolute;
   top:50px;
@@ -65,16 +65,16 @@ html,body{
   width: 100%;
   height: 64;
   padding: 18px;
-  padding-right: 30px;
+  width:50px !important;
   display: flex;
   justify-content: right;
   align-items: center;
 }
-:where(.css-dev-only-do-not-override-1b0bdye).ant-btn.ant-btn-icon-only {
+/* :where(.css-dev-only-do-not-override-1b0bdye).ant-btn.ant-btn-icon-only {
   width:50px;
   padding-inline-start: 0;
   padding-inline-end: 0;
-}
+} */
 .dropdown-menu.controller-menu{
     box-shadow:8px 8px 16px rgba(0, 0, 0, 0.5);
     transition: all 1s !important;
@@ -95,18 +95,14 @@ html,body{
     width:80vw;
   }
   .dark-sider{
-    width: 40px !important;
-    max-width: 40px !important;
-    min-width: 40px !important;
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
   }
   .dark-sider-button{
     display: none !important;
   }
-  :where(.css-dev-only-do-not-override-1b0bdye).ant-btn.ant-btn-icon-only {
-    width: 40px;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-  }
+  
   .dropdown-bar{
     display: block;
   }
@@ -134,11 +130,7 @@ html,body{
   color:red;
 }
 
-:where(.css-dev-only-do-not-override-1b0bdye).ant-layout.ant-layout-has-sider
-  > .ant-layout-content {
-  width: 0;
-  padding: 0 20px !important;
-}
+ 
 
 .ant-layout {
   flex: unset !important;
@@ -281,11 +273,7 @@ p {
   font-size:40px;
   font-weight:600;
 }
-.tox-tinymce-aux {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  z-index: 1300;
-  display: none !important;
-} 
+ 
  
 .content-container {
   padding: 20px;
@@ -578,18 +566,8 @@ h3 {
   height: 100vh;
   width: 70vw;
 }
-:where(.css-dev-only-do-not-override-1b0bdye).ant-col-16 {
-  --ant-display: block;
-  display: block;
-  display: var(--ant-display);
-  flex: 0 0 66.66666666666666%;
-  max-width: 100%;
-}
+ 
 /* controll bar responsive */
-
-
-
-
 /* comment */
  
 .comment-item{

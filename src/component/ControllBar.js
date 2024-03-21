@@ -131,7 +131,7 @@ const ControllBar = () => {
                 onConfirm={() => {
                   localStorage.removeItem(TOKEN);
                   localStorage.removeItem(USER_LOGIN);
-                  window.location.replace("/login");
+                  window.location = "/login";
                 }}
               >
                 <p className="menu-item ml-0" style={{ cursor: "pointer" }}>
@@ -192,7 +192,7 @@ const ControllBar = () => {
                   onConfirm={() => {
                     localStorage.removeItem(TOKEN);
                     localStorage.removeItem(USER_LOGIN);
-                    window.location.replace("/login");
+                    window.location = "/login";
                   }}
                 >
                   <p className="menu-item ml-0" style={{ cursor: "pointer" }}>

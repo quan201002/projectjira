@@ -38,7 +38,7 @@ function* createProjectSaga(action) {
     console.log(data);
     //gọi api thành công thì dispatch lên reducer
     if (status === STATUS_CODE.SUCCESS) {
-      window.location.replace("/projectmanagement");
+      window.location = "/projectmanagement";
     }
   } catch (err) {
     console.log(err.response.data);

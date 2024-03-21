@@ -33,7 +33,7 @@ const Formsignup = () => {
           span: 8,
         }}
         wrapperCol={{
-          span: 16,
+          span: 24,
         }}
         className="signup-form"
         initialValues={{
@@ -55,7 +55,7 @@ const Formsignup = () => {
                     const re =
                       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     const isValid = re.test(value);
-                    if (value.trim() == "") {
+                    if (value == "") {
                       reject("please input your email");
                     } else if (isValid) {
                       return resolve();
@@ -72,6 +72,7 @@ const Formsignup = () => {
           <Form.Item
             label="Password"
             name="passWord"
+            value=""
             rules={[
               {
                 validator(rule, value) {
@@ -92,6 +93,7 @@ const Formsignup = () => {
             <Input.Password className="signup-password" />
           </Form.Item>
           <Form.Item
+            value=""
             label="Confirm password"
             name="confirmPassword"
             rules={[

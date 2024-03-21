@@ -24,7 +24,7 @@ import {
   CLOSE_DRAWER,
   GET_PROJECT_DETAIL_SAGA,
 } from "../../constant/ProjectCyberBugsConstant";
-import $ from "jquery";
+// import $ from "jquery";
 function* createTaskSaga(action) {
   console.log("action create task saga", action);
   yield put({
@@ -46,7 +46,7 @@ function* createTaskSaga(action) {
       type: CLOSE_DRAWER,
     });
   } catch (err) {
-    console.log(err.response.data);
+    console.log(err);
     if (err.response.data.statusCode === STATUS_CODE.SERVER_ERROR) {
       notifiFunction("error", "Task name has been used");
     }
@@ -203,11 +203,11 @@ function* deleteTaskSaga(action) {
         type: GET_PROJECT_DETAIL_SAGA,
         projectId: projectId,
       });
-      // const taskModalform = document.getElementById("exampleModal");
-      // taskModalform.classList.remove("show");
-      // const modalBackDrop = document.querySelector(".modal-backdrop");
-      // modalBackDrop.classList.remove("show");
-      $("#taskDetailModal").modal("hide");
+      const taskModalform = document.getElementById("taskDetailModal");
+      taskModalform.classList.remove("show");
+      const modalBackDrop = document.querySelector(".modal-backdrop");
+      modalBackDrop.classList.remove("show");
+      // $("#taskDetailModal").modal("hide");
     }
   } catch (err) {
     console.log(err.response);
