@@ -111,6 +111,18 @@ function* addUserProjectSaga(action) {
       yield put({
         type: GET_LIST_PROJECT_SAGA,
       });
+      yield put({
+        type: GET_USER_API,
+        keyWord: "",
+      });
+      yield put({
+        type: GET_PROJECT_DETAIL_SAGA,
+        projectId: action.userProject.projectId,
+      });
+      yield put({
+        type: GET_USER_BY_PROJECT_ID_SAGA,
+        idProject: action.userProject.projectId,
+      });
       notifiFunction("success", "User added");
     }
   } catch (err) {
@@ -153,6 +165,10 @@ function* removeUserSaga(action) {
       yield put({
         type: GET_USER_BY_PROJECT_ID_SAGA,
         idProject: action.userProject.projectId,
+      });
+      yield put({
+        type: GET_USER_API,
+        keyWord: "",
       });
     }
     yield put({

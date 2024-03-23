@@ -13,6 +13,7 @@ import { BugOutlined, PlusOutlined } from "@ant-design/icons";
 import { GET_PROJECT_DETAIL_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 import { Header } from "antd/es/layout/layout";
 import {
+  ADD_USER_PROJECT_API,
   GET_USER_API,
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../../redux/constant/UserConstants";
@@ -33,7 +34,8 @@ function ProjectDetail(props) {
   console.log("arrr User", arrUser);
 
   const outSiders = [];
-  userSearch.map((a) => {
+  const usersList = [...userSearch];
+  usersList?.map((a) => {
     let is = false;
     for (let i = 0; i < arrUser.length; i++) {
       if (a.userId == arrUser[i].userId) {
@@ -262,13 +264,7 @@ function ProjectDetail(props) {
                             </>
                           );
                         })}
-                        {taskListDetail.statusId == 1 ? (
-                          <button className="w-100 btn text-lg-left">
-                            <PlusOutlined /> Create
-                          </button>
-                        ) : (
-                          ""
-                        )}
+
                         {provided.placeholder}
                       </ul>
                     </div>
@@ -339,8 +335,6 @@ function ProjectDetail(props) {
           <div className="col-6 col-sx-12 col-sm-6  users-container">
             <h5>Not yet added</h5>
             <List
-              header={<div>Header</div>}
-              footer={<div>Footer</div>}
               bordered
               dataSource={outSiders}
               renderItem={(item) => (
@@ -352,7 +346,20 @@ function ProjectDetail(props) {
                       description={`User id: ${item.userId}`}
                     />
                     <div>
-                      <button className="btn btn-primary">+</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_USER_PROJECT_API,
+                            userProject: {
+                              projectId: projectId,
+                              userId: item.userId,
+                            },
+                          });
+                        }}
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </List.Item>
@@ -365,8 +372,6 @@ function ProjectDetail(props) {
           <div className="col-6 col-sx-12 col-sm-6  users-container">
             <h5>Already in project</h5>
             <List
-              header={<div>Header</div>}
-              footer={<div>Footer</div>}
               bordered
               dataSource={arrUser}
               renderItem={(item) => (

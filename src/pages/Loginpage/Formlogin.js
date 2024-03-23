@@ -130,14 +130,14 @@ const Formlogin = (props) => {
                 </Link>
                 <div className="social mt-5" style={{ marginTop: "20px" }}>
                   <Button
-                    className="bg-primary me-3"
+                    className="bg-primary mr-1"
                     type="primary"
                     shape="circle"
                     icon={<FacebookOutlined />}
                     size={"large"}
                   ></Button>
                   <Button
-                    className="bg-primary me-3"
+                    className="bg-primary "
                     type="primary"
                     shape="circle"
                     icon={<TwitterOutlined />}

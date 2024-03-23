@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AutoComplete, Popconfirm, Space, Table, Tag } from "antd";
+import { AutoComplete, List, Popconfirm, Space, Table, Tag } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
@@ -173,6 +173,76 @@ const UserList = () => {
             setPage(page);
             localStorage.setItem("PAGE", JSON.stringify(page));
           },
+        }}
+      />
+      <List
+        className="list-user-jira"
+        bordered
+        dataSource={data.reverse()}
+        renderItem={(item) => (
+          // id email name phone action: edit, delete
+          <List.Item>
+            <div className="w-100">
+              <div className="w-100 d-flex justify-content-between">
+                <div>User id</div>
+                <div className="mr-2">{item.userId}</div>
+              </div>
+              <div className="w-100 d-flex justify-content-between">
+                <div>Name</div>
+                <div className="mr-2">{item.name}</div>
+              </div>
+              <div className="w-100 d-flex justify-content-between">
+                <div>Phone</div>
+                <div className="mr-2">{item.phoneNumber}</div>
+              </div>
+              <div className="w-100 d-flex justify-content-between">
+                <div>Action</div>
+                <div className="mr-2">
+                  <button
+                    className="btn btn-primary mr-2"
+                    onClick={() => {
+                      const action = {
+                        type: "OPEN_FORM_EDIT_PROJECT",
+                        title: "Edit Project",
+                        open: true,
+                        Component: () => {
+                          return <MyEnhancedForm />;
+                        },
+                      };
+
+                      dispatch(action);
+                      const actionEditUser = {
+                        type: EDIT_USER,
+                        userEditModel: item,
+                      };
+                      dispatch(actionEditUser);
+                    }}
+                  >
+                    <EditOutlined />
+                  </button>
+                  <Popconfirm
+                    title="Delete user"
+                    description="Are you sure to delete this user ?"
+                    onConfirm={() => {
+                      dispatch({
+                        type: DELETE_USER_SAGA,
+                        userId: item.userId,
+                      });
+                    }}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <button className="btn  btn-danger">
+                      <DeleteOutlined />
+                    </button>
+                  </Popconfirm>
+                </div>
+              </div>
+            </div>
+          </List.Item>
+        )}
+        pagination={{
+          pageSize: 9,
         }}
       />
     </div>

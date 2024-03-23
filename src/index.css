@@ -122,7 +122,13 @@ html,body{
   .list-project-jira{
   display: block !important;
   }
+  .list-user-jira{
+    display: block!important;
+  }
   .table-project-jira{
+    display: none !important;
+  }
+  .user-table{
     display: none !important;
   }
 }
@@ -639,6 +645,9 @@ h3 {
   display: flex;
 }
 .list-project-jira{
+  display: none;
+}
+.list-user-jira{
   display: none;
 }
 .modal-users{

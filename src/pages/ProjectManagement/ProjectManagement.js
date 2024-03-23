@@ -496,8 +496,6 @@ const ProjectManagement = () => {
         />
         <List
           className="list-project-jira"
-          header={<div>Header</div>}
-          footer={<div>Footer</div>}
           bordered
           dataSource={data}
           renderItem={(item) => (
