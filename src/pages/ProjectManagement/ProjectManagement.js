@@ -410,7 +410,7 @@ const ProjectManagement = () => {
                 );
               }}
             >
-              <Button>+</Button>
+              <button className="btn btn-secondary add-user-btn">+</button>
             </Popover>
           </div>
         );
@@ -502,6 +502,14 @@ const ProjectManagement = () => {
             <List.Item>
               <div className="w-100">
                 <div className="w-100 d-flex justify-content-between">
+                  <div style={{ color: "blueviolet" }}>Project Id</div>
+                  <div className="mr-2">
+                    <NavLink to={`/projectdetail/${item.id}`}>
+                      {item.id}
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="w-100 d-flex justify-content-between">
                   <div>Project Name</div>
                   <div className="mr-2">{item.projectName}</div>
                 </div>
@@ -511,7 +519,11 @@ const ProjectManagement = () => {
                 </div>
                 <div className="w-100 d-flex justify-content-between">
                   <div>Creator</div>
-                  <div className="mr-2">{item.creator.name}</div>
+                  <div className="mr-2">
+                    <h5>
+                      <Tag color="geekblue">{item.creator.name}</Tag>
+                    </h5>
+                  </div>
                 </div>
                 <div className="w-100 d-flex justify-content-between">
                   <div>Members</div>
@@ -691,12 +703,14 @@ const ProjectManagement = () => {
                         );
                       }}
                     >
-                      <Button>+</Button>
+                      <button className="btn add-user-btn btn-secondary mt-2 mb-2">
+                        +
+                      </button>
                     </Popover>
                   </div>
                 </div>
                 <div className="w-100 d-flex justify-content-between">
-                  <div>Actions</div>
+                  <div style={{ color: "orangered" }}>Actions</div>
                   <div className="mr-2">
                     <button
                       className="mr-3 btn btn-primary"
@@ -742,7 +756,7 @@ const ProjectManagement = () => {
             </List.Item>
           )}
           pagination={{
-            pageSize: 9,
+            pageSize: 7,
           }}
         />
       </div>

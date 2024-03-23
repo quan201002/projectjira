@@ -40,6 +40,9 @@ const UserList = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (text, record, index) => {
+        return <Tag color="#2db7f5">{record?.name}</Tag>;
+      },
     },
     {
       title: "Phone",
@@ -168,7 +171,7 @@ const UserList = () => {
           current: localStorage.getItem("PAGE")
             ? JSON.parse(localStorage.getItem("PAGE"))
             : 1,
-          pageSize: 6,
+          pageSize: 7,
           onChange: (page) => {
             setPage(page);
             localStorage.setItem("PAGE", JSON.stringify(page));
@@ -180,23 +183,36 @@ const UserList = () => {
         bordered
         dataSource={data.reverse()}
         renderItem={(item) => (
-          // id email name phone action: edit, delete
           <List.Item>
             <div className="w-100">
               <div className="w-100 d-flex justify-content-between">
-                <div>User id</div>
+                <div
+                  className="font-weight-bold"
+                  style={{ color: "blueviolet" }}
+                >
+                  User id
+                </div>
                 <div className="mr-2">{item.userId}</div>
               </div>
               <div className="w-100 d-flex justify-content-between">
-                <div>Name</div>
-                <div className="mr-2">{item.name}</div>
+                <div className="font-weight-bold">Name</div>
+                <div className="mr-2">
+                  <Tag color="geekblue">
+                    <h5>{item.name}</h5>
+                  </Tag>
+                </div>
               </div>
               <div className="w-100 d-flex justify-content-between">
-                <div>Phone</div>
+                <div className="font-weight-bold">Phone</div>
                 <div className="mr-2">{item.phoneNumber}</div>
               </div>
               <div className="w-100 d-flex justify-content-between">
-                <div>Action</div>
+                <div
+                  className="font-weight-bold"
+                  style={{ color: "orangered" }}
+                >
+                  Action
+                </div>
                 <div className="mr-2">
                   <button
                     className="btn btn-primary mr-2"
@@ -242,7 +258,7 @@ const UserList = () => {
           </List.Item>
         )}
         pagination={{
-          pageSize: 9,
+          pageSize: 7,
         }}
       />
     </div>

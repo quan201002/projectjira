@@ -307,9 +307,7 @@ function ProjectDetail(props) {
         >
           <h3 className="mr-4">Members</h3>
           <div className="avatar-container-detail">{renderAvatar()}</div>
-          <Button type="primary" onClick={showModal}>
-            +
-          </Button>
+          <button className="btn btn-secondary add-user-btn">+</button>
         </div>
       </div>
       <div className="row">{renderCardTaskList()}</div>
