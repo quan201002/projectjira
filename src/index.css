@@ -13,6 +13,7 @@ html,body{
   width: 100%;
   height: 100%;
   background-image: url("./../public/background.jpg");
+  overflow: scroll;
 }
 
 /*Login input */
@@ -114,6 +115,15 @@ html,body{
 @media (max-width:667px) {
   .login-form{
     width: 100vw;
+  }
+  .board{
+    margin-right: 5px !important;
+  }
+  .list-project-jira{
+  display: block !important;
+  }
+  .table-project-jira{
+    display: none !important;
   }
 }
  
@@ -621,4 +631,25 @@ h3 {
 }
 .validate-text {
   color:red;
+}
+.board{
+  margin-right: 150px;
+}
+.avatar-container-detail{
+  display: flex;
+}
+.list-project-jira{
+  display: none;
+}
+.modal-users{
+  width: 50vw !important;
+  height: 80vh !important;
+ 
+}
+.modal-users-container{
+  height: 50vh;
+}
+.users-container{
+  overflow:scroll;
+  height: 100%;
 }

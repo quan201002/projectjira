@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Col, Row } from "antd";
-import { Breadcrumb } from "antd";
+import React, { useEffect, useState } from "react";
+import { Avatar, Col, List, Popconfirm, Row } from "antd";
+import { Breadcrumb, Modal, Button, Form, Input, Checkbox } from "antd";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -9,21 +9,74 @@ import {
   UPDATE_TASK_STATUS_SAGA,
 } from "../../redux/constant/TaskConstants";
 import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
-import { BugOutlined } from "@ant-design/icons";
+import { BugOutlined, PlusOutlined } from "@ant-design/icons";
 import { GET_PROJECT_DETAIL_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
+import { Header } from "antd/es/layout/layout";
+import {
+  GET_USER_API,
+  GET_USER_BY_PROJECT_ID_SAGA,
+} from "../../redux/constant/UserConstants";
+const { Search } = Input;
+
+const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 function ProjectDetail(props) {
-  let dispatch = useDispatch();
+  const { projectId } = useParams();
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+  const { arrUser } = useSelector((state) => state.UserLoginCyberBugsReducer);
+  const users = [...userSearch];
+
+  const data = users;
+  console.log("userSearch", userSearch);
+  console.log("arrr User", arrUser);
+
+  const outSiders = [];
+  userSearch.map((a) => {
+    let is = false;
+    for (let i = 0; i < arrUser.length; i++) {
+      if (a.userId == arrUser[i].userId) {
+        is = true;
+      }
+    }
+    if (!is) {
+      outSiders.push(a);
+    }
+  });
+  console.log("outSiders", outSiders);
   useEffect(() => {
     dispatch({
       type: GET_PROJECT_DETAIL_SAGA,
       projectId,
     });
+    dispatch({
+      type: GET_USER_API,
+      keyWord: "",
+    });
+    dispatch({
+      type: GET_USER_BY_PROJECT_ID_SAGA,
+      idProject: projectId,
+    });
   }, []);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  let dispatch = useDispatch();
+  useEffect(() => {}, []);
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
   console.log("project detail", projectDetail);
-  const { projectId } = useParams();
+
   console.log("project detaill", projectDetail);
   const renderAvatar = () => {
     return projectDetail?.members?.map((user, index) => {
@@ -97,7 +150,10 @@ function ProjectDetail(props) {
             <Droppable droppableId={taskListDetail.statusId} key={index}>
               {(provided) => {
                 return (
-                  <div className="col-3 tasklist-bar">
+                  <div
+                    className="col-lg-3 col-md-6 col-sm tasklist-bar"
+                    id="task-container"
+                  >
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
@@ -117,93 +173,102 @@ function ProjectDetail(props) {
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
                           console.log("task", task);
                           return (
-                            <Draggable
-                              key={task.taskId.toString()}
-                              index={index}
-                              draggableId={JSON.stringify({
-                                projectId: task.projectId,
-                                taskId: task.taskId,
-                              })}
-                            >
-                              {(provided) => {
-                                return (
-                                  <li
-                                    onClick={() => {
-                                      const taskModalform =
-                                        document.getElementById(
-                                          "taskDetailModal"
-                                        );
+                            <>
+                              <Draggable
+                                key={task.taskId.toString()}
+                                index={index}
+                                draggableId={JSON.stringify({
+                                  projectId: task.projectId,
+                                  taskId: task.taskId,
+                                })}
+                              >
+                                {(provided) => {
+                                  return (
+                                    <li
+                                      onClick={() => {
+                                        const taskModalform =
+                                          document.getElementById(
+                                            "taskDetailModal"
+                                          );
 
-                                      taskModalform.style.display = "block";
-                                      document
-                                        .querySelector("body")
-                                        .classList.add("modal-open");
-                                      dispatch({
-                                        type: GET_TASK_SAGA,
-                                        taskId: task.taskId,
-                                      });
-                                    }}
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    className="list-group-item draggable-task "
-                                    data-toggle="modal"
-                                    data-target="#taskDetailModal"
-                                  >
-                                    <h4 className="text-info">
-                                      {task.taskName}
-                                    </h4>
-                                    <div
-                                      className="block"
-                                      style={{ display: "flex" }}
+                                        taskModalform.style.display = "block";
+                                        document
+                                          .querySelector("body")
+                                          .classList.add("modal-open");
+                                        dispatch({
+                                          type: GET_TASK_SAGA,
+                                          taskId: task.taskId,
+                                        });
+                                      }}
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      className="list-group-item draggable-task "
+                                      data-toggle="modal"
+                                      data-target="#taskDetailModal"
                                     >
-                                      <div className="block-left">
-                                        <span className="mr-2">
-                                          {renderTaskTypeIcon(
-                                            task.taskTypeDetail.id
+                                      <h4 className="text-info">
+                                        {task.taskName}
+                                      </h4>
+                                      <div
+                                        className="block"
+                                        style={{ display: "flex" }}
+                                      >
+                                        <div className="block-left">
+                                          <span className="mr-2">
+                                            {renderTaskTypeIcon(
+                                              task.taskTypeDetail.id
+                                            )}
+                                          </span>
+                                          {renderPrioritySign(
+                                            task.priorityTask.priorityId,
+                                            projectId
                                           )}
-                                        </span>
-                                        {renderPrioritySign(
-                                          task.priorityTask.priorityId,
-                                          projectId
-                                        )}
-                                        <p className="text-warning task-priority">
-                                          {task.priorityTask.priority}
-                                        </p>
-                                      </div>
-                                      <div className="block-right ml-2">
-                                        <div
-                                          className="avatar-group"
-                                          style={{ display: "flex" }}
-                                        >
-                                          {task?.assigness?.map(
-                                            (mem, index) => {
-                                              return (
-                                                <div
-                                                  className="avatar "
-                                                  key={index}
-                                                >
-                                                  <img
-                                                    className="assigness-avatar"
-                                                    src={mem.avatar}
-                                                    alt={mem.avatar}
-                                                    style={{
-                                                      borderRadius: "50%",
-                                                    }}
-                                                  ></img>
-                                                </div>
-                                              );
-                                            }
-                                          )}
+                                          <p className="text-warning task-priority">
+                                            {task.priorityTask.priority}
+                                          </p>
+                                        </div>
+                                        <div className="block-right ml-2">
+                                          <div
+                                            className="avatar-group"
+                                            style={{ display: "flex" }}
+                                          >
+                                            {task?.assigness?.map(
+                                              (mem, index) => {
+                                                return (
+                                                  <div
+                                                    className="avatar "
+                                                    key={index}
+                                                  >
+                                                    <img
+                                                      className="assigness-avatar"
+                                                      src={mem.avatar}
+                                                      alt={mem.avatar}
+                                                      style={{
+                                                        borderRadius: "50%",
+                                                      }}
+                                                    ></img>
+                                                  </div>
+                                                );
+                                              }
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </li>
-                                );
-                              }}
-                            </Draggable>
+                                    </li>
+                                  );
+                                }}
+                              </Draggable>
+                            </>
                           );
                         })}
+                        {taskListDetail.statusId == 1 ? (
+                          <button className="w-100 btn text-lg-left">
+                            <PlusOutlined /> Create
+                          </button>
+                        ) : (
+                          ""
+                        )}
                         {provided.placeholder}
                       </ul>
                     </div>
@@ -233,7 +298,7 @@ function ProjectDetail(props) {
       </div>
 
       <div style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}>
-        <div style={{ marginRight: "150px" }}>
+        <div className="board">
           <h1>Board</h1>
         </div>
         <div
@@ -245,10 +310,107 @@ function ProjectDetail(props) {
           }}
         >
           <h3 className="mr-4">Members</h3>
-          {renderAvatar()}
+          <div className="avatar-container-detail">{renderAvatar()}</div>
+          <Button type="primary" onClick={showModal}>
+            +
+          </Button>
         </div>
       </div>
       <div className="row">{renderCardTaskList()}</div>
+
+      <Modal
+        className="modal-users"
+        title={`Add member to project ${projectDetail.projectName}`}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <div className="ant-col ant-col-24">
+          <Search
+            placeholder="search user"
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={onSearch}
+          />
+        </div>
+
+        <div className="row modal-users-container">
+          <div className="col-6 col-sx-12 col-sm-6  users-container">
+            <h5>Not yet added</h5>
+            <List
+              header={<div>Header</div>}
+              footer={<div>Footer</div>}
+              bordered
+              dataSource={outSiders}
+              renderItem={(item) => (
+                <List.Item>
+                  <div className="w-100 d-flex justify-content-between">
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.avatar} />}
+                      title={item.name}
+                      description={`User id: ${item.userId}`}
+                    />
+                    <div>
+                      <button className="btn btn-primary">+</button>
+                    </div>
+                  </div>
+                </List.Item>
+              )}
+              pagination={{
+                pageSize: 9,
+              }}
+            />
+          </div>
+          <div className="col-6 col-sx-12 col-sm-6  users-container">
+            <h5>Already in project</h5>
+            <List
+              header={<div>Header</div>}
+              footer={<div>Footer</div>}
+              bordered
+              dataSource={arrUser}
+              renderItem={(item) => (
+                <List.Item>
+                  <div className="w-100 d-flex justify-content-between">
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.avatar} />}
+                      title={item.name}
+                      description={`User id: ${item.userId}`}
+                    />
+                    <div>
+                      <Popconfirm
+                        title="Remove assignee"
+                        description="Are you sure to remove this user from project ?"
+                        onConfirm={() => {
+                          dispatch({
+                            type: "REMOVE_USER_PROJECT_API",
+                            userProject: {
+                              projectId: projectId,
+                              userId: item.userId,
+                            },
+                          });
+                        }}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <button
+                          style={{ borderRadius: "50%" }}
+                          className="btn btn-danger"
+                        >
+                          X
+                        </button>
+                      </Popconfirm>
+                    </div>
+                  </div>
+                </List.Item>
+              )}
+              pagination={{
+                pageSize: 9,
+              }}
+            />
+          </div>
+        </div>
+      </Modal>
     </div>
   ) : (
     <>

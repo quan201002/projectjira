@@ -10,6 +10,8 @@ import {
   Avatar,
   Popover,
   AutoComplete,
+  List,
+  Typography,
 } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactHTMLParser from "html-react-parser";
@@ -253,7 +255,7 @@ const ProjectManagement = () => {
                             console.log("user  ", item);
                             return (
                               <tr key={index}>
-                                <td>{item.userId}</td>
+                                <td className="mr-1">{item.userId}</td>
                                 <td>
                                   <img
                                     style={{ borderRadius: "50%" }}
@@ -480,6 +482,7 @@ const ProjectManagement = () => {
           <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
         </Space>
         <Table
+          className="table-project-jira"
           style={{
             width: "100%",
           }}
@@ -488,7 +491,260 @@ const ProjectManagement = () => {
           onChange={handleChange}
           rowKey={"id"}
           pagination={{
-            pageSize: 6,
+            pageSize: 9,
+          }}
+        />
+        <List
+          className="list-project-jira"
+          header={<div>Header</div>}
+          footer={<div>Footer</div>}
+          bordered
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item>
+              <div className="w-100">
+                <div className="w-100 d-flex justify-content-between">
+                  <div>Project Name</div>
+                  <div className="mr-2">{item.projectName}</div>
+                </div>
+                <div className="w-100 d-flex justify-content-between">
+                  <div>Category name</div>
+                  <div className="mr-2">{item.categoryName}</div>
+                </div>
+                <div className="w-100 d-flex justify-content-between">
+                  <div>Creator</div>
+                  <div className="mr-2">{item.creator.name}</div>
+                </div>
+                <div className="w-100 d-flex justify-content-between">
+                  <div>Members</div>
+                  <div className="mr-2">
+                    {item.members?.slice(0, 3).map((member, index) => {
+                      return (
+                        <Popover
+                          key={index}
+                          placement="topLeft"
+                          title="Members"
+                          content={() => {
+                            return (
+                              <table className="table">
+                                <thead>
+                                  <tr>
+                                    <th>Id</th>
+                                    <th>avatar</th>
+                                    <th>name</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {item.members?.map((user, index) => {
+                                    return (
+                                      <tr key={index}>
+                                        <td>{user.userId}</td>
+                                        <td>
+                                          <img
+                                            style={{ borderRadius: "50%" }}
+                                            src={user.avatar}
+                                            width="50"
+                                            height="50"
+                                          ></img>
+                                        </td>
+                                        <td>{user.name}</td>
+                                        <td>
+                                          <Popconfirm
+                                            title="Remove assignee"
+                                            description="Are you sure to remove this user from project ?"
+                                            onConfirm={() => {
+                                              dispatch({
+                                                type: "REMOVE_USER_PROJECT_API",
+                                                userProject: {
+                                                  projectId: item.id,
+                                                  userId: user.userId,
+                                                },
+                                              });
+                                            }}
+                                            okText="Yes"
+                                            cancelText="No"
+                                          >
+                                            <button
+                                              style={{ borderRadius: "50%" }}
+                                              className="btn btn-danger"
+                                            >
+                                              X
+                                            </button>
+                                          </Popconfirm>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            );
+                          }}
+                        >
+                          <Avatar src={member.avatar} key={index} />
+                        </Popover>
+                      );
+                    })}
+                    <Popover
+                      placement="topLeft"
+                      title="Members"
+                      content={() => {
+                        return (
+                          <table className="table">
+                            <thead>
+                              <tr>
+                                <th>Id</th>
+                                <th>avatar</th>
+                                <th>name</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.members?.map((user, index) => {
+                                return (
+                                  <tr key={index}>
+                                    <td>{user.userId}</td>
+                                    <td>
+                                      <img
+                                        style={{ borderRadius: "50%" }}
+                                        src={user.avatar}
+                                        width="50"
+                                        height="50"
+                                      ></img>
+                                    </td>
+                                    <td>{user.name}</td>
+                                    <td>
+                                      <Popconfirm
+                                        title="Remove assignee"
+                                        description="Are you sure to remove this user from project ?"
+                                        onConfirm={() => {
+                                          dispatch({
+                                            type: "REMOVE_USER_PROJECT_API",
+                                            userProject: {
+                                              projectId: item.id,
+                                              userId: user.userId,
+                                            },
+                                          });
+                                        }}
+                                        okText="Yes"
+                                        cancelText="No"
+                                      >
+                                        <button
+                                          style={{ borderRadius: "50%" }}
+                                          className="btn btn-danger"
+                                        >
+                                          X
+                                        </button>
+                                      </Popconfirm>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        );
+                      }}
+                    >
+                      {item.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+                    </Popover>
+
+                    <Popover
+                      placement="right"
+                      title={"add user"}
+                      content={() => {
+                        return (
+                          <AutoComplete
+                            options={userSearch?.map((user, index) => {
+                              return {
+                                label: user.name,
+                                value: user.userId.toString(),
+                              };
+                            })}
+                            style={{ width: "100%" }}
+                            onSearch={(value) => {
+                              if (searchRef.current) {
+                                clearTimeout(searchRef.current);
+                              }
+
+                              searchRef.current = setTimeout(() => {
+                                dispatch({
+                                  type: GET_USER_API,
+                                  keyWord: value,
+                                });
+                              }, 500);
+                            }}
+                            value={value}
+                            onChange={(text) => {
+                              setValue(text);
+                            }}
+                            onSelect={(valueSelected, option) => {
+                              //set gia tri cua hop thoai = option.label
+                              setValue(option.label);
+                              //goi api tra ve backend
+                              dispatch({
+                                type: ADD_USER_PROJECT_API,
+                                userProject: {
+                                  projectId: item.id,
+                                  userId: option.value,
+                                },
+                              });
+                            }}
+                          />
+                        );
+                      }}
+                    >
+                      <Button>+</Button>
+                    </Popover>
+                  </div>
+                </div>
+                <div className="w-100 d-flex justify-content-between">
+                  <div>Actions</div>
+                  <div className="mr-2">
+                    <button
+                      className="mr-3 btn btn-primary"
+                      onClick={() => {
+                        const action = {
+                          type: "OPEN_FORM_EDIT_PROJECT",
+                          title: "Edit Project",
+                          open: true,
+                          Component: () => {
+                            return <FormEditProject />;
+                          },
+                        };
+                        dispatch(action);
+
+                        const actionEditProject = {
+                          type: "EDIT_PROJECT",
+                          projectEditModel: item,
+                        };
+                        dispatch(actionEditProject);
+                      }}
+                    >
+                      <EditOutlined />
+                    </button>
+                    <Popconfirm
+                      title="Delete project"
+                      description="Are you sure to delete this project ?"
+                      onConfirm={() => {
+                        dispatch({
+                          type: DELETE_PROJECT_SAGA,
+                          idProject: item.id,
+                        });
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <button className="btn  btn-danger">
+                        <DeleteOutlined />
+                      </button>
+                    </Popconfirm>
+                  </div>
+                </div>
+              </div>
+            </List.Item>
+          )}
+          pagination={{
+            pageSize: 9,
           }}
         />
       </div>

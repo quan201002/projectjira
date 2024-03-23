@@ -31,7 +31,10 @@ import {
   REMOVE_USER_PROJECT_API,
 } from "../../constant/UserConstants";
 import { notifiFunction } from "../../../component/Notification/Notification";
-import { GET_LIST_PROJECT_SAGA } from "../../constant/ProjectCyberBugsConstant";
+import {
+  GET_LIST_PROJECT_SAGA,
+  GET_PROJECT_DETAIL_SAGA,
+} from "../../constant/ProjectCyberBugsConstant";
 
 function* siginSaga(action) {
   yield delay(500);
@@ -142,6 +145,14 @@ function* removeUserSaga(action) {
       notifiFunction("success", "User removed");
       yield put({
         type: GET_LIST_PROJECT_SAGA,
+      });
+      yield put({
+        type: GET_PROJECT_DETAIL_SAGA,
+        projectId: action.userProject.projectId,
+      });
+      yield put({
+        type: GET_USER_BY_PROJECT_ID_SAGA,
+        idProject: action.userProject.projectId,
       });
     }
     yield put({
