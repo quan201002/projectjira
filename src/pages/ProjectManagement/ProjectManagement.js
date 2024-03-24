@@ -193,7 +193,7 @@ const ProjectManagement = () => {
       dataIndex: "projectName",
       key: "projectName",
       render: (text, record, index) => {
-        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
+        return <Tag color="greekblue">{text}</Tag>;
       },
       ...getColumnSearchProps("projectName"),
       sorter: (item2, item1) => {
@@ -224,7 +224,7 @@ const ProjectManagement = () => {
       dataIndex: "creator",
       key: "creator",
       render: (text, record, index) => {
-        return <Tag color="#2db7f5">{record.creator?.name}</Tag>;
+        return <Tag color="geekblue-inverse">{record.creator?.name}</Tag>;
       },
     },
     {
@@ -479,7 +479,9 @@ const ProjectManagement = () => {
             marginTop: 48,
           }}
         >
-          <div style={{ fontWeight: "bold" }}>PROJECT MANAGEMENT</div>
+          <div style={{ fontWeight: "bold", textAlign: "left" }}>
+            PROJECT MANAGEMENT
+          </div>
         </Space>
         <Table
           className="table-project-jira"

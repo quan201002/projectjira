@@ -143,7 +143,7 @@ const ControllBar = () => {
             </Sider>
             <div class="dropdown dropdown-bar">
               <button
-                class="btn btn-primary dropdown-toggle"
+                class="dropdown-toggle menu-button"
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="dropdown"

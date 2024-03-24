@@ -20,7 +20,12 @@ export default function Homepage() {
     <div className="container1">
       <div className="content-container">
         <div className="homepage-header">
-          <h3>USER MANAGEMENT</h3>
+          <div
+            style={{ fontWeight: "bold", textAlign: "left" }}
+            className="mt-3"
+          >
+            USER MANAGEMENT
+          </div>
           <span>
             Hello, {userLogin.name}
             <img
