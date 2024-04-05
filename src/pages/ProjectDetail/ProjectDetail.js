@@ -1,5 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Avatar, Col, List, Popconfirm, Row } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  AutoComplete,
+  Avatar,
+  Col,
+  List,
+  Popconfirm,
+  Popover,
+  Row,
+} from "antd";
 import { Breadcrumb, Modal, Button, Form, Input, Checkbox } from "antd";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +27,23 @@ import {
 } from "../../redux/constant/UserConstants";
 const { Search } = Input;
 
-const onSearch = (value, _e, info) => console.log(info?.source, value);
-
 function ProjectDetail(props) {
+  const onSelect = (data) => {
+    console.log("onSelect", data);
+  };
+  const onChange = (data) => {
+    setValue(data);
+  };
+  const mockVal = (str, repeat = 1) => ({
+    value: str.repeat(repeat),
+  });
+  const [options, setOptions] = useState([]);
+  const [value, setValue] = useState("");
+  const searchRef = useRef(null);
+  const getPanelValue = (searchText) =>
+    !searchText
+      ? []
+      : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
   const { projectId } = useParams();
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
@@ -32,7 +54,12 @@ function ProjectDetail(props) {
   const data = users;
   console.log("userSearch", userSearch);
   console.log("arrr User", arrUser);
-
+  const onSearch = (value, _e, info) => {
+    dispatch({
+      type: GET_USER_API,
+      keyWord: value,
+    });
+  };
   const outSiders = [];
   const usersList = [...userSearch];
   usersList?.map((a) => {
@@ -74,16 +101,16 @@ function ProjectDetail(props) {
   };
 
   let dispatch = useDispatch();
-  useEffect(() => {}, []);
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
   console.log("project detail", projectDetail);
-
+  const detail = { ...projectDetail };
+  console.log("detail", detail);
   console.log("project detaill", projectDetail);
   const renderAvatar = () => {
-    return projectDetail?.members?.map((user, index) => {
+    return detail?.members?.map((user, index) => {
       return (
-        <div className="d-flex">
+        <div className="d-flex users-avatar">
           <div className="avatar" key={index}>
             <img src={user.avatar} alt={user.avatar}></img>
           </div>
@@ -91,12 +118,140 @@ function ProjectDetail(props) {
       );
     });
   };
-  {
-    /* <i className="fa fa-arrow-up "></i>
-                                        <i class="fa-solid fa-arrow-down"></i>
-                                        <i class="fa-solid fa-arrow-right"></i>
-                                        <i class="fa-solid fa-arrow-turn-down"></i> */
-  }
+  const renderAvatarResp = () => {
+    return (
+      <div className="d-flex ">
+        {detail.members?.slice(0, 3).map((member, index) => {
+          return (
+            <Popover
+              key={index}
+              placement="topLeft"
+              title="Members"
+              content={() => {
+                return (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>avatar</th>
+                        <th>name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {detail.members?.map((item, i) => {
+                        return (
+                          <tr key={i}>
+                            <td className="mr-1">{item.userId}</td>
+                            <td>
+                              <img
+                                style={{ borderRadius: "50%" }}
+                                src={item.avatar}
+                                width="50"
+                                height="50"
+                              ></img>
+                            </td>
+                            <td>{item.name}</td>
+                            <td>
+                              <Popconfirm
+                                title="Remove assignee"
+                                description="Are you sure to remove this user from project ?"
+                                onConfirm={() => {
+                                  dispatch({
+                                    type: "REMOVE_USER_PROJECT_API",
+                                    userProject: {
+                                      projectId: projectId,
+                                      userId: item.userId,
+                                    },
+                                  });
+                                }}
+                                okText="Yes"
+                                cancelText="No"
+                              >
+                                <button
+                                  style={{ borderRadius: "50%" }}
+                                  className="btn btn-danger"
+                                >
+                                  X
+                                </button>
+                              </Popconfirm>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                );
+              }}
+            >
+              <Avatar src={member.avatar} key={index} />
+            </Popover>
+          );
+        })}
+        <Popover
+          placement="topLeft"
+          title="Members"
+          content={() => {
+            return (
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>avatar</th>
+                    <th>name</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail.members?.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{item.userId}</td>
+                        <td>
+                          <img
+                            style={{ borderRadius: "50%" }}
+                            src={item.avatar}
+                            width="50"
+                            height="50"
+                          ></img>
+                        </td>
+                        <td>{item.name}</td>
+                        <td>
+                          <Popconfirm
+                            title="Remove assignee"
+                            description="Are you sure to remove this user from project ?"
+                            onConfirm={() => {
+                              dispatch({
+                                type: "REMOVE_USER_PROJECT_API",
+                                userProject: {
+                                  projectId: projectId,
+                                  userId: item.userId,
+                                },
+                              });
+                            }}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <button
+                              style={{ borderRadius: "50%" }}
+                              className="btn btn-danger"
+                            >
+                              X
+                            </button>
+                          </Popconfirm>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            );
+          }}
+        >
+          {detail.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+        </Popover>
+      </div>
+    );
+  };
   const renderPrioritySign = (priorityId, projectId) => {
     switch (priorityId) {
       case 1:
@@ -147,21 +302,20 @@ function ProjectDetail(props) {
   const renderCardTaskList = () => {
     return (
       <DragDropContext onDragEnd={handleDragEnd}>
-        {projectDetail?.lstTask?.map((taskListDetail, index) => {
+        {detail?.lstTask?.map((taskListDetail, index) => {
           return (
             <Droppable droppableId={taskListDetail.statusId} key={index}>
               {(provided) => {
                 return (
                   <div
-                    className="col-lg-3 col-md-6 col-sm tasklist-bar"
+                    className="col-lg-3 col-md-6 col-sm-12 tasklist-bar"
                     id="task-container"
                   >
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                       key={index}
-                      className="card pb-2"
-                      style={{ width: "17rem" }}
+                      className="card pb-2 card-task-list"
                     >
                       <div className=" card-header bg-gray-100  p-2 rounded flex flex-col ">
                         {taskListDetail.statusName}
@@ -170,7 +324,7 @@ function ProjectDetail(props) {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         key={index}
-                        className="list-group list-group-flush"
+                        className="list-group list-group-flush tasks-container"
                       >
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
                           console.log("task", task);
@@ -205,7 +359,7 @@ function ProjectDetail(props) {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      className="list-group-item draggable-task "
+                                      className="list-group-item draggable-task dragged-task"
                                       data-toggle="modal"
                                       data-target="#taskDetailModal"
                                     >
@@ -231,29 +385,148 @@ function ProjectDetail(props) {
                                           </p>
                                         </div>
                                         <div className="block-right ml-2">
-                                          <div
-                                            className="avatar-group"
-                                            style={{ display: "flex" }}
-                                          >
-                                            {task?.assigness?.map(
-                                              (mem, index) => {
+                                          <div className="avatar-group">
+                                            {task?.assigness
+                                              .slice(0, 4)
+                                              ?.map((mem, index) => {
                                                 return (
                                                   <div
-                                                    className="avatar "
+                                                    className="avatar"
                                                     key={index}
                                                   >
                                                     <img
-                                                      className="assigness-avatar"
                                                       src={mem.avatar}
                                                       alt={mem.avatar}
                                                       style={{
                                                         borderRadius: "50%",
+                                                        width: "30px",
+                                                        height: "30px",
                                                       }}
                                                     ></img>
                                                   </div>
                                                 );
-                                              }
+                                              })}
+                                            {task?.assigness?.length > 4 ? (
+                                              <Avatar className="avatar-remaining">
+                                                ...
+                                              </Avatar>
+                                            ) : (
+                                              ""
                                             )}
+                                          </div>
+                                          <div className="avatar-group-responsive">
+                                            {task?.assigness
+                                              ?.slice(0, 2)
+                                              .map((member, index) => {
+                                                return (
+                                                  <Popover
+                                                    key={index}
+                                                    placement="top"
+                                                    title="Members"
+                                                    content={() => {
+                                                      return (
+                                                        <table className="table">
+                                                          <thead>
+                                                            <tr>
+                                                              <th>Id</th>
+                                                              <th>avatar</th>
+                                                              <th>name</th>
+                                                              <th></th>
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            {task?.assigness?.map(
+                                                              (item, i) => {
+                                                                return (
+                                                                  <tr key={i}>
+                                                                    <td className="mr-1">
+                                                                      {item.id}
+                                                                    </td>
+                                                                    <td>
+                                                                      <img
+                                                                        style={{
+                                                                          borderRadius:
+                                                                            "50%",
+                                                                        }}
+                                                                        src={
+                                                                          item.avatar
+                                                                        }
+                                                                        width="50"
+                                                                        height="50"
+                                                                      ></img>
+                                                                    </td>
+                                                                    <td>
+                                                                      {
+                                                                        item.name
+                                                                      }
+                                                                    </td>
+                                                                  </tr>
+                                                                );
+                                                              }
+                                                            )}
+                                                          </tbody>
+                                                        </table>
+                                                      );
+                                                    }}
+                                                  >
+                                                    <Avatar
+                                                      src={member.avatar}
+                                                      key={index}
+                                                    />
+                                                  </Popover>
+                                                );
+                                              })}
+                                            <Popover
+                                              placement="topLeft"
+                                              title="Members"
+                                              content={() => {
+                                                return (
+                                                  <table className="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Id</th>
+                                                        <th>avatar</th>
+                                                        <th>name</th>
+                                                        <th></th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      {task?.assigness?.map(
+                                                        (item, index) => {
+                                                          return (
+                                                            <tr key={index}>
+                                                              <td>{item.id}</td>
+                                                              <td>
+                                                                <img
+                                                                  style={{
+                                                                    borderRadius:
+                                                                      "50%",
+                                                                  }}
+                                                                  src={
+                                                                    item.avatar
+                                                                  }
+                                                                  width="50"
+                                                                  height="50"
+                                                                ></img>
+                                                              </td>
+                                                              <td>
+                                                                {item.name}
+                                                              </td>
+                                                            </tr>
+                                                          );
+                                                        }
+                                                      )}
+                                                    </tbody>
+                                                  </table>
+                                                );
+                                              }}
+                                            >
+                                              {task?.assigness?.length >= 3 ? (
+                                                <Avatar>...</Avatar>
+                                              ) : (
+                                                ""
+                                              )}
+                                            </Popover>
                                           </div>
                                         </div>
                                       </div>
@@ -277,7 +550,7 @@ function ProjectDetail(props) {
       </DragDropContext>
     );
   };
-  return projectDetail ? (
+  return detail ? (
     <div
       style={{ padding: "0px", paddingLeft: "2rem", paddingTop: "5rem" }}
       className="content-container"
@@ -288,7 +561,7 @@ function ProjectDetail(props) {
           items={[
             { title: "Project" },
             { title: "Cyber Learn" },
-            { title: projectDetail.projectName },
+            { title: detail.projectName },
           ]}
         />
       </div>
@@ -307,28 +580,58 @@ function ProjectDetail(props) {
         >
           <h3 className="mr-4">Members</h3>
           <div className="avatar-container-detail">{renderAvatar()}</div>
-          <button className="btn btn-secondary add-user-btn">+</button>
+          <div className="avatar-container-detail-resp">
+            {renderAvatarResp()}
+          </div>
+
+          <button
+            className="btn btn-secondary add-user-btn"
+            onClick={showModal}
+          >
+            +
+          </button>
         </div>
       </div>
-      <div className="row">{renderCardTaskList()}</div>
+      <div className="row works-container">{renderCardTaskList()}</div>
 
       <Modal
         className="modal-users"
-        title={`Add member to project ${projectDetail.projectName}`}
+        title={`Add member to project ${detail.projectName}`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <div className="ant-col ant-col-24">
-          <Search
-            placeholder="search user"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onSearch={onSearch}
-          />
-        </div>
-
+        <AutoComplete
+          options={userSearch?.map((user, index) => {
+            return {
+              label: user.name,
+              value: user.userId.toString(),
+            };
+          })}
+          style={{
+            width: "100%",
+          }}
+          value={value}
+          onSearch={(value) => {
+            searchRef.current = setTimeout(() => {
+              dispatch({
+                type: GET_USER_API,
+                keyWord: value,
+              });
+            }, 500);
+          }}
+          onChange={(text) => {
+            setValue(text);
+          }}
+          onSelect={(valueSelected, option) => {
+            setValue(option.label);
+            dispatch({
+              type: GET_USER_API,
+              keyWord: valueSelected,
+            });
+          }}
+          placeholder="Search user"
+        />
         <div className="row modal-users-container">
           <div className="col-6 col-sx-12 col-sm-6  users-container">
             <h5>Not yet added</h5>

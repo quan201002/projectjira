@@ -98,7 +98,6 @@ const Formlogin = (props) => {
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
                 />
-
                 {errors.passWord && touched.passWord ? (
                   <div className="error">{errors.passWord}</div>
                 ) : null}

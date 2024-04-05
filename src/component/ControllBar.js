@@ -18,6 +18,7 @@ import { NavLink } from "react-router-dom";
 import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
 import { TOKEN, USER_LOGIN } from "../redux/constant/SettingSystem";
 import { Card, Space } from "antd";
+import Darkmode from "./GlobalSetting/Darkmode";
 const { Content, Sider } = Layout;
 
 const renderLoginRequireMent = () => {
@@ -89,12 +90,11 @@ const ControllBar = () => {
             </Sider>
             <Sider
               className="d-flex justify-content-center menu-sider white-sider"
-              style={{
-                background: colorBgContainer,
-                height: "100vh",
-              }}
               width={200}
             >
+              <p className="text-left mb-5">
+                <Darkmode />
+              </p>
               <p>
                 <BuildOutlined />
                 <NavLink className="  menu-item" to="/createproject">
@@ -119,26 +119,27 @@ const ControllBar = () => {
                   Login
                 </NavLink>
               </p>
+              <p style={{ cursor: "pointer" }}>
+                <LogoutOutlined />
+                <Popconfirm
+                  className="menu-item"
+                  title="Log out"
+                  description="Are you sure to logout ?"
+                  onConfirm={() => {
+                    localStorage.removeItem(TOKEN);
+                    localStorage.removeItem(USER_LOGIN);
+                    window.location = "/login";
+                  }}
+                >
+                  Log out
+                </Popconfirm>
+              </p>
               <p>
                 <FormOutlined />
                 <NavLink className="menu-item" to="/signup">
                   Signup
                 </NavLink>
               </p>
-              <Popconfirm
-                title="Log out"
-                description="Are you sure to logout ?"
-                onConfirm={() => {
-                  localStorage.removeItem(TOKEN);
-                  localStorage.removeItem(USER_LOGIN);
-                  window.location = "/login";
-                }}
-              >
-                <p className="menu-item ml-0" style={{ cursor: "pointer" }}>
-                  <LogoutOutlined className="mr-1" />
-                  Log out
-                </p>
-              </Popconfirm>
               <Divider type="horizontal" />
             </Sider>
             <div class="dropdown dropdown-bar">
@@ -186,21 +187,22 @@ const ControllBar = () => {
                     Signup
                   </NavLink>
                 </p>
-                <Popconfirm
-                  title="Log out"
-                  description="Are you sure to logout ?"
-                  onConfirm={() => {
-                    localStorage.removeItem(TOKEN);
-                    localStorage.removeItem(USER_LOGIN);
-                    window.location = "/login";
-                  }}
-                >
-                  <p className="menu-item ml-0" style={{ cursor: "pointer" }}>
-                    <LogoutOutlined className="mr-1" />
-                    Log out
-                  </p>
-                </Popconfirm>
               </div>
+            </div>
+            <div className="account-actions">
+              <Popconfirm
+                title="Log out"
+                description="Are you sure to logout ?"
+                onConfirm={() => {
+                  localStorage.removeItem(TOKEN);
+                  localStorage.removeItem(USER_LOGIN);
+                  window.location = "/login";
+                }}
+              >
+                <button className="btn btn-bg-primary logout-button">
+                  <p style={{ lineHeight: "100%" }}>Log out</p>
+                </button>
+              </Popconfirm>
             </div>
           </div>
         </div>

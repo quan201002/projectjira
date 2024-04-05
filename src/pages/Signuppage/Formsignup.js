@@ -23,7 +23,7 @@ const Formsignup = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  console.log("password", passWord);
+  // console.log("password", passWord);
   return (
     <div className="signup-page">
       <Form

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import { withFormik } from "formik";
 import { Input, Button } from "antd";
 import * as Yup from "yup";
 import { connect, useDispatch, useSelector } from "react-redux";
-
 import { https } from "../../service/api";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -47,10 +45,13 @@ function CreateProject(props) {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <div className="title">Create Project</div>
+        <div>
+          <h4 className="title mb-3">CREATE PROJECT</h4>
+        </div>
+
         <form
           onSubmit={handleSubmit}
-          className="content-container"
+          className="create-project-container"
           onChange={handleChange}
         >
           <div className="form-group w-100">

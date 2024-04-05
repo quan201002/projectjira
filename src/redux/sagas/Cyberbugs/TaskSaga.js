@@ -94,7 +94,6 @@ function* updateTaskStatusSaga(action) {
     });
     console.log("data status update", data);
     //sau khi thành công gọi lại get project detail saga để sắp xếp lại thông tin các task
-
     yield put({
       type: GET_PROJECT_DETAIL_SAGA,
       projectId: taskUpdateStatus.projectId,

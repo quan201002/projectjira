@@ -36,9 +36,9 @@ function App() {
             element={<ProjectDetail />}
           ></Route>
         </Route>
-
         <Route path="/signup" element={<Signuppage />}></Route>
         <Route path="/modalHOC" element={<Modaljira />}></Route>
+        <Route path="/drag" element={<DragandDropDnd />}></Route>
       </Routes>
     </>
   );

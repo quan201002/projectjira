@@ -61,69 +61,69 @@ export default function ModalDetail() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let isValid = true;
-    console.log("value", value);
-    console.log("name", name);
-    console.log(taskModal.timeTrackingRemaining);
-    console.log(taskModal.timeTrackingSpent);
+    // let isValid = true;
+    // console.log("value", value);
+    // console.log("name", name);
+    // console.log(taskModal.timeTrackingRemaining);
+    // console.log(taskModal.timeTrackingSpent);
 
-    switch (name) {
-      case "originalEstimate":
-        if (value <= 0) {
-          document.querySelector(".validate-original-estimate").innerText =
-            "Must greater than 0";
-        } else {
-          document.querySelector(".validate-original-estimate").innerText = "";
-        }
+    // switch (name) {
+    //   case "originalEstimate":
+    //     if (value <= 0) {
+    //       document.querySelector(".validate-original-estimate").innerText =
+    //         "Must greater than 0";
+    //     } else {
+    //       document.querySelector(".validate-original-estimate").innerText = "";
+    //     }
 
-        if (
-          taskModal.timeTrackingRemaining * 1 +
-            taskModal.timeTrackingSpent * 1 !==
-          value * 1
-        ) {
-          document.querySelector(".validate-original-estimate").innerText =
-            "Equal to logged hours plus remaining hours";
-        } else {
-          document.querySelector(".validate-original-estimate").innerText = "";
-        }
-        break;
-      case "timeTrackingSpent":
-        if (value < 0) {
-          document.querySelector(".validate-timetrackingspent").innerText =
-            "Must >= 0";
-        } else {
-          document.querySelector(".validate-timetrackingspent").innerText = " ";
-        }
-        if (
-          value * 1 + taskModal.timeTrackingRemaining * 1 ===
-          taskModal.originalEstimate * 1
-        ) {
-          document.querySelector(".validate-original-estimate").innerText = "";
-        } else {
-          document.querySelector(".validate-original-estimate").innerText =
-            "Equal to logged hours plus remaining hours";
-        }
+    //     if (
+    //       taskModal.timeTrackingRemaining * 1 +
+    //         taskModal.timeTrackingSpent * 1 !==
+    //       value * 1
+    //     ) {
+    //       document.querySelector(".validate-original-estimate").innerText =
+    //         "Equal to logged hours plus remaining hours";
+    //     } else {
+    //       document.querySelector(".validate-original-estimate").innerText = "";
+    //     }
+    //     break;
+    //   case "timeTrackingSpent":
+    //     if (value < 0) {
+    //       document.querySelector(".validate-timetrackingspent").innerText =
+    //         "Must >= 0";
+    //     } else {
+    //       document.querySelector(".validate-timetrackingspent").innerText = " ";
+    //     }
+    //     if (
+    //       value * 1 + taskModal.timeTrackingRemaining * 1 ===
+    //       taskModal.originalEstimate * 1
+    //     ) {
+    //       document.querySelector(".validate-original-estimate").innerText = "";
+    //     } else {
+    //       document.querySelector(".validate-original-estimate").innerText =
+    //         "Equal to logged hours plus remaining hours";
+    //     }
 
-        break;
-      case "timeTrackingRemaining":
-        if (value < 0) {
-          document.querySelector(".validate-timetrackingremaining").innerText =
-            "Must >= 0";
-        } else {
-          document.querySelector(".validate-timetrackingremaining").innerText =
-            " ";
-        }
-        if (
-          value * 1 + taskModal.timeTrackingSpent * 1 ===
-          taskModal.originalEstimate * 1
-        ) {
-          document.querySelector(".validate-original-estimate").innerText = "";
-        } else {
-          document.querySelector(".validate-original-estimate").innerText =
-            "Equal to logged hours plus remaining hours";
-        }
-        break;
-    }
+    //     break;
+    //   case "timeTrackingRemaining":
+    //     if (value < 0) {
+    //       document.querySelector(".validate-timetrackingremaining").innerText =
+    //         "Must >= 0";
+    //     } else {
+    //       document.querySelector(".validate-timetrackingremaining").innerText =
+    //         " ";
+    //     }
+    //     if (
+    //       value * 1 + taskModal.timeTrackingSpent * 1 ===
+    //       taskModal.originalEstimate * 1
+    //     ) {
+    //       document.querySelector(".validate-original-estimate").innerText = "";
+    //     } else {
+    //       document.querySelector(".validate-original-estimate").innerText =
+    //         "Equal to logged hours plus remaining hours";
+    //     }
+    //     break;
+    // }
 
     dispatch({
       type: HANDLE_CHANGE_POST_API_SAGA,
@@ -138,7 +138,6 @@ export default function ModalDetail() {
     // });
   };
   const renderDescription = () => {
-    const handelEditorChange = (e) => {};
     const jsxDescription = ReactHTMLparser(taskModal?.description);
     return (
       <div>
@@ -358,7 +357,6 @@ export default function ModalDetail() {
               name="timeTrackingRemaining"
               value={taskModal.timeTrackingRemaining}
               onChange={handleChange}
-              defaultValue=""
             ></input>
             <p className="validate-text validate-timetrackingremaining"></p>
           </div>
@@ -378,16 +376,16 @@ export default function ModalDetail() {
   const childRef = useRef(null);
   return (
     <div
-      class="modal fade"
+      className="modal fade"
       id="taskDetailModal"
-      tabindex="-1"
+      tabIndex="-1"
       role="dialog"
       aria-labelledby="TaskDetailModalLabel"
       aria-hidden="true"
       // style={{marginLeft:"24%",marginTop:"10px",height:"100%"}}
     >
-      <div class="modal-dialog custom-modal " role="document">
-        <div class="modal-content">
+      <div className="modal-dialog custom-modal " role="document">
+        <div className="modal-content modal-task-detail">
           <div className="modal-header">
             <div classame="task-title w-100">
               <span
@@ -464,7 +462,7 @@ export default function ModalDetail() {
                     <h6 className="text-success">COMMENT</h6>
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
-                        <img src={userLogin.ava}></img>
+                        <img src={userLogin.avatar}></img>
                       </div>
                       <div className="input-comment">
                         <input
@@ -707,7 +705,7 @@ export default function ModalDetail() {
                     <p className="validate-text validate-original-estimate"></p>
                   </div>
                   <div className="time-tracking">
-                    <h6 className="text-detail">ITME TRACKING</h6>
+                    <h6 className="text-detail">TIME TRACKING</h6>
                     {renderTimeTracking()}
                   </div>
                   <div className="d-flex justify-content-between">

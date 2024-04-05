@@ -50,7 +50,7 @@ const UserList = () => {
       dataIndex: "phoneNumber",
     },
     {
-      title: "",
+      title: " ",
       key: "x",
       render: (text, record) => {
         return (
@@ -89,7 +89,7 @@ const UserList = () => {
               okText="Yes"
               cancelText="No"
             >
-              <button className="btn  btn-danger">
+              <button className="btn btn-danger">
                 <DeleteOutlined />
               </button>
             </Popconfirm>
@@ -125,7 +125,6 @@ const UserList = () => {
             value: user.userId.toString(),
           };
         })}
-        defaultValue={JSON.parse(localStorage.getItem("SEARCH"))}
         value={value}
         style={{ width: "100%" }}
         onSearch={(value) => {
@@ -140,9 +139,7 @@ const UserList = () => {
           }, 500);
         }}
         onChange={(text) => {
-          setSearch(value);
           setValue(text);
-          localStorage.setItem("SEARCH", JSON.stringify(text));
         }}
         onSelect={(valueSelected, option) => {
           //set gia tri cua hop thoai = option.label

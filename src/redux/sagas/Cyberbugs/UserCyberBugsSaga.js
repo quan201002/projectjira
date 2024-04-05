@@ -73,9 +73,6 @@ export function* theoDoiSignin() {
 //get user
 
 function* getUserSaga(action) {
-  //action.keyword
-
-  //api
   try {
     const res = yield call(() => {
       return https.get(`/api/Users/getUser?keyword=${action.keyWord}`);

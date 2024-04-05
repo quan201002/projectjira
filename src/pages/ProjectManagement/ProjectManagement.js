@@ -479,8 +479,8 @@ const ProjectManagement = () => {
             marginTop: 48,
           }}
         >
-          <div style={{ fontWeight: "bold", textAlign: "left" }}>
-            PROJECT MANAGEMENT
+          <div>
+            <h4 className="title">PROJECT MANAGEMENT</h4>
           </div>
         </Space>
         <Table
@@ -493,7 +493,7 @@ const ProjectManagement = () => {
           onChange={handleChange}
           rowKey={"id"}
           pagination={{
-            pageSize: 9,
+            pageSize: 7,
           }}
         />
         <List
