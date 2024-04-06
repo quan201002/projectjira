@@ -1,14 +1,15 @@
-import { escape } from "lodash";
+import { escape, update } from "lodash";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Darkmode() {
+  let dispatch = useDispatch();
   const bodyEl = document.querySelector("body");
   const inputEl = document.querySelector(".input");
-  const [check, setCheck] = useState(false);
-
-  function updateBody() {
+  const [check, setCheck] = useState(JSON.parse(localStorage.getItem("mode")));
+  const updateBody = () => {
     setCheck(!check);
-    console.log("check", check);
+    localStorage.setItem("mode", JSON.stringify(!check));
     if (!check) {
       bodyEl.style.backgroundColor = "black";
       document.querySelector("html").classList.add("dark-mode");
@@ -16,7 +17,7 @@ export default function Darkmode() {
       bodyEl.style.backgroundColor = "white";
       document.querySelector("html").classList.remove("dark-mode");
     }
-  }
+  };
 
   return (
     <>

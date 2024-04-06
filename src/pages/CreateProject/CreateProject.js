@@ -48,49 +48,26 @@ function CreateProject(props) {
         <div>
           <h4 className="title mb-3">CREATE PROJECT</h4>
         </div>
-
         <form
           onSubmit={handleSubmit}
           className="create-project-container"
           onChange={handleChange}
         >
           <div className="form-group w-100">
-            <p>Name</p>
+            <p className="input-label">Name</p>
             <Input
               onChange={handleChange}
-              className="form-control "
+              className="form-control input-form"
               name="projectName"
               value={values.projectName}
             ></Input>
             <div style={{ color: "red" }}>{errors.projectName}</div>
           </div>
           <div className="form-group w-100">
-            <p>Description</p>
-            {/* <Editor
-              style={{ heigth: "300px", width: "100%" }}
-              value={values.description}
-              name="description"
-              apiKey="yum1msoezeygff7ybjfk07rmlduenqggxcyw8oy3izh0xfch"
-              init={{
-                plugins:
-                  "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                tinycomments_mode: "embedded",
-                tinycomments_author: "Author name",
-                mergetags_list: [
-                  { value: "First.Name", title: "First Name" },
-                  { value: "Email", title: "Email" },
-                ],
-                ai_request: (request, respondWith) =>
-                  respondWith.string(() =>
-                    Promise.reject("See docs to implement AI Assistant")
-                  ),
-              }}
-              initialValue="Welcome to TinyMCE!"
-              onEditorChange={handelEditorChange}
-            /> */}
+            <p className="input-label">Description</p>
+
             <CKEditor
+              className="input-form"
               editor={ClassicEditor}
               data={values.description}
               onReady={(editor) => {
@@ -118,7 +95,7 @@ function CreateProject(props) {
           <div className="form-group  w-100">
             <select
               name="categoryId"
-              className="form-control"
+              className="form-control input-form"
               value={values.categoryId}
               onChange={handleChange}
             >

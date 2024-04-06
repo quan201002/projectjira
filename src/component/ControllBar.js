@@ -92,7 +92,7 @@ const ControllBar = () => {
               className="d-flex justify-content-center menu-sider white-sider"
               width={200}
             >
-              <p className="text-left mb-5">
+              <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container">
                 <Darkmode />
               </p>
               <p>
