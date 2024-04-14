@@ -42,9 +42,9 @@ function FormEditProject(props) {
       <div className="row">
         <div className="col-4">
           <div className="form-group">
-            <h4 className="font-weight-bold">Project Id</h4>
+            <h4 className="font-weight-bold input-label ">Project Id</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               value={values.id}
               onChange={handleChange}
               name="id"
@@ -54,10 +54,10 @@ function FormEditProject(props) {
 
         <div className="col-4">
           <div className="form-group">
-            <h4 className="font-weight-bold">Project name</h4>
+            <h4 className="font-weight-bold input-label">Project name</h4>
             <input
               value={values.projectName}
-              className="form-control"
+              className="form-control input-form"
               onChange={handleChange}
               name="projectName"
             />
@@ -66,7 +66,7 @@ function FormEditProject(props) {
 
         <div className="col-4">
           <div className="form-group">
-            <h4 className="font-weight-bold">Project category</h4>
+            <h4 className="font-weight-bold input-label">Project category</h4>
             {/* <input
               value={values.categoryId}
               className="form-control"
@@ -75,7 +75,7 @@ function FormEditProject(props) {
             /> */}
             <select
               name="categoryId"
-              className="form-control"
+              className="form-control input-form"
               value={values.categoryId}
               onChange={handleChange}
             >
@@ -93,7 +93,7 @@ function FormEditProject(props) {
 
         <div className="col-12">
           <div className="form-group">
-            <h4 className="font-weight-bold">Description</h4>
+            <h4 className="font-weight-bold input-label mb-2">Description</h4>
 
             <CKEditor
               editor={ClassicEditor}

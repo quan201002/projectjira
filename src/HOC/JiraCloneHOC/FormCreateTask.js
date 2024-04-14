@@ -86,10 +86,10 @@ const FormCreateTask = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <p>Project</p>
+        <p className="input-label">Project</p>
         <select
           name="projectId"
-          className="form-control"
+          className="form-control input-form"
           onChange={(e) => {
             setFieldValue("projectId", e.target.value);
             let { value } = e.target;
@@ -120,10 +120,10 @@ const FormCreateTask = (props) => {
       <div className="form-group">
         <div className="row">
           <div className="col-6">
-            <p>Task name</p>
+            <p className="input-label">Task name</p>
             <input
               name="taskName"
-              className="form-control"
+              className="form-control input-form"
               onChange={handleChange}
               value={values.taskName}
             ></input>
@@ -132,10 +132,10 @@ const FormCreateTask = (props) => {
             )}
           </div>
           <div className="col-6">
-            <p>Status</p>
+            <p className="input-label">Status</p>
             <select
               name="statusId"
-              className="form-control"
+              className="form-control input-form"
               onChange={handleChange}
             >
               {arrStatus?.map((status, index) => {
@@ -152,10 +152,10 @@ const FormCreateTask = (props) => {
       <div className="form-group">
         <div className="row">
           <div className="col-6">
-            <p>Priority</p>
+            <p className="input-label">Priority</p>
             <select
               name="priorityId"
-              className="form-control"
+              className="form-control input-form"
               onChange={handleChange}
             >
               {arrPriority.map((priority, index) => {
@@ -172,9 +172,9 @@ const FormCreateTask = (props) => {
             </select>
           </div>
           <div className="col-6">
-            <p>Task type</p>
+            <p className="input-label">Task type</p>
             <select
-              className="form-control"
+              className="form-control input-form"
               name="typeId"
               onChange={handleChange}
             >
@@ -192,8 +192,9 @@ const FormCreateTask = (props) => {
       <div className="form-group">
         <div className="row">
           <div className="col-6">
-            <p>Assignees</p>
+            <p className="input-label">Assignees</p>
             <Select
+              className="input-form form-control"
               mode="multiple"
               options={userOptions}
               size={size}
@@ -211,13 +212,14 @@ const FormCreateTask = (props) => {
             )}
             <div className="row mt-2">
               <div className="col-12 mt-1">
-                <p>Original estimate (hours)</p>
+                <p className="input-label">Original estimate (hours)</p>
                 <input
                   onChange={handleChange}
-                  className="form-control"
+                  className="form-control input-form"
                   type="number"
                   name="originalEstimate"
                   min="0"
+                  autoComplete="off"
                 ></input>
                 {errors.originalEstimate && touched.originalEstimate && (
                   <div id="feedback">{errors.originalEstimate}</div>
@@ -226,8 +228,9 @@ const FormCreateTask = (props) => {
             </div>
           </div>
           <div className="col-6">
-            <p>Time tracking (hours)</p>
+            <p className="input-label">Time tracking (hours)</p>
             <Slider
+              className="form-input"
               onChange={handleChange}
               max={
                 Number(timeTracking.timeTrackingSpent) +
@@ -237,16 +240,16 @@ const FormCreateTask = (props) => {
               defaultValue={30}
             />
             <div className="row" style={{ marginTop: 5 }}>
-              <div className="col-6 text-left">
+              <div className="col-6 text-left time-tracking-display">
                 {timeTracking.timeTrackingSpent}
               </div>
-              <div className="col-6 text-left">
+              <div className="col-6 text-left time-tracking-display">
                 {timeTracking.timeTrackingRemaining}
               </div>
             </div>
             <div className="row ">
               <div className="col-6">
-                <p>Time spent</p>
+                <p className="input-label">Time spent</p>
                 <input
                   onChange={(e) => {
                     setTimeTracking({
@@ -256,16 +259,17 @@ const FormCreateTask = (props) => {
                     setFieldValue("timeTrackingSpent", e.target.value);
                   }}
                   type="number"
-                  className="form-control"
+                  className="form-control input-form"
                   name="timeTrackingSpent"
                   min="0"
+                  autoComplete="off"
                 ></input>
                 {errors.timeTrackingSpent && touched.timeTrackingSpent && (
                   <div id="feedback">{errors.timeTrackingSpent}</div>
                 )}
               </div>
               <div className="col-6">
-                <p>Time remaining</p>
+                <p className="input-label">Time remaining</p>
                 <input
                   onChange={(e) => {
                     setTimeTracking({
@@ -274,8 +278,9 @@ const FormCreateTask = (props) => {
                     });
                     setFieldValue("timeTrackingRemaining", e.target.value);
                   }}
+                  autoComplete="off"
                   type="number"
-                  className="form-control"
+                  className="form-control input-form"
                   name="timeTrackingRemaining"
                   min="0"
                   max={values.originalEstimate}
@@ -290,7 +295,7 @@ const FormCreateTask = (props) => {
         </div>
       </div>
       <div className="form-group">
-        <p>Description</p>
+        <p className="input-label">Description</p>
 
         <CKEditor
           editor={ClassicEditor}

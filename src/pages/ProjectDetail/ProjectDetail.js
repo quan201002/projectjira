@@ -255,9 +255,9 @@ function ProjectDetail(props) {
   const renderPrioritySign = (priorityId, projectId) => {
     switch (priorityId) {
       case 1:
-        return <i className="fa fa-arrow-up "></i>;
+        return <i className="fa fa-arrow-up  "></i>;
       case 2:
-        return <i class="fa-solid fa-arrow-right"></i>;
+        return <i class="fa-solid fa-arrow-right  "></i>;
       case 3:
         return <i class="fa-solid fa-arrow-turn-down"></i>;
       case 4:
@@ -363,7 +363,7 @@ function ProjectDetail(props) {
                                       data-toggle="modal"
                                       data-target="#taskDetailModal"
                                     >
-                                      <h4 className="text-info">
+                                      <h4 className="text-info ">
                                         {task.taskName}
                                       </h4>
                                       <div
@@ -376,11 +376,13 @@ function ProjectDetail(props) {
                                               task.taskTypeDetail.id
                                             )}
                                           </span>
-                                          {renderPrioritySign(
-                                            task.priorityTask.priorityId,
-                                            projectId
-                                          )}
-                                          <p className="text-warning task-priority">
+                                          <span className="pri-sign">
+                                            {renderPrioritySign(
+                                              task.priorityTask.priorityId,
+                                              projectId
+                                            )}
+                                          </span>
+                                          <p className="text-warning task-priority  ">
                                             {task.priorityTask.priority}
                                           </p>
                                         </div>
@@ -568,7 +570,7 @@ function ProjectDetail(props) {
 
       <div style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}>
         <div className="board">
-          <h1>Board</h1>
+          <h1 className="text">Board</h1>
         </div>
         <div
           style={{
@@ -578,7 +580,7 @@ function ProjectDetail(props) {
             width: "23%",
           }}
         >
-          <h3 className="mr-4">Members</h3>
+          <h3 className="mr-4 text">Members</h3>
           <div className="avatar-container-detail">{renderAvatar()}</div>
           <div className="avatar-container-detail-resp">
             {renderAvatarResp()}

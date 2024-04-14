@@ -1,11 +1,12 @@
 import { escape, update } from "lodash";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function Darkmode() {
   let dispatch = useDispatch();
   const bodyEl = document.querySelector("body");
-  const inputEl = document.querySelector(".input");
+  const inputEl = document.getElementById("dark-mode");
+
   const [check, setCheck] = useState(JSON.parse(localStorage.getItem("mode")));
   const updateBody = () => {
     setCheck(!check);
@@ -22,6 +23,7 @@ export default function Darkmode() {
   return (
     <>
       <input
+        checked={check}
         type="checkbox"
         id="dark-mode"
         className="input"

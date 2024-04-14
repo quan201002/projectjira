@@ -238,7 +238,7 @@ const ProjectManagement = () => {
                 <Popover
                   key={index}
                   placement="topLeft"
-                  title="Members"
+                  title="Members hi"
                   content={() => {
                     return (
                       <table className="table">
@@ -366,6 +366,7 @@ const ProjectManagement = () => {
             </Popover>
 
             <Popover
+              className="popover-add-user"
               placement="right"
               title={"add user"}
               content={() => {

@@ -98,6 +98,7 @@ export default function DragandDropDnd() {
                             </Draggable>
                           );
                         })}
+                        ;
                       </div>
                       {provided.placeholder}
                     </div>

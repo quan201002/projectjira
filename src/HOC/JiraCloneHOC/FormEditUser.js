@@ -17,9 +17,9 @@ const FormEditUser = (props) => {
       <div className="row">
         <div className="col-4">
           <div className="form-group">
-            <h4 className="font-weight-bold">User Id</h4>
+            <h4 className="font-weight-bold input-label">User Id</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               type="text"
               onChange={handleChange}
               value={values.id}
@@ -29,9 +29,9 @@ const FormEditUser = (props) => {
         </div>
         <div className="col-8">
           <div className="form-group">
-            <h4 className="font-weight-bold">Password</h4>
+            <h4 className="font-weight-bold input-label">Password</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               type="password"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -49,9 +49,9 @@ const FormEditUser = (props) => {
       <div className="row">
         <div className="col-12">
           <div className="form-group">
-            <h4 className="font-weight-bold">Email</h4>
+            <h4 className="font-weight-bold input-label">Email</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               type="email"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -69,9 +69,9 @@ const FormEditUser = (props) => {
       <div className="row">
         <div className="col-4">
           <div className="form-group">
-            <h4 className="font-weight-bold">Name</h4>
+            <h4 className="font-weight-bold input-label">Name</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               type="text"
               onChange={handleChange}
               value={values.name}
@@ -81,9 +81,9 @@ const FormEditUser = (props) => {
         </div>
         <div className="col-8">
           <div className="form-group">
-            <h4 className="font-weight-bold">Phone number</h4>
+            <h4 className="font-weight-bold input-label">Phone number</h4>
             <input
-              className="form-control"
+              className="form-control input-form"
               type="number"
               onChange={handleChange}
               onBlur={handleBlur}

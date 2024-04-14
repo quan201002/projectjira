@@ -58,8 +58,11 @@ const ControllBar = () => {
               collapsed={collapsed}
               className="dark-sider"
             >
+              <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container">
+                <Darkmode />
+              </p>
               <Button
-                className="dark-sider-button"
+                className="dark-sider-button ml-lg-3 "
                 type="text"
                 icon={<MenuOutlined style={{ color: "white" }} />}
                 onClick={() => setCollapsed(!collapsed)}
@@ -92,9 +95,6 @@ const ControllBar = () => {
               className="d-flex justify-content-center menu-sider white-sider"
               width={200}
             >
-              <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container">
-                <Darkmode />
-              </p>
               <p>
                 <BuildOutlined />
                 <NavLink className="  menu-item" to="/createproject">
