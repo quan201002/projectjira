@@ -52,8 +52,7 @@ function ProjectDetail(props) {
   const users = [...userSearch];
 
   const data = users;
-  console.log("userSearch", userSearch);
-  console.log("arrr User", arrUser);
+
   const onSearch = (value, _e, info) => {
     dispatch({
       type: GET_USER_API,
@@ -73,7 +72,7 @@ function ProjectDetail(props) {
       outSiders.push(a);
     }
   });
-  console.log("outSiders", outSiders);
+
   useEffect(() => {
     dispatch({
       type: GET_PROJECT_DETAIL_SAGA,
@@ -103,10 +102,9 @@ function ProjectDetail(props) {
   let dispatch = useDispatch();
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-  console.log("project detail", projectDetail);
+
   const detail = { ...projectDetail };
-  console.log("detail", detail);
-  console.log("project detaill", projectDetail);
+
   const renderAvatar = () => {
     return detail?.members?.map((user, index) => {
       return (
@@ -255,13 +253,13 @@ function ProjectDetail(props) {
   const renderPrioritySign = (priorityId, projectId) => {
     switch (priorityId) {
       case 1:
-        return <i className="fa fa-arrow-up  "></i>;
+        return <i className="fa fa-arrow-up"></i>;
       case 2:
-        return <i class="fa-solid fa-arrow-right  "></i>;
+        return <i className="fa-solid fa-arrow-right  "></i>;
       case 3:
-        return <i class="fa-solid fa-arrow-turn-down"></i>;
+        return <i className="fa-solid fa-arrow-turn-down"></i>;
       case 4:
-        return <i class="fa-solid fa-arrow-down"></i>;
+        return <i className="fa-solid fa-arrow-down"></i>;
     }
   };
   // const renderTaskTypeIcon = (taskType) => {
@@ -327,7 +325,7 @@ function ProjectDetail(props) {
                         className="list-group list-group-flush tasks-container"
                       >
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
-                          console.log("task", task);
+                          // console.log("task", task);
                           return (
                             <>
                               <Draggable

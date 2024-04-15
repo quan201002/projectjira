@@ -97,19 +97,19 @@ const ControllBar = () => {
             >
               <p>
                 <BuildOutlined />
-                <NavLink className="  menu-item" to="/createproject">
+                <NavLink className="menu-item" to="/createproject">
                   Createproject
                 </NavLink>
               </p>
               <p>
                 <AppstoreOutlined />
-                <NavLink className="  menu-item" to="/projectmanagement">
+                <NavLink className="menu-item" to="/projectmanagement">
                   Project management
                 </NavLink>
               </p>
               <p>
                 <UserSwitchOutlined />
-                <NavLink className=" menu-item" to="/">
+                <NavLink className="menu-item" to="/">
                   User management
                 </NavLink>
               </p>
@@ -142,9 +142,9 @@ const ControllBar = () => {
               </p>
               <Divider type="horizontal" />
             </Sider>
-            <div class="dropdown dropdown-bar">
+            <div className="dropdown dropdown-bar">
               <button
-                class="dropdown-toggle menu-button"
+                className="dropdown-toggle menu-button"
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="dropdown"
@@ -154,12 +154,12 @@ const ControllBar = () => {
                 Menu
               </button>
               <div
-                class="dropdown-menu controller-menu"
+                className="dropdown-menu controller-menu"
                 aria-labelledby="dropdownMenuButton"
               >
                 <p>
                   <BuildOutlined />
-                  <NavLink className="  menu-item" to="/createproject">
+                  <NavLink className="menu-item" to="/createproject">
                     Createproject
                   </NavLink>
                 </p>

@@ -5,6 +5,7 @@ import FormLogin from "./Formlogin";
 export default function Loginpage() {
   return (
     <div
+      className="login-background"
       style={{
         backgroundColor: "#f0f2f5",
         height: "100vh",

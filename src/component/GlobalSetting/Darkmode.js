@@ -24,13 +24,14 @@ export default function Darkmode() {
     <>
       <input
         checked={check}
+        onChange={updateBody}
         type="checkbox"
         id="dark-mode"
         className="input"
         onClick={updateBody}
       />
       <label htmlFor="dark-mode" className="label">
-        <div className="circle" />
+        <p className="circle"></p>
       </label>
     </>
   );
