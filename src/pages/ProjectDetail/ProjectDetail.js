@@ -634,7 +634,7 @@ function ProjectDetail(props) {
         />
         <div className="row modal-users-container">
           <div className="col-6 col-sx-12 col-sm-6  users-container">
-            <h5>Not yet added</h5>
+            <h5 className="title">Not yet added</h5>
             <List
               bordered
               dataSource={outSiders}
@@ -671,7 +671,7 @@ function ProjectDetail(props) {
             />
           </div>
           <div className="col-6 col-sx-12 col-sm-6  users-container">
-            <h5>Already in project</h5>
+            <h5 className="title">Already in project</h5>
             <List
               bordered
               dataSource={arrUser}

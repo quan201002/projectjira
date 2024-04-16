@@ -18,7 +18,7 @@ export default function Homepage() {
 
   return (
     <div className="container1">
-      <div className="content-container">
+      <div className="content-container  ">
         <div className="homepage-header">
           <div>
             <h4 className="title mt-4">USER MANAGEMENT</h4>

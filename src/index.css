@@ -36,6 +36,9 @@ ul{
   --background-list:rgba(255,255,255,0.1);
   --card-header-background:rgb(14, 222, 225);
   --task-item-background:#f3f1f1;
+  --scroll-bar-x:#a8a8a8;
+  --scroll-bar-y:#f1f1f1;
+  --header:#0EDEE1;
 }
 .dark-mode{
   --right-sider:#0c0c0c0c;
@@ -61,6 +64,9 @@ ul{
    --background-list:#022341;
    --card-header-background: #02144e;
    --task-item-background:#022341;
+   --scroll-bar-x:#042fa6b3;
+   --scroll-bar-y:#0213576b;
+   --header:#02144e;
 }
 .ant-table-cell{
   background-color: var(--table-cell-color);
@@ -221,9 +227,12 @@ ul{
 .ck.ck-button.ck-on{
   border:1px solid var(--text); 
 }
-.ant-select-selector{
+.ant-select-selector,
+.ant-select-selector:hover{
   background-color: var(--background) !important;
+  color:var(--text)!important;
 }
+ 
 .ant-select-selector .ant-select-selection-search-input {
   color:var(--text)!important;
 }
@@ -512,6 +521,7 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border:none;
 }
 
 .task-title {
@@ -714,6 +724,8 @@ h3 {
 .comment-item{
   height: 35vh;
   overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-bar-x) var(--scroll-bar-y);
 }
 .login-notification{
   width: 100vw;
@@ -786,6 +798,8 @@ h3 {
 .users-container{
   overflow:scroll;
   height: 100%;
+  scrollbar-color:var(--scroll-bar-x) var(--scroll-bar-y);
+  scrollbar-width: thin;
 }
 .add-user-btn{
   border-radius: 50% !important;
@@ -834,15 +848,7 @@ opacity: 1;
    background-color: var(--background);
   border: var(--list-border);
 }
-.card-task-list ul  {
  
- 
-}
-.card-task-list ul li{
- 
-  
-
-}
 .card-header {
  
   font-weight: bold;
@@ -855,7 +861,25 @@ opacity: 1;
 .card:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
- 
+.ant-list-item-meta-title,
+.ant-list-item-meta-description{
+  color:var(--text)!important;
+}
+.modal-header{
+  background-color: var(--header);
+  color:var(--text);
+}
+.modal-body{
+  background-color: var(--form-background);
+  color:var(--text)
+}
+.modal-task-detail select,
+.modal-task-detail select:hover,
+.modal-task-detail input,
+.modal-task-detail input:hover{
+  background-color:var(--background);
+  color:var(--text);
+}
 @media (max-width:1700px){
   .card-task-list{
     width: 100%;
@@ -986,6 +1010,18 @@ visibility: hidden;
   background-color:black;
   animation: toggleOn 0.4s linear forwards;
  
+}
+.ant-modal-title{
+  color:var(--text)!important;
+}
+.ant-modal-content{
+  background-color: var(--form-background)!important;
+}
+.ant-modal-header{
+  background-color: var(--form-background)!important;
+}
+.ant-select-selection-search input::placeholder{
+  color:--
 }
 @keyframes toggleOn {
   0%{

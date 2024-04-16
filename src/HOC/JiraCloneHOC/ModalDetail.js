@@ -206,7 +206,7 @@ export default function ModalDetail() {
           </div>
         ) : (
           <div>
-            <p className="text-detail mb-1">Description:</p>
+            <p className="title-detail mb-1">Description:</p>
             {jsxDescription}
             <div
               className="btn btn-primary mb-3"
@@ -453,13 +453,13 @@ export default function ModalDetail() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-8">
-                  <p className="issue text-success">
+                  <p className="issue detail-title">
                     This is an issue of type:
                     {taskModal.taskTypeDetail.taskType}
                   </p>
                   <div className="description">{renderDescription()}</div>
                   <div className="comment">
-                    <h6 className="text-success">COMMENT</h6>
+                    <h6 className="detail-title">COMMENT</h6>
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
                         <img src={userLogin.avatar}></img>
@@ -542,7 +542,7 @@ export default function ModalDetail() {
                 </div>
                 <div className="col-4">
                   <div className="status">
-                    <h6 className="text-detail">Status</h6>
+                    <h6 className="title-detail">Status</h6>
                     <select
                       onChange={(e) => {
                         const action = {
@@ -570,7 +570,7 @@ export default function ModalDetail() {
                     </select>
                   </div>
                   <div className="assignees">
-                    <h6 className="text-detail">Assignees</h6>
+                    <h6 className="title-detail">Assignees</h6>
                     <div className="row w-100">
                       {taskModal?.assigness?.map((user, index) => {
                         return (
@@ -673,7 +673,7 @@ export default function ModalDetail() {
                     </div>
                   </div>
                   <div className="priority" style={{ marginBottom: 20 }}>
-                    <h6 className="text-detail">PRIORITY</h6>
+                    <h6 className="title-detail">PRIORITY</h6>
                     <select
                       name="priorityId"
                       className="form-control"
@@ -692,7 +692,7 @@ export default function ModalDetail() {
                     </select>
                   </div>
                   <div className="estimate">
-                    <h6 className="text-detail">ORIGINAL ESTIMATE (HOURS)</h6>
+                    <h6 className="title-detail">ORIGINAL ESTIMATE (HOURS)</h6>
                     <input
                       name="originalEstimate"
                       type="number"
@@ -705,7 +705,7 @@ export default function ModalDetail() {
                     <p className="validate-text validate-original-estimate"></p>
                   </div>
                   <div className="time-tracking">
-                    <h6 className="text-detail">TIME TRACKING</h6>
+                    <h6 className="title-detail">TIME TRACKING</h6>
                     {renderTimeTracking()}
                   </div>
                   <div className="d-flex justify-content-between">

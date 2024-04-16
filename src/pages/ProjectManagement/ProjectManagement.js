@@ -512,7 +512,7 @@ const ProjectManagement = () => {
                     </NavLink>
                   </div>
                 </div>
-                <div className="w-100 d-flex justify-content-between">
+                <div className="w-100 d-flex justify-content-between ">
                   <div>Project Name</div>
                   <div className="mr-2">{item.projectName}</div>
                 </div>
