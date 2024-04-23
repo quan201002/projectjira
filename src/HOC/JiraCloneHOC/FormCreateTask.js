@@ -36,7 +36,7 @@ const FormCreateTask = (props) => {
     setFieldValue,
   } = props;
   let userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
-  console.log("user login", userLogin);
+  // console.log("user login", userLogin);
   //do kết nối với withFormmik nên sinh ra những props này
   let { projectList } = useSelector((state) => state.ProjectCyberBugsReducer);
   let { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
@@ -48,7 +48,7 @@ const FormCreateTask = (props) => {
   const userOptions = arrUser?.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
-  console.log("projectList", projectList);
+  // console.log("projectList", projectList);
   const [size, setSize] = useState("middle");
   const handleSizeChange = (e) => {
     setSize(e.target.value);
@@ -194,10 +194,8 @@ const FormCreateTask = (props) => {
           <div className="col-6">
             <p className="input-label">Assignees</p>
             <Select
-              className="input-form form-control"
               mode="multiple"
               options={userOptions}
-              size={size}
               onChange={(values) => {
                 setFieldValue("listUserAsign", values);
               }}

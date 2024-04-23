@@ -186,12 +186,12 @@ export function* theoDoiRemoveUser() {
 
 function* getUserByProjectIdSaga(action) {
   const { idProject } = action;
-  console.log("id project", idProject);
+  // console.log("id project", idProject);
   try {
     const { data, status } = yield call(() =>
       cyberbugsService.getUserByProjectId(idProject)
     );
-    console.log("data", data);
+    // console.log("data", data);
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
         type: GET_USER_BY_PROJECT_ID,

@@ -13,8 +13,6 @@ export const cyberbugsService = {
     return https.post("/api/Project/createProject", newProject);
   },
   createProjectAuthorization: (newProject) => {
-    console.log();
-
     return https.post("/api/Project/createProjectAuthorize", newProject);
   },
   getListProject: () => {

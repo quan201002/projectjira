@@ -45,7 +45,7 @@ const ProjectManagement = () => {
 
   const data = projectList;
 
-  console.log("data", data);
+  // console.log("data", data);
   let dispatch = useDispatch();
 
   //dung useDispatch de goi action
@@ -422,7 +422,7 @@ const ProjectManagement = () => {
       dataIndex: "",
       key: "x",
       render: (text, record) => {
-        console.log("record", record);
+        // console.log("record", record);
         return (
           <>
             <button

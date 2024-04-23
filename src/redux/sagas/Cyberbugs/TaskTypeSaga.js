@@ -7,7 +7,7 @@ import {
 import { https } from "../../../service/api";
 
 function* getAllTaskTypeSaga(action) {
-  console.log("action saga", action);
+  // console.log("action saga", action);
   try {
     const { data, status } = yield call(() => {
       return TaskTypeService.getAllTaskType();

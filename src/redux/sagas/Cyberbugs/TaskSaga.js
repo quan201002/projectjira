@@ -27,7 +27,7 @@ import {
 
 // import $ from "jquery";
 function* createTaskSaga(action) {
-  console.log("action create task saga", action);
+  // console.log("action create task saga", action);
   yield put({
     type: DISPLAY_LOADING,
   });
@@ -62,7 +62,7 @@ export function* theoDoiCreateTaskSaga() {
 
 function* getTaskSaga(action) {
   const { taskId } = action;
-  console.log("action", action);
+  // console.log("action", action);
   try {
     const { data, status } = yield call(() => {
       return TaskService.getTask(taskId);
@@ -86,22 +86,24 @@ export function* theoDoiGetTaskSaga() {
 
 function* updateTaskStatusSaga(action) {
   const { taskUpdateStatus } = action;
-  console.log("action", action);
+  // console.log("action", action);
   try {
     //cập nhật api status cho task hiện tại
     const { data, status } = yield call(() => {
       return TaskService.updateStatusTask(taskUpdateStatus);
     });
-    console.log("data status update", data);
+    // console.log("data status update", data);
     //sau khi thành công gọi lại get project detail saga để sắp xếp lại thông tin các task
-    yield put({
-      type: GET_PROJECT_DETAIL_SAGA,
-      projectId: taskUpdateStatus.projectId,
-    });
-    yield put({
-      type: GET_TASK_SAGA,
-      taskId: taskUpdateStatus.taskId,
-    });
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_PROJECT_DETAIL_SAGA,
+        projectId: taskUpdateStatus.projectId,
+      });
+      yield put({
+        type: GET_TASK_SAGA,
+        taskId: taskUpdateStatus.taskId,
+      });
+    }
   } catch (err) {
     console.log(err.response.data);
   }
@@ -144,7 +146,7 @@ function* handelChangePostApi(action) {
   //save qua api updateTaskSaga
   //lay du lieu tu state.taskModal
   let { taskModal } = yield select((state) => state.TaskReducer);
-  console.log("task Modal sau khi thay doi", taskModal);
+  // console.log("task Modal sau khi thay doi", taskModal);
   const objectApi = {
     listUserAsign: [0],
     taskId: "string",
@@ -163,14 +165,14 @@ function* handelChangePostApi(action) {
   });
 
   const taskModalUpdate = { ...taskModal, listUserAsign };
-  console.log("object sau khi xu li", taskModal);
-  console.log("task Modal update", taskModalUpdate);
+  // console.log("object sau khi xu li", taskModal);
+  // console.log("task Modal update", taskModalUpdate);
 
   try {
     const { data, status } = yield call(() => {
       return TaskService.updateTaskSaga(taskModalUpdate);
     });
-    console.log("data", data);
+    // console.log("data", data);
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
         type: GET_PROJECT_DETAIL_SAGA,
@@ -192,7 +194,7 @@ export function* theoDoiHandelChangePostApi() {
 
 function* deleteTaskSaga(action) {
   const { taskId, projectId } = action;
-  console.log("action", action);
+  // console.log("action", action);
   try {
     const { status } = yield call(() => {
       return TaskService.deleteTask(taskId);

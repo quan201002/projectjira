@@ -7,12 +7,12 @@ import {
 } from "../../constant/CyberBugsConstant";
 
 function* getAllProjectCaterorySaga(action) {
-  console.log(action);
+  // console.log(action);
   try {
     const { data, status } = yield call(() =>
       cyberbugsService.getAllProjectCategory()
     );
-    console.log(data);
+    // console.log(data);
     //gọi api thành công thì dispatch lên reducer
     if (status === STATUS_CODE.SUCCESS) {
       yield put({

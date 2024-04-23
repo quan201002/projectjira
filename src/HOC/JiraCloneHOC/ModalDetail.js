@@ -223,7 +223,7 @@ export default function ModalDetail() {
     );
   };
   const settingCommentEditor = (e) => {
-    console.log(e.target.dataset.id);
+    // console.log(e.target.dataset.id);
     setTargetComment(e.target.dataset.id);
     setVisibleCommentEditor(!visibleCommentEditor);
   };
@@ -246,8 +246,8 @@ export default function ModalDetail() {
               }}
               onChange={(event, editor) => {
                 setEditCmtValue(editor.getData());
-                console.log(content);
-                console.log("cmt", editCmtValue);
+                // console.log(content);
+                // console.log("cmt", editCmtValue);
               }}
               onBlur={(event, editor) => {
                 console.log("Blur.", editor);
@@ -349,7 +349,6 @@ export default function ModalDetail() {
             ></input>
             <p className="validate-text validate-timetrackingspent"></p>
           </div>
-
           <div className="col-6">
             <input
               type="number"
@@ -405,7 +404,7 @@ export default function ModalDetail() {
               >
                 {renderTaskType()}
               </select>
-              <span className="mr-2">{taskModal.taskName}</span>
+              <span className="mr-2 ml-4 ml-md-0">{taskModal.taskName}</span>
               <Popconfirm
                 title="Delete the task"
                 description="Are you sure to delete this task?"
@@ -420,7 +419,7 @@ export default function ModalDetail() {
                 okText="Yes"
                 cancelText="No"
               >
-                <button className="btn btn-danger ">
+                <button className="btn btn-danger  ">
                   <DeleteOutlined className="text-light" />
                 </button>
               </Popconfirm>
@@ -452,14 +451,14 @@ export default function ModalDetail() {
           <div className="modal-body">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-8">
-                  <p className="issue detail-title">
+                <div className="col-xl-8 col-md-12">
+                  <p className="issue title-detail">
                     This is an issue of type:
                     {taskModal.taskTypeDetail.taskType}
                   </p>
                   <div className="description">{renderDescription()}</div>
-                  <div className="comment">
-                    <h6 className="detail-title">COMMENT</h6>
+                  <div className="comment mt-5">
+                    <h6 className="title-detail">COMMENT</h6>
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
                         <img src={userLogin.avatar}></img>
@@ -470,12 +469,12 @@ export default function ModalDetail() {
                           type="text"
                           placeholder="Add a comment .. "
                           onChange={(e) => {
-                            console.log(e.target.value);
+                            // console.log(e.target.value);
                             setCommentValue(e.target.value);
                           }}
                         ></input>
                         <button
-                          className="btn btn-primary mt-2 mb-2"
+                          className="btn btn-primary mt-2 "
                           onClick={() => {
                             dispatch({
                               type: INSERT_COMMENT_SAGA,
@@ -540,7 +539,7 @@ export default function ModalDetail() {
                     </div>
                   </div>
                 </div>
-                <div className="col-4">
+                <div className="col-xl-4 col-md-12">
                   <div className="status">
                     <h6 className="title-detail">Status</h6>
                     <select
@@ -556,7 +555,7 @@ export default function ModalDetail() {
 
                         dispatch(action);
                       }}
-                      className="custom-select mt-3 mb-3"
+                      className="custom-select    mt-3 mb-3"
                       name="statusId"
                       value={taskModal.statusId}
                     >
@@ -574,7 +573,7 @@ export default function ModalDetail() {
                     <div className="row w-100">
                       {taskModal?.assigness?.map((user, index) => {
                         return (
-                          <div className="mt-2 mb-2 " key={index}>
+                          <div className="col-3 mt-2 mb-2 " key={index}>
                             <div className="item">
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar}></img>
@@ -676,7 +675,7 @@ export default function ModalDetail() {
                     <h6 className="title-detail">PRIORITY</h6>
                     <select
                       name="priorityId"
-                      className="form-control"
+                      className=" custom-select"
                       value={taskModal.priorityId}
                       onChange={(e) => {
                         handleChange(e);
@@ -704,8 +703,8 @@ export default function ModalDetail() {
                     ></input>
                     <p className="validate-text validate-original-estimate"></p>
                   </div>
-                  <div className="time-tracking">
-                    <h6 className="title-detail">TIME TRACKING</h6>
+                  <div className="time-tracking ">
+                    <h6 className="title-detail mb-2">TIME TRACKING</h6>
                     {renderTimeTracking()}
                   </div>
                   <div className="d-flex justify-content-between">

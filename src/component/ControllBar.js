@@ -14,7 +14,7 @@ import React, { useState } from "react";
 
 import { Button, Divider, Layout, Menu, Popconfirm, theme } from "antd";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
 import { TOKEN, USER_LOGIN } from "../redux/constant/SettingSystem";
 import { Card, Space } from "antd";
@@ -40,11 +40,33 @@ const renderLoginRequireMent = () => {
 //menu items
 
 const ControllBar = () => {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const renderLoginButton = () => {
+    return localStorage.getItem(USER_LOGIN) ? (
+      <p style={{ cursor: "pointer" }}>
+        <LogoutOutlined />
+        <Popconfirm
+          className="menu-item"
+          title="Log out"
+          description="Are you sure to logout ?"
+          onConfirm={() => {
+            localStorage.removeItem(TOKEN);
+            localStorage.removeItem(USER_LOGIN);
+            navigate("./login");
+          }}
+        >
+          Log out
+        </Popconfirm>
+      </p>
+    ) : (
+      <></>
+    );
+  };
   return (
     <>
       <Layout style={{ height: "100%" }}>
@@ -113,27 +135,8 @@ const ControllBar = () => {
                   User management
                 </NavLink>
               </p>
-              <p>
-                <LoginOutlined />
-                <NavLink className="menu-item" to="/login">
-                  Login
-                </NavLink>
-              </p>
-              <p style={{ cursor: "pointer" }}>
-                <LogoutOutlined />
-                <Popconfirm
-                  className="menu-item"
-                  title="Log out"
-                  description="Are you sure to logout ?"
-                  onConfirm={() => {
-                    localStorage.removeItem(TOKEN);
-                    localStorage.removeItem(USER_LOGIN);
-                    window.location = "/login";
-                  }}
-                >
-                  Log out
-                </Popconfirm>
-              </p>
+
+              {renderLoginButton()}
               <p>
                 <FormOutlined />
                 <NavLink className="menu-item" to="/signup">

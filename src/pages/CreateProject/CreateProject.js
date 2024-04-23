@@ -12,7 +12,7 @@ function CreateProject(props) {
   let arrProjectCaterory = useSelector(
     (state) => state.ProjectCateroryReducer.arrProjectCaterory
   );
-  console.log("arrProjectCaterory", arrProjectCaterory);
+  // console.log("arrProjectCaterory", arrProjectCaterory);
   const dispatch = useDispatch();
   const {
     values,
@@ -81,7 +81,7 @@ function CreateProject(props) {
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();
-                console.log("data", data);
+                // console.log("data", data);
                 setFieldValue("description", data);
               }}
               onBlur={(event, editor) => {
@@ -124,7 +124,7 @@ function CreateProject(props) {
 const createProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    console.log("props value", props);
+    // console.log("props value", props);
     return {
       projectName: "",
       description: "",

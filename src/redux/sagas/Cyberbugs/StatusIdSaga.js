@@ -11,7 +11,7 @@ import {
 import { StatusService } from "../../../service/StatusService";
 
 function* getAllStatusSaga(action) {
-  console.log("action saga", action);
+  // console.log("action saga", action);
   try {
     const { data, status } = yield call(() => {
       return StatusService.getAllStatus();

@@ -7,6 +7,7 @@ import {
   Popconfirm,
   Popover,
   Row,
+  Tag,
 } from "antd";
 import { Breadcrumb, Modal, Button, Form, Input, Checkbox } from "antd";
 import { useParams } from "react-router-dom";
@@ -39,6 +40,7 @@ function ProjectDetail(props) {
   });
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
+  const [dragging, setDragging] = useState(false);
   const searchRef = useRef(null);
   const getPanelValue = (searchText) =>
     !searchText
@@ -102,8 +104,7 @@ function ProjectDetail(props) {
   let dispatch = useDispatch();
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-
-  const detail = { ...projectDetail };
+  let detail = { ...projectDetail };
 
   const renderAvatar = () => {
     return detail?.members?.map((user, index) => {
@@ -274,10 +275,10 @@ function ProjectDetail(props) {
   // };
 
   const handleDragEnd = (result) => {
-    console.log("result", result);
+    // console.log("result", result);
     let { projectId, taskId } = JSON.parse(result.draggableId);
     const { source, destination } = result;
-    console.log("destination", destination);
+    // console.log("destination", destination);
     //goi api cập nhật lại status
     if (!result.destination) {
       return;
@@ -297,12 +298,28 @@ function ProjectDetail(props) {
       },
     });
   };
+  const handleDragStart = (e) => {
+    setDragging(true);
+  };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+  };
   const renderCardTaskList = () => {
+    const colors = ["yellow", "blue", "green", "red"];
     return (
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         {detail?.lstTask?.map((taskListDetail, index) => {
           return (
-            <Droppable droppableId={taskListDetail.statusId} key={index}>
+            <Droppable
+              droppableId={taskListDetail.statusId}
+              key={index}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+            >
               {(provided) => {
                 return (
                   <div
@@ -316,7 +333,9 @@ function ProjectDetail(props) {
                       className="card pb-2 card-task-list"
                     >
                       <div className=" card-header bg-gray-100  p-2 rounded flex flex-col ">
-                        {taskListDetail.statusName}
+                        <Tag style={{ fontSize: "18px" }} color={colors[index]}>
+                          {taskListDetail.statusName}
+                        </Tag>
                       </div>
                       <ul
                         ref={provided.innerRef}
@@ -551,10 +570,7 @@ function ProjectDetail(props) {
     );
   };
   return detail ? (
-    <div
-      style={{ padding: "0px", paddingLeft: "2rem", paddingTop: "5rem" }}
-      className="content-container"
-    >
+    <div className="content-container">
       <div className="nav-crumb">
         <Breadcrumb
           className="breadcrumb-projectdetail bg-gray-100 p-2 rounded flex"
@@ -566,7 +582,10 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}>
+      <div
+        style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}
+        className="members"
+      >
         <div className="board">
           <h1 className="text">Board</h1>
         </div>

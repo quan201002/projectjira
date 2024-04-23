@@ -15,7 +15,7 @@ function* getComments(action) {
       return commentService.getComments(action.taskId);
     });
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data get comments", data);
+      // console.log("data get comments", data);
       yield put({
         type: GET_COMMENTS,
         comments: data.content,
@@ -30,13 +30,13 @@ export function* theoDoiGetCommetsSaga() {
 }
 
 function* insertComments(action) {
-  console.log("action insert", action);
+  // console.log("action insert", action);
   try {
     const { data, status } = yield call(() => {
       return commentService.insertComment(action.insertDetail);
     });
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data comment", data);
+      // console.log("data comment", data);
       yield put({
         type: GET_TASK_SAGA,
         taskId: action.insertDetail.taskId,
@@ -51,13 +51,13 @@ export function* theoDoiInsertCommentSaga() {
 }
 
 function* updateCommentSaga(action) {
-  console.log("action update", action);
+  // console.log("action update", action);
   try {
     const { data, status } = yield call(() => {
       return commentService.updateComment(action.updateDetail);
     });
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data update", data);
+      // console.log("data update", data);
       yield put({
         type: GET_TASK_SAGA,
         taskId: action.updateDetail.taskId,
@@ -72,13 +72,13 @@ export function* theoDoiUpdateCommentSaga() {
 }
 
 function* deleteCommentSaga(action) {
-  console.log("action delete", action);
+  // console.log("action delete", action);
   try {
     const { data, status } = yield call(() => {
       return commentService.deleteComment(action.deleteDetail);
     });
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data delete", data);
+      // console.log("data delete", data);
       yield put({
         type: GET_TASK_SAGA,
         taskId: action.deleteDetail.taskId,

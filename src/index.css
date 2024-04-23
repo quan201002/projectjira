@@ -110,9 +110,9 @@ ul{
 .ant-table-wrapper td.ant-table-column-sort{
   background-color: var(--table-column-sort);
 }
-.ant-pagination-options .ant-select-selector{
+/* .ant-pagination-options .ant-select-selector{
   background:var(--box-color)!important;
-}
+} */
 .form-group .ant-select-selector{
  background-color: var(--form-background) !important;
   outline: none;
@@ -638,7 +638,7 @@ h3 {
 }
 .draggable-task{
   outline: none;
-  transition: all 1s ease;
+   
   border:none;
   border-radius: 0.1rem!important;
   margin :0.5rem;
@@ -826,7 +826,7 @@ h3 {
   position: absolute;
   top:0;
   left:220px;
-  z-index:10000;
+  z-index:2;
 }
 
 .logout-button:hover{
@@ -845,12 +845,13 @@ opacity: 1;
 }
 .card-task-list{
   width: 90%;
+  min-height: 500px;
    background-color: var(--background);
   border: var(--list-border);
 }
  
 .card-header {
- 
+  overflow:hidden;
   font-weight: bold;
   font-size: 14px;
   min-height: 60px;
@@ -906,10 +907,39 @@ opacity: 1;
     display: none!important;
   }
 }
+@media (max-width:1024px) {
+  .dark-sider{
  
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+  }
+  .dark-sider-button{
+    display: none !important;
+  }
+   .dropdown-bar{
+    display: block;
+  }
+  .white-sider{
+    display: none !important;
+  }
+  .modal-users{
+    width:80vw!important;
+  }
+  .logout-button{
+    display: block;
+    }
+  .custom-modal{
+    max-width: 90% !important;
+  }
+  .ant-card{
+    width:50vw;
+  }
+ } 
 @media (max-width:992px) { 
   .card-task-list{
     width: 100%;
+   min-height: 0 ;
   }
   .login-form{
     width: 76vw ;
@@ -942,6 +972,9 @@ opacity: 1;
   .custom-modal{
     max-width: 90% !important;
   }
+  .ant-card{
+    width:50vw;
+  }
 }
 @media (max-width:667px) {
   .login-form{
@@ -961,10 +994,16 @@ opacity: 1;
   }
 
   .card-task-list{
-    width: 70%;
+    width: 99%;
   }
   .custom-modal{
     max-width: 100% !important;
+  }
+  .ant-card{
+    width:99vw;
+  }
+  .members{
+    display:block!important;
   }
 }
 @media (max-width:800px){
@@ -1021,7 +1060,21 @@ visibility: hidden;
   background-color: var(--form-background)!important;
 }
 .ant-select-selection-search input::placeholder{
-  color:--
+  color:var(--text);
+}
+.title-detail{
+  color:var(--text);
+  font-weight: 800;
+  text-transform:uppercase;
+   
+}
+.input-comment{
+  display: grid;
+  grid-template-columns:3fr 1fr;
+}
+.avatar{
+  display:flex;
+  align-items:center;
 }
 @keyframes toggleOn {
   0%{

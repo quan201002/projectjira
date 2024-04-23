@@ -107,7 +107,7 @@ const UserList = () => {
   const users = [...userSearch];
 
   const data = users;
-  console.log("userSearch", userSearch);
+  // console.log("userSearch", userSearch);
 
   useEffect(() => {
     dispatch({
