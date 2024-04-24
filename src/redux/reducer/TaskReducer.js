@@ -52,7 +52,7 @@ export const TaskReducer = (state = initialState, action) => {
         ...state.taskModal.assigness,
         action.userSelected,
       ];
-      console.log("state", state);
+      // console.log("state", state);
       return { ...state };
       break;
     case REMOVE_USER_ASSIGN:

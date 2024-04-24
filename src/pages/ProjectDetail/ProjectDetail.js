@@ -104,10 +104,9 @@ function ProjectDetail(props) {
   let dispatch = useDispatch();
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-  let detail = { ...projectDetail };
 
   const renderAvatar = () => {
-    return detail?.members?.map((user, index) => {
+    return projectDetail?.members?.map((user, index) => {
       return (
         <div className="d-flex users-avatar">
           <div className="avatar" key={index}>
@@ -120,7 +119,7 @@ function ProjectDetail(props) {
   const renderAvatarResp = () => {
     return (
       <div className="d-flex ">
-        {detail.members?.slice(0, 3).map((member, index) => {
+        {projectDetail.members?.slice(0, 3).map((member, index) => {
           return (
             <Popover
               key={index}
@@ -246,7 +245,7 @@ function ProjectDetail(props) {
             );
           }}
         >
-          {detail.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+          {projectDetail.members?.length > 3 ? <Avatar>...</Avatar> : ""}
         </Popover>
       </div>
     );
@@ -275,7 +274,8 @@ function ProjectDetail(props) {
   // };
 
   const handleDragEnd = (result) => {
-    // console.log("result", result);
+    console.log("result", result);
+    console.log("project detail", projectDetail);
     let { projectId, taskId } = JSON.parse(result.draggableId);
     const { source, destination } = result;
     // console.log("destination", destination);
@@ -289,6 +289,19 @@ function ProjectDetail(props) {
     ) {
       return;
     }
+    console.log(
+      projectDetail.lstTask[source.droppableId - 1].lstTaskDeTail[source.index]
+    );
+    let taskClone =
+      projectDetail.lstTask[source.droppableId - 1].lstTaskDeTail[source.index];
+    projectDetail.lstTask[source.droppableId - 1].lstTaskDeTail.splice(
+      source.index,
+      1
+    );
+
+    let propDestination =
+      projectDetail.lstTask[destination.droppableId - 1].lstTaskDeTail;
+    propDestination.splice(destination.index, 0, taskClone);
     dispatch({
       type: UPDATE_TASK_STATUS_SAGA,
       taskUpdateStatus: {
@@ -312,7 +325,7 @@ function ProjectDetail(props) {
     const colors = ["yellow", "blue", "green", "red"];
     return (
       <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-        {detail?.lstTask?.map((taskListDetail, index) => {
+        {projectDetail?.lstTask?.map((taskListDetail, index) => {
           return (
             <Droppable
               droppableId={taskListDetail.statusId}
@@ -569,7 +582,7 @@ function ProjectDetail(props) {
       </DragDropContext>
     );
   };
-  return detail ? (
+  return projectDetail ? (
     <div className="content-container">
       <div className="nav-crumb">
         <Breadcrumb
@@ -577,7 +590,7 @@ function ProjectDetail(props) {
           items={[
             { title: "Project" },
             { title: "Cyber Learn" },
-            { title: detail.projectName },
+            { title: projectDetail.projectName },
           ]}
         />
       </div>
@@ -615,7 +628,7 @@ function ProjectDetail(props) {
 
       <Modal
         className="modal-users"
-        title={`Add member to project ${detail.projectName}`}
+        title={`Add member to project ${projectDetail.projectName}`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
