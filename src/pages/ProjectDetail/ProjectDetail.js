@@ -40,7 +40,7 @@ function ProjectDetail(props) {
   });
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
-  const [dragging, setDragging] = useState(false);
+
   const searchRef = useRef(null);
   const getPanelValue = (searchText) =>
     !searchText
@@ -51,9 +51,6 @@ function ProjectDetail(props) {
     (state) => state.UserLoginCyberBugsReducer
   );
   const { arrUser } = useSelector((state) => state.UserLoginCyberBugsReducer);
-  const users = [...userSearch];
-
-  const data = users;
 
   const onSearch = (value, _e, info) => {
     dispatch({
@@ -311,28 +308,15 @@ function ProjectDetail(props) {
       },
     });
   };
-  const handleDragStart = (e) => {
-    setDragging(true);
-  };
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-  };
   const renderCardTaskList = () => {
     const colors = ["yellow", "blue", "green", "red"];
+    const orderColors = ["red", "gold", "green", "purple"];
     return (
-      <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         {projectDetail?.lstTask?.map((taskListDetail, index) => {
           return (
-            <Droppable
-              droppableId={taskListDetail.statusId}
-              key={index}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-            >
+            <Droppable droppableId={taskListDetail.statusId} key={index}>
               {(provided) => {
                 return (
                   <div
@@ -357,7 +341,7 @@ function ProjectDetail(props) {
                         className="list-group list-group-flush tasks-container"
                       >
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
-                          // console.log("task", task);
+                          console.log("task", task);
                           return (
                             <>
                               <Draggable
@@ -389,18 +373,19 @@ function ProjectDetail(props) {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      className="list-group-item draggable-task dragged-task"
+                                      className="list-group-item task draggable-task dragged-task"
                                       data-toggle="modal"
                                       data-target="#taskDetailModal"
                                     >
-                                      <h4 className="text-info ">
-                                        {task.taskName}
-                                      </h4>
+                                      <h4 className="mb-3">{task.taskName}</h4>
                                       <div
                                         className="block"
-                                        style={{ display: "flex" }}
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "space-between",
+                                        }}
                                       >
-                                        <div className="block-left">
+                                        <div className="block-left space-x-2">
                                           <span className="mr-2">
                                             {renderTaskTypeIcon(
                                               task.taskTypeDetail.id
@@ -412,11 +397,20 @@ function ProjectDetail(props) {
                                               projectId
                                             )}
                                           </span>
-                                          <p className="text-warning task-priority  ">
-                                            {task.priorityTask.priority}
-                                          </p>
+                                          <span className="task-priority ml-2">
+                                            <Tag
+                                              color={
+                                                orderColors[
+                                                  task.priorityTask.priorityId -
+                                                    1
+                                                ]
+                                              }
+                                            >
+                                              {task.priorityTask.priority}
+                                            </Tag>
+                                          </span>
                                         </div>
-                                        <div className="block-right ml-2">
+                                        <div className="block-right">
                                           <div className="avatar-group">
                                             {task?.assigness
                                               .slice(0, 4)
@@ -595,10 +589,7 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div
-        style={{ display: "flex", width: "60%", marginBottom: "2.5rem" }}
-        className="members"
-      >
+      <div className="members">
         <div className="board">
           <h1 className="text">Board</h1>
         </div>

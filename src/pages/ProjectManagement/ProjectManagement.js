@@ -479,13 +479,9 @@ const ProjectManagement = () => {
             marginBottom: 16,
             marginTop: 48,
           }}
-        >
-          <div>
-            <h4 className="title">PROJECT MANAGEMENT</h4>
-          </div>
-        </Space>
+        ></Space>
         <Table
-          className="table-project-jira"
+          className="table-project-jira mt-5"
           style={{
             width: "100%",
           }}
@@ -498,7 +494,7 @@ const ProjectManagement = () => {
           }}
         />
         <List
-          className="list-project-jira"
+          className="list-project-jira mt-5"
           bordered
           dataSource={data}
           renderItem={(item) => (

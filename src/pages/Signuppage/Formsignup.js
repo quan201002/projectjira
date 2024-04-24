@@ -82,7 +82,6 @@ const Formsignup = () => {
                     } else if (value?.length < 6 && value?.length > 0) {
                       reject("password must have at least 6 characters");
                     } else {
-                      reject("Please input your password");
                       setPassWord(value);
                       return resolve();
                     }

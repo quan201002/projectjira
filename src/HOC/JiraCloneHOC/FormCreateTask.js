@@ -116,6 +116,14 @@ const FormCreateTask = (props) => {
             );
           })}
         </select>
+        <p
+          style={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+          }}
+        >
+          * You can only create tasks of your own project
+        </p>
       </div>
       <div className="form-group">
         <div className="row">

@@ -50,6 +50,8 @@ function* createTaskSaga(action) {
     console.log(err);
     if (err.response.data.statusCode === STATUS_CODE.SERVER_ERROR) {
       notifiFunction("error", "Task name has been used");
+    } else if (err.response.data.statusCode === STATUS_CODE.UNAUTHORIZED) {
+      notifiFunction("error", "You're not a member of this project");
     }
   }
   yield put({

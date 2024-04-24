@@ -150,6 +150,7 @@ ul{
   background: var(--background-color);
    overflow: scroll;
   padding: 20px;
+  scrollbar-width: thin;
 }
 .create-project-container{
   display: flex;
@@ -364,7 +365,7 @@ h3 {
 .card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
-  border-radius: 1px;
+  
   margin-bottom: 20px;
 }
  
@@ -391,9 +392,7 @@ h3 {
 .ant-breadcrumb-separator {
   color: #666;
 }
-.tasklist-bar {
-  display: flex;
-}
+ 
 
 /* /* .ant-select-selector {
   display: none !important;
@@ -442,7 +441,7 @@ h3 {
  
 
 .nav-crumb {
-  margin-bottom: 106px;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -484,6 +483,9 @@ h1, h3 {
 .tasklist-bar{
   display: flex;
   justify-content: center;
+  padding-right: 3px;
+  padding-left:3px;
+  margin:0;
 }
 /* styles.css */
  .container {
@@ -638,15 +640,16 @@ h3 {
 }
 .draggable-task{
   outline: none;
-   
+  transition: all 0.5s ;
   border:none;
-  border-radius: 0.1rem!important;
+  border-radius:10px;
   margin :0.5rem;
   background-color:  var(--task-item-background)  !important;
+  height: 100px;
 }
 .draggable-task:hover{
   transform:translateY(-10px);
-  box-shadow:  8px 8px rgba(0,0,0,0.5);  
+  box-shadow: var(--box-shadow);  
   border-radius:5px;
 }
 .draggable-task:active{
@@ -856,7 +859,7 @@ opacity: 1;
   font-size: 14px;
   min-height: 60px;
   background:var(--card-header-background);
-  border-radius:1px!important;
+ 
   color:var(--text);
 }
 .card:hover {
@@ -880,6 +883,16 @@ opacity: 1;
 .modal-task-detail input:hover{
   background-color:var(--background);
   color:var(--text);
+}
+.avatar-remaining{
+  margin-bottom: 5px;
+}
+.avatar-group{
+  z-index: 5;
+}
+.block-left{
+  display:flex;
+  align-items: flex-end;
 }
 @media (max-width:1700px){
   .card-task-list{
@@ -1075,6 +1088,23 @@ visibility: hidden;
 .avatar{
   display:flex;
   align-items:center;
+}
+.breadcrumb-projectdetail{
+  font-size:20px;
+  color:var(--text);
+}
+.ant-breadcrumb-separator{
+  color:var(--text)!important;
+}
+.ant-breadcrumb-link{
+  color:var(--text)!important;
+}
+.task{
+    color:var(--text);
+}
+.members{
+  display: flex;
+ 
 }
 @keyframes toggleOn {
   0%{
