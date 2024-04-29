@@ -178,14 +178,18 @@ const ProjectManagement = () => {
 
   const columns = [
     {
-      title: "id",
+      title: "ID",
       dataIndex: "id",
       key: "id",
       sorter: (item2, item1) => {
         return item2.id - item1.id;
       },
       render: (text, record, index) => {
-        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
+        return (
+          <NavLink to={`/projectdetail/${record.id}`} className="project-id">
+            {text}
+          </NavLink>
+        );
       },
     },
     {
@@ -252,17 +256,18 @@ const ProjectManagement = () => {
                         </thead>
                         <tbody>
                           {record.members?.map((item, index) => {
-                            console.log("user  ", item);
                             return (
                               <tr key={index}>
                                 <td className="mr-1">{item.userId}</td>
                                 <td>
-                                  <img
-                                    style={{ borderRadius: "50%" }}
-                                    src={item.avatar}
-                                    width="50"
-                                    height="50"
-                                  ></img>
+                                  <div>
+                                    <img
+                                      style={{ borderRadius: "50%" }}
+                                      src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
+                                      width="50"
+                                      height="50"
+                                    ></img>
+                                  </div>
                                 </td>
                                 <td>{item.name}</td>
                                 <td>
@@ -297,7 +302,19 @@ const ProjectManagement = () => {
                     );
                   }}
                 >
-                  <Avatar src={member.avatar} key={index} />
+                  <div className="avatars">
+                    <Avatar
+                      src={
+                        <img
+                          style={{ borderRadius: "50%" }}
+                          src={`https://ui-avatars.com/api/?name=${member.name}&background=random&bold=true`}
+                          width="50"
+                          height="50"
+                        ></img>
+                      }
+                      key={index}
+                    />
+                  </div>
                 </Popover>
               );
             })}
@@ -322,12 +339,16 @@ const ProjectManagement = () => {
                           <tr key={index}>
                             <td>{item.userId}</td>
                             <td>
-                              <img
-                                style={{ borderRadius: "50%" }}
-                                src={item.avatar}
-                                width="50"
-                                height="50"
-                              ></img>
+                              <div>
+                                <img
+                                  style={{
+                                    borderRadius: "50%",
+                                  }}
+                                  src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
+                                  width="50"
+                                  height="50"
+                                ></img>
+                              </div>
                             </td>
                             <td>{item.name}</td>
                             <td>
@@ -362,7 +383,15 @@ const ProjectManagement = () => {
                 );
               }}
             >
-              {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+              {record.members?.length > 3 ? (
+                <Avatar
+                  style={{ marginLeft: "-15px", backgroundColor: "#007bff" }}
+                >
+                  +{record.members?.length - 3}
+                </Avatar>
+              ) : (
+                ""
+              )}
             </Popover>
 
             <Popover
@@ -425,8 +454,8 @@ const ProjectManagement = () => {
         // console.log("record", record);
         return (
           <>
-            <button
-              className="mr-3 btn btn-primary"
+            <Button
+              className="mr-3 button edit-button"
               onClick={() => {
                 const action = {
                   type: "OPEN_FORM_EDIT_PROJECT",
@@ -445,8 +474,8 @@ const ProjectManagement = () => {
                 dispatch(actionEditProject);
               }}
             >
-              <EditOutlined />
-            </button>
+              <i class="fa-solid fa-pen-to-square"></i>
+            </Button>
             <Popconfirm
               title="Delete project"
               description="Are you sure to delete this project ?"
@@ -459,9 +488,9 @@ const ProjectManagement = () => {
               okText="Yes"
               cancelText="No"
             >
-              <button className="btn  btn-danger">
-                <DeleteOutlined />
-              </button>
+              <Button className="button delete-button">
+                <i class="fa-regular fa-trash-can"></i>
+              </Button>
             </Popconfirm>
           </>
         );
@@ -480,6 +509,16 @@ const ProjectManagement = () => {
             marginTop: 48,
           }}
         ></Space>
+        <p
+          style={{
+            fontWeight: "bold",
+            fontStyle: "italic",
+            color: "var(--text)",
+            marginTop: "15px",
+          }}
+        >
+          * Click on project ID to see project detail
+        </p>
         <Table
           className="table-project-jira mt-5"
           style={{
@@ -490,7 +529,7 @@ const ProjectManagement = () => {
           onChange={handleChange}
           rowKey={"id"}
           pagination={{
-            pageSize: 7,
+            pageSize: 9,
           }}
         />
         <List
@@ -503,7 +542,10 @@ const ProjectManagement = () => {
                 <div className="w-100 d-flex justify-content-between">
                   <div style={{ color: "blueviolet" }}>Project Id</div>
                   <div className="mr-2">
-                    <NavLink to={`/projectdetail/${item.id}`}>
+                    <NavLink
+                      className="project-id"
+                      to={`/projectdetail/${item.id}`}
+                    >
                       {item.id}
                     </NavLink>
                   </div>
@@ -552,7 +594,7 @@ const ProjectManagement = () => {
                                         <td>
                                           <img
                                             style={{ borderRadius: "50%" }}
-                                            src={user.avatar}
+                                            src={`https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true`}
                                             width="50"
                                             height="50"
                                           ></img>
@@ -590,7 +632,12 @@ const ProjectManagement = () => {
                             );
                           }}
                         >
-                          <Avatar src={member.avatar} key={index} />
+                          <div className="avatars">
+                            <Avatar
+                              key={index}
+                              src={`https://ui-avatars.com/api/?name=${member.name}&background=random&bold=true`}
+                            />
+                          </div>
                         </Popover>
                       );
                     })}
@@ -616,7 +663,7 @@ const ProjectManagement = () => {
                                     <td>
                                       <img
                                         style={{ borderRadius: "50%" }}
-                                        src={user.avatar}
+                                        src={`https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true`}
                                         width="50"
                                         height="50"
                                       ></img>
@@ -654,7 +701,18 @@ const ProjectManagement = () => {
                         );
                       }}
                     >
-                      {item.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+                      {item.members?.length > 3 ? (
+                        <Avatar
+                          style={{
+                            marginLeft: "-20px",
+                            background: "#007bff",
+                          }}
+                        >
+                          +{item.members.length - 3}
+                        </Avatar>
+                      ) : (
+                        ""
+                      )}
                     </Popover>
 
                     <Popover

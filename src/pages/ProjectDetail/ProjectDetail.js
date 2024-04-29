@@ -106,8 +106,11 @@ function ProjectDetail(props) {
     return projectDetail?.members?.map((user, index) => {
       return (
         <div className="d-flex users-avatar">
-          <div className="avatar" key={index}>
-            <img src={user.avatar} alt={user.avatar}></img>
+          <div className="avatar avatars" key={index}>
+            <img
+              src={`https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true`}
+              alt={user.name}
+            ></img>
           </div>
         </div>
       );
@@ -133,14 +136,15 @@ function ProjectDetail(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      {detail.members?.map((item, i) => {
+                      {projectDetail.members?.map((item, i) => {
                         return (
                           <tr key={i}>
                             <td className="mr-1">{item.userId}</td>
                             <td>
                               <img
                                 style={{ borderRadius: "50%" }}
-                                src={item.avatar}
+                                src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
+                                key={index}
                                 width="50"
                                 height="50"
                               ></img>
@@ -178,7 +182,12 @@ function ProjectDetail(props) {
                 );
               }}
             >
-              <Avatar src={member.avatar} key={index} />
+              <div className="avatars">
+                <Avatar
+                  src={`https://ui-avatars.com/api/?name=${member.name}&background=random&bold=true`}
+                  key={index}
+                />
+              </div>
             </Popover>
           );
         })}
@@ -197,14 +206,15 @@ function ProjectDetail(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {detail.members?.map((item, index) => {
+                  {projectDetail.members?.map((item, index) => {
                     return (
                       <tr key={index}>
                         <td>{item.userId}</td>
                         <td>
                           <img
                             style={{ borderRadius: "50%" }}
-                            src={item.avatar}
+                            src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
+                            key={index}
                             width="50"
                             height="50"
                           ></img>
@@ -242,7 +252,18 @@ function ProjectDetail(props) {
             );
           }}
         >
-          {projectDetail.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+          {projectDetail.members?.length > 3 ? (
+            <Avatar
+              style={{
+                marginLeft: "-20px",
+                background: "#007bff",
+              }}
+            >
+              ...
+            </Avatar>
+          ) : (
+            ""
+          )}
         </Popover>
       </div>
     );
@@ -250,13 +271,13 @@ function ProjectDetail(props) {
   const renderPrioritySign = (priorityId, projectId) => {
     switch (priorityId) {
       case 1:
-        return <i className="fa fa-arrow-up"></i>;
+        return <i class="fa-solid fa-angle-up text-danger"></i>;
       case 2:
-        return <i className="fa-solid fa-arrow-right  "></i>;
+        return <i className="fa-solid fa-equals   text-warning"></i>;
       case 3:
-        return <i className="fa-solid fa-arrow-turn-down"></i>;
+        return <i className="fa-solid fa-angle-down text-primary"></i>;
       case 4:
-        return <i className="fa-solid fa-arrow-down"></i>;
+        return <i className="fa-solid fa-angles-down text-primary"></i>;
     }
   };
   // const renderTaskTypeIcon = (taskType) => {
@@ -341,7 +362,6 @@ function ProjectDetail(props) {
                         className="list-group list-group-flush tasks-container"
                       >
                         {taskListDetail.lstTaskDeTail.map((task, index) => {
-                          console.log("task", task);
                           return (
                             <>
                               <Draggable
@@ -385,13 +405,13 @@ function ProjectDetail(props) {
                                           justifyContent: "space-between",
                                         }}
                                       >
-                                        <div className="block-left space-x-2">
-                                          <span className="mr-2">
+                                        <div className="block-left space-x-4">
+                                          <span className="mr-3 ">
                                             {renderTaskTypeIcon(
                                               task.taskTypeDetail.id
                                             )}
                                           </span>
-                                          <span className="pri-sign">
+                                          <span className="pri-sign mr-2">
                                             {renderPrioritySign(
                                               task.priorityTask.priorityId,
                                               projectId
@@ -474,9 +494,7 @@ function ProjectDetail(props) {
                                                                           borderRadius:
                                                                             "50%",
                                                                         }}
-                                                                        src={
-                                                                          item.avatar
-                                                                        }
+                                                                        src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
                                                                         width="50"
                                                                         height="50"
                                                                       ></img>
@@ -589,7 +607,7 @@ function ProjectDetail(props) {
         />
       </div>
 
-      <div className="members">
+      <div className="members mb-3">
         <div className="board">
           <h1 className="text">Board</h1>
         </div>
@@ -611,7 +629,7 @@ function ProjectDetail(props) {
             className="btn btn-secondary add-user-btn"
             onClick={showModal}
           >
-            +
+            <span>+</span>
           </button>
         </div>
       </div>

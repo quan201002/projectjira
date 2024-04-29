@@ -38,7 +38,7 @@ const Modaljira = () => {
         open={open}
         styles={{
           body: {
-            paddingBottom: 80,
+            paddingBottom: 20,
           },
         }}
         extra={

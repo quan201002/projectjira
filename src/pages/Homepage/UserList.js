@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AutoComplete, List, Popconfirm, Space, Table, Tag } from "antd";
+import {
+  AutoComplete,
+  Button,
+  List,
+  Popconfirm,
+  Space,
+  Table,
+  Tag,
+} from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
@@ -55,8 +63,8 @@ const UserList = () => {
       render: (text, record) => {
         return (
           <>
-            <button
-              className="btn btn-primary mr-2"
+            <Button
+              className="button edit-button mr-2"
               onClick={() => {
                 const action = {
                   type: "OPEN_FORM_EDIT_PROJECT",
@@ -75,8 +83,8 @@ const UserList = () => {
                 dispatch(actionEditUser);
               }}
             >
-              <EditOutlined />
-            </button>
+              <i class="fa-solid fa-pen-to-square"></i>
+            </Button>
             <Popconfirm
               title="Delete user"
               description="Are you sure to delete this user ?"
@@ -89,9 +97,9 @@ const UserList = () => {
               okText="Yes"
               cancelText="No"
             >
-              <button className="btn btn-danger">
-                <DeleteOutlined />
-              </button>
+              <Button className="button delete-button">
+                <i class="fa-regular fa-trash-can"></i>
+              </Button>
             </Popconfirm>
           </>
         );
@@ -118,7 +126,7 @@ const UserList = () => {
   return (
     <div style={{ width: "100%" }}>
       <AutoComplete
-        className="mt-lg-5 mb-lg-5 mb-md-1 mt-md-1 mt-sm-0 mb-sm-0"
+        className="mt-lg-5 mb-lg-5 mb-md-1 mt-md-1 mt-sm-0 mb-sm-0 user-search"
         options={userSearch?.map((user, index) => {
           return {
             label: user.name,

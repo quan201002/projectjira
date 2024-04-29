@@ -48,8 +48,8 @@ const ControllBar = () => {
   } = theme.useToken();
   const renderLoginButton = () => {
     return localStorage.getItem(USER_LOGIN) ? (
-      <p style={{ cursor: "pointer" }}>
-        <LogoutOutlined />
+      <p style={{ cursor: "pointer" }} className="menu-item-container">
+        <LogoutOutlined className="navbar-icon" />
         <Popconfirm
           className="menu-item"
           title="Log out"
@@ -117,28 +117,37 @@ const ControllBar = () => {
               className="d-flex justify-content-center menu-sider white-sider"
               width={200}
             >
-              <p>
-                <BuildOutlined />
+              <p className="logo-container text-center">
+                <NavLink className="logo-link " to="/">
+                  <img
+                    src="../logojira.png"
+                    alt="logojira"
+                    className="logo"
+                  ></img>
+                </NavLink>
+              </p>
+              <p className="menu-item-container">
+                <BuildOutlined className="navbar-icon" />
                 <NavLink className="menu-item" to="/createproject">
                   Createproject
                 </NavLink>
               </p>
-              <p>
-                <AppstoreOutlined />
+
+              <p className="menu-item-container">
+                <AppstoreOutlined className="navbar-icon" />
                 <NavLink className="menu-item" to="/projectmanagement">
                   Project management
                 </NavLink>
               </p>
-              <p>
-                <UserSwitchOutlined />
+              <p className="menu-item-container">
+                <UserSwitchOutlined className="navbar-icon" />
                 <NavLink className="menu-item" to="/">
                   User management
                 </NavLink>
               </p>
-
               {renderLoginButton()}
-              <p>
-                <FormOutlined />
+              <p className="menu-item-container">
+                <FormOutlined className="navbar-icon" />
                 <NavLink className="menu-item" to="/signup">
                   Signup
                 </NavLink>
@@ -160,6 +169,11 @@ const ControllBar = () => {
                 className="dropdown-menu controller-menu"
                 aria-labelledby="dropdownMenuButton"
               >
+                <p className="logo-container text-center">
+                  <NavLink className="" to="/">
+                    <img src="../logojira.png" className="logo"></img>
+                  </NavLink>
+                </p>
                 <p>
                   <BuildOutlined />
                   <NavLink className="menu-item" to="/createproject">

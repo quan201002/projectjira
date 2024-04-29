@@ -23,7 +23,7 @@ export default function Homepage() {
           <div>
             <h4 className="title mt-4">USER MANAGEMENT</h4>
           </div>
-          <span className="title">
+          <span className="title user-info">
             Hello, {userLogin.name}
             <img
               style={{
@@ -31,7 +31,7 @@ export default function Homepage() {
                 backgroundSize: "80%",
                 marginLeft: "0.5rem",
               }}
-              src={userLogin.avatar}
+              src={`https://ui-avatars.com/api/?name=${userLogin.name}&background=93bdea&bold=true`}
             ></img>
           </span>
         </div>

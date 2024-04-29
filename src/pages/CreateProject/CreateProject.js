@@ -45,9 +45,6 @@ function CreateProject(props) {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <div>
-          <h4 className="title mb-3">CREATE PROJECT</h4>
-        </div>
         <form
           onSubmit={handleSubmit}
           className="create-project-container"

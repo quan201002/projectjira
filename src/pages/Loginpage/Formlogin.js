@@ -46,9 +46,8 @@ const Formlogin = (props) => {
   return (
     <div
       style={{
-        backgroundImage: 'url("/background.jpg")',
         width: "100%",
-        height: "100%",
+        height: "100vh",
         backgroundSize: "cover",
       }}
     >
@@ -104,7 +103,7 @@ const Formlogin = (props) => {
                 <Button
                   htmlType="submit"
                   size="large"
-                  className="btn btn-primary"
+                  className="btn btn-primary mb-2"
                   style={{
                     width: "100%",
                     backgroundColor: "#1890ff",
@@ -129,7 +128,7 @@ const Formlogin = (props) => {
                 </Link>
                 <div className="social mt-5" style={{ marginTop: "20px" }}>
                   <Button
-                    className="bg-primary mr-1"
+                    className="bg-primary mr-3 "
                     type="primary"
                     shape="circle"
                     icon={<FacebookOutlined />}
