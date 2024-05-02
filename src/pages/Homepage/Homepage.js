@@ -21,9 +21,9 @@ export default function Homepage() {
       <div className="content-container  ">
         <div className="homepage-header">
           <div>
-            <h4 className="title mt-4">USER MANAGEMENT</h4>
+            <h4 className="title mt-4 head-text">USER MANAGEMENT</h4>
           </div>
-          <span className="title user-info">
+          <span className="title user-info mb-1">
             Hello, {userLogin.name}
             <img
               style={{

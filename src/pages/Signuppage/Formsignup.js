@@ -25,7 +25,7 @@ const Formsignup = () => {
   };
   // console.log("password", passWord);
   return (
-    <div className="signup-page">
+    <div className="form-signup-container">
       <Form
         name="basic"
         layout="vertical"
@@ -141,12 +141,14 @@ const Formsignup = () => {
             <InputNumber style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button htmlType="submit" className="my-button">
               Sign Up
             </Button>
           </Form.Item>
           <Link to="/login">
-            <Button type="link">Login</Button>
+            <Button type="link" className="">
+              Login
+            </Button>
           </Link>
         </div>
       </Form>

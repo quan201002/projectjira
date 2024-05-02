@@ -26,6 +26,7 @@ import {
   GET_USER_API,
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../../redux/constant/UserConstants";
+import ModalDetail from "../../HOC/JiraCloneHOC/ModalDetail";
 const { Search } = Input;
 
 function ProjectDetail(props) {
@@ -254,12 +255,12 @@ function ProjectDetail(props) {
         >
           {projectDetail.members?.length > 3 ? (
             <Avatar
+              className="remainings"
               style={{
                 marginLeft: "-20px",
-                background: "#007bff",
               }}
             >
-              ...
+              +{projectDetail.members?.length - 3}
             </Avatar>
           ) : (
             ""
@@ -437,11 +438,11 @@ function ProjectDetail(props) {
                                               ?.map((mem, index) => {
                                                 return (
                                                   <div
-                                                    className="avatar"
+                                                    className="avatars"
                                                     key={index}
                                                   >
                                                     <img
-                                                      src={mem.avatar}
+                                                      src={`https://ui-avatars.com/api/?name=${mem.name}&background=random&bold=true`}
                                                       alt={mem.avatar}
                                                       style={{
                                                         borderRadius: "50%",
@@ -453,9 +454,18 @@ function ProjectDetail(props) {
                                                 );
                                               })}
                                             {task?.assigness?.length > 4 ? (
-                                              <Avatar className="avatar-remaining">
-                                                ...
-                                              </Avatar>
+                                              <div
+                                                className="avatars"
+                                                key={index}
+                                              >
+                                                <Avatar
+                                                  style={{
+                                                    background: "#007bff",
+                                                  }}
+                                                >
+                                                  +{task.assigness.length - 4}
+                                                </Avatar>
+                                              </div>
                                             ) : (
                                               ""
                                             )}
@@ -513,10 +523,12 @@ function ProjectDetail(props) {
                                                       );
                                                     }}
                                                   >
-                                                    <Avatar
-                                                      src={member.avatar}
-                                                      key={index}
-                                                    />
+                                                    <div className="avatars">
+                                                      <Avatar
+                                                        src={`https://ui-avatars.com/api/?name=${member.name}&background=random&bold=true`}
+                                                        key={index}
+                                                      />
+                                                    </div>
                                                   </Popover>
                                                 );
                                               })}
@@ -546,9 +558,7 @@ function ProjectDetail(props) {
                                                                     borderRadius:
                                                                       "50%",
                                                                   }}
-                                                                  src={
-                                                                    item.avatar
-                                                                  }
+                                                                  src={`https://ui-avatars.com/api/?name=${item.name}&background=random&bold=true`}
                                                                   width="50"
                                                                   height="50"
                                                                 ></img>
@@ -566,7 +576,15 @@ function ProjectDetail(props) {
                                               }}
                                             >
                                               {task?.assigness?.length >= 3 ? (
-                                                <Avatar>...</Avatar>
+                                                <div className="avatars">
+                                                  <Avatar
+                                                    style={{
+                                                      backgruond: "#007bff",
+                                                    }}
+                                                  >
+                                                    +{task.assigness.length - 3}
+                                                  </Avatar>
+                                                </div>
                                               ) : (
                                                 ""
                                               )}
@@ -596,6 +614,7 @@ function ProjectDetail(props) {
   };
   return projectDetail ? (
     <div className="content-container">
+      <ModalDetail />
       <div className="nav-crumb">
         <Breadcrumb
           className="breadcrumb-projectdetail bg-gray-100 p-2 rounded flex"
@@ -620,17 +639,24 @@ function ProjectDetail(props) {
           }}
         >
           <h3 className="mr-4 text">Members</h3>
-          <div className="avatar-container-detail">{renderAvatar()}</div>
+          <div className="avatar-container-detail">
+            {renderAvatar()}
+            <button
+              className="add-user-btn add-button my-button"
+              onClick={showModal}
+            >
+              <span>+</span>
+            </button>
+          </div>
           <div className="avatar-container-detail-resp">
             {renderAvatarResp()}
+            <button
+              className="add-user-btn my-button add-button add-button-reps"
+              onClick={showModal}
+            >
+              <span>+</span>
+            </button>
           </div>
-
-          <button
-            className="btn btn-secondary add-user-btn"
-            onClick={showModal}
-          >
-            <span>+</span>
-          </button>
         </div>
       </div>
       <div className="row works-container">{renderCardTaskList()}</div>
@@ -690,6 +716,9 @@ function ProjectDetail(props) {
                     <div>
                       <button
                         className="btn btn-primary"
+                        style={{
+                          borderRadius: "50%",
+                        }}
                         onClick={() => {
                           dispatch({
                             type: ADD_USER_PROJECT_API,

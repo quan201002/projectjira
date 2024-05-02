@@ -19,11 +19,12 @@ const FormEditUser = (props) => {
           <div className="form-group">
             <h4 className="font-weight-bold input-label">User Id</h4>
             <input
-              className="form-control input-form"
+              className="form-control input-form disabled-input"
               type="text"
               onChange={handleChange}
               value={values.id}
               name="id"
+              disabled
             />
           </div>
         </div>

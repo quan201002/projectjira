@@ -15,7 +15,7 @@ import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
 import { Editor } from "@tinymce/tinymce-react";
 import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
 import { Button, Popconfirm, Select, Tag } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { CommentOutlined, DeleteOutlined } from "@ant-design/icons";
 import {
   DELETE_COMMENT_SAGA,
   GET_COMMENTS_SAGA,
@@ -208,15 +208,15 @@ export default function ModalDetail() {
           <div>
             <p className="title-detail mb-1">Description:</p>
             {jsxDescription}
-            <div
-              className="btn btn-primary mb-3"
+            <Button
+              className="btn my-button mb-3 "
               onClick={() => {
                 setHistoryContet(taskModal.description);
                 setVisibleDesEditor(!visibleDesEditor);
               }}
             >
               Add description
-            </div>
+            </Button>
           </div>
         )}
       </div>
@@ -297,7 +297,7 @@ export default function ModalDetail() {
               key={index}
               onClick={settingCommentEditor}
             >
-              Edit
+              <span className="displaycmt-edit-btn">Edit</span>
             </div>
           </>
         )}
@@ -376,8 +376,9 @@ export default function ModalDetail() {
   return (
     <div
       className="modal fade"
+      style={{ display: "none" }}
       id="taskDetailModal"
-      tabIndex="-1"
+      tabIndex="10"
       role="dialog"
       aria-labelledby="TaskDetailModalLabel"
       aria-hidden="true"
@@ -404,7 +405,14 @@ export default function ModalDetail() {
               >
                 {renderTaskType()}
               </select>
-              <span className="mr-2 ml-4 ml-md-0">{taskModal.taskName}</span>
+              <span
+                className="mr-2 ml-4 ml-md-0"
+                style={{
+                  fontWeight: "700",
+                }}
+              >
+                {taskModal.taskName}
+              </span>
               <Popconfirm
                 title="Delete the task"
                 description="Are you sure to delete this task?"
@@ -419,9 +427,9 @@ export default function ModalDetail() {
                 okText="Yes"
                 cancelText="No"
               >
-                <button className="btn btn-danger  ">
-                  <DeleteOutlined className="text-light" />
-                </button>
+                <Button className="button delete-button">
+                  <i class="fa-regular fa-trash-can"></i>
+                </Button>
               </Popconfirm>
             </div>
             <div className="task-click">
@@ -454,14 +462,24 @@ export default function ModalDetail() {
                 <div className="col-xl-8 col-md-12">
                   <p className="issue title-detail">
                     This is an issue of type:
-                    {taskModal.taskTypeDetail.taskType}
+                    <span> {taskModal.taskTypeDetail.taskType}</span>
                   </p>
                   <div className="description">{renderDescription()}</div>
                   <div className="comment mt-5">
                     <h6 className="title-detail">COMMENT</h6>
-                    <div className="block-comment" style={{ display: "flex" }}>
+                    <div
+                      className="block-comment"
+                      style={{
+                        display: "flex",
+
+                        alignItems: "center",
+                      }}
+                    >
                       <div className="avatar">
-                        <img src={userLogin.avatar}></img>
+                        <img
+                          style={{ alignSelf: "flex-end" }}
+                          src={`https://ui-avatars.com/api/?name=${userLogin.name}&background=007bff&bold=true`}
+                        ></img>
                       </div>
                       <div className="input-comment">
                         <input
@@ -474,19 +492,24 @@ export default function ModalDetail() {
                           }}
                         ></input>
                         <button
-                          className="btn btn-primary mt-2 "
+                          className="add-comment-button"
                           onClick={() => {
-                            dispatch({
-                              type: INSERT_COMMENT_SAGA,
-                              insertDetail: {
-                                taskId: taskModal.taskId,
-                                contentComment: commentValue,
-                              },
-                            });
-                            setCommentValue("");
+                            if (commentValue != "") {
+                              dispatch({
+                                type: INSERT_COMMENT_SAGA,
+                                insertDetail: {
+                                  taskId: taskModal.taskId,
+                                  contentComment: commentValue,
+                                },
+                              });
+                              setCommentValue("");
+                            }
                           }}
                         >
-                          Add comment
+                          <div className="cmt-btn-content">
+                            <CommentOutlined className="cmt-icon" />
+                            <span className="text-cmt"> comment</span>
+                          </div>
                         </button>
                       </div>
                     </div>
@@ -501,12 +524,18 @@ export default function ModalDetail() {
                             >
                               <div className="avatar">
                                 <img
-                                  src={cmt.user.avatar}
-                                  alt={cmt.user.avatar}
+                                  src={`https://ui-avatars.com/api/?name=${cmt.user.name}&background=007bff&bold=true`}
+                                  alt={cmt.user.name}
                                 ></img>
                               </div>
                               <div>
-                                <p style={{ marginBottom: 5, color: "navy" }}>
+                                <p
+                                  style={{
+                                    marginBottom: 5,
+                                    wordBreak: "break-all",
+                                    color: "navy",
+                                  }}
+                                >
                                   {ReactHTMLparser(cmt.contentComment)}
                                 </p>
                                 <div className="d-flex">
@@ -517,7 +546,6 @@ export default function ModalDetail() {
                                     {renderCommentEditor(cmt, index)}
                                   </span>
                                   <span
-                                    style={{ color: "red", cursor: "pointer" }}
                                     onClick={() => {
                                       dispatch({
                                         type: DELETE_COMMENT_SAGA,
@@ -528,7 +556,9 @@ export default function ModalDetail() {
                                       });
                                     }}
                                   >
-                                    Delete
+                                    <span className="displaycmt-delete-btn">
+                                      delete
+                                    </span>
                                   </span>
                                 </div>
                               </div>
@@ -570,13 +600,16 @@ export default function ModalDetail() {
                   </div>
                   <div className="assignees">
                     <h6 className="title-detail">Assignees</h6>
-                    <div className="row w-100">
+                    <div className="row w-100 assignees-container">
                       {taskModal?.assigness?.map((user, index) => {
                         return (
                           <div className="col-3 mt-2 mb-2 " key={index}>
                             <div className="item">
                               <div className="avatar">
-                                <img src={user.avatar} alt={user.avatar}></img>
+                                <img
+                                  src={`https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true`}
+                                  alt={user.avatar}
+                                ></img>
                               </div>
                               <p className="assigness-name mt-1 ml-1">
                                 <Tag color="cyan">

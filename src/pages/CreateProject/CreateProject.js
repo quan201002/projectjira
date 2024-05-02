@@ -108,7 +108,7 @@ function CreateProject(props) {
           <Button
             htmlType="submit"
             size="large"
-            className="mt-2 btn btn-primary"
+            className="mt-2 btn my-button"
             style={{ width: "fit-content" }}
           >
             Create

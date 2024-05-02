@@ -103,11 +103,9 @@ const Formlogin = (props) => {
                 <Button
                   htmlType="submit"
                   size="large"
-                  className="btn btn-primary mb-2"
+                  className="mb-2 my-button"
                   style={{
                     width: "100%",
-                    backgroundColor: "#1890ff",
-                    borderColor: "#1890ff",
                   }}
                 >
                   Login

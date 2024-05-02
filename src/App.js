@@ -19,7 +19,6 @@ import SecureGate from "./component/GlobalSetting/SecureGate";
 function App() {
   return (
     <>
-      <ModalDetail />
       <LoadingComponent />
       <Routes>
         <Route path="/login" element={<Loginpage />}></Route>

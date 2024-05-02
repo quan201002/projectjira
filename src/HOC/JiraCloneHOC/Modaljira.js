@@ -43,17 +43,18 @@ const Modaljira = () => {
         }}
         extra={
           <Space>
-            <Button className="cancel-button" onClick={onClose}>
+            <button className="cancel-button btn" onClick={onClose}>
               Cancel
-            </Button>
-            <Button
+            </button>
+            <button
+              className="btn my-button"
               onClick={() => {
                 callBackSubmit();
               }}
               type="primary"
             >
               Submit
-            </Button>
+            </button>
           </Space>
         }
       >

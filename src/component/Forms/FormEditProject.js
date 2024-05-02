@@ -44,10 +44,11 @@ function FormEditProject(props) {
           <div className="form-group">
             <h4 className="font-weight-bold input-label ">Project Id</h4>
             <input
-              className="form-control input-form"
+              className="form-control input-form disabled-input"
               value={values.id}
               onChange={handleChange}
               name="id"
+              disabled
             />
           </div>
         </div>

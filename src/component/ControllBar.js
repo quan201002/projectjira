@@ -19,6 +19,7 @@ import FormCreateTask from "../HOC/JiraCloneHOC/FormCreateTask";
 import { TOKEN, USER_LOGIN } from "../redux/constant/SettingSystem";
 import { Card, Space } from "antd";
 import Darkmode from "./GlobalSetting/Darkmode";
+import RippleButton from "./RippleButton";
 const { Content, Sider } = Layout;
 
 const renderLoginRequireMent = () => {
@@ -26,14 +27,14 @@ const renderLoginRequireMent = () => {
     <></>
   ) : (
     <div className="login-notification">
-      <Space direction="vertical" size={16}>
+      {/* <Space direction="vertical" size={16}>
         <Card className="card-notification text-center " title="Login require">
           <h3>Login your account to continue</h3>
-          <Button className="bg-primary text-light mt-4">
-            <NavLink to="/login">Login here</NavLink>
-          </Button>
+          
         </Card>
-      </Space>
+      </Space> */}
+      <h3 className="login-requirement">Login your account to continue</h3>
+      <RippleButton />
     </div>
   );
 };
@@ -74,7 +75,7 @@ const ControllBar = () => {
           <div className="sider-container">
             {renderLoginRequireMent()}
             <Sider
-              style={{ height: "100%" }}
+              style={{ height: "100%", zIndex: "5" }}
               trigger={null}
               collapsible
               collapsed={collapsed}
@@ -154,72 +155,74 @@ const ControllBar = () => {
               </p>
               <Divider type="horizontal" />
             </Sider>
-            <div className="dropdown dropdown-bar">
-              <button
-                className="dropdown-toggle menu-button"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Menu
-              </button>
-              <div
-                className="dropdown-menu controller-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <p className="logo-container text-center">
-                  <NavLink className="" to="/">
-                    <img src="../logojira.png" className="logo"></img>
-                  </NavLink>
-                </p>
-                <p>
-                  <BuildOutlined />
-                  <NavLink className="menu-item" to="/createproject">
-                    Createproject
-                  </NavLink>
-                </p>
-                <p>
-                  <AppstoreOutlined />
-                  <NavLink className="  menu-item" to="/projectmanagement">
-                    Project management
-                  </NavLink>
-                </p>
-                <p>
-                  <UserSwitchOutlined />
-                  <NavLink className=" menu-item" to="/">
-                    User management
-                  </NavLink>
-                </p>
-                <p>
-                  <LoginOutlined />
-                  <NavLink className="menu-item" to="/login">
-                    Login
-                  </NavLink>
-                </p>
-                <p>
-                  <FormOutlined />
-                  <NavLink className="menu-item" to="/signup">
-                    Signup
-                  </NavLink>
-                </p>
-              </div>
-            </div>
-            <div className="account-actions">
-              <Popconfirm
-                title="Log out"
-                description="Are you sure to logout ?"
-                onConfirm={() => {
-                  localStorage.removeItem(TOKEN);
-                  localStorage.removeItem(USER_LOGIN);
-                  window.location = "/login";
-                }}
-              >
-                <button className="btn btn-bg-primary logout-button">
-                  <p style={{ lineHeight: "100%" }}>Log out</p>
+            <div className="header-bar">
+              <div className="dropdown dropdown-bar">
+                <button
+                  className="dropdown-toggle menu-button"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Menu
                 </button>
-              </Popconfirm>
+                <div
+                  className="dropdown-menu controller-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <p className="logo-container text-center">
+                    <NavLink className="" to="/">
+                      <img src="../logojira.png" className="logo"></img>
+                    </NavLink>
+                  </p>
+                  <p>
+                    <BuildOutlined />
+                    <NavLink className="menu-item" to="/createproject">
+                      Createproject
+                    </NavLink>
+                  </p>
+                  <p>
+                    <AppstoreOutlined />
+                    <NavLink className="  menu-item" to="/projectmanagement">
+                      Project management
+                    </NavLink>
+                  </p>
+                  <p>
+                    <UserSwitchOutlined />
+                    <NavLink className=" menu-item" to="/">
+                      User management
+                    </NavLink>
+                  </p>
+                  <p>
+                    <LoginOutlined />
+                    <NavLink className="menu-item" to="/login">
+                      Login
+                    </NavLink>
+                  </p>
+                  <p>
+                    <FormOutlined />
+                    <NavLink className="menu-item" to="/signup">
+                      Signup
+                    </NavLink>
+                  </p>
+                </div>
+              </div>
+              <div className="account-actions">
+                <Popconfirm
+                  title="Log out"
+                  description="Are you sure to logout ?"
+                  onConfirm={() => {
+                    localStorage.removeItem(TOKEN);
+                    localStorage.removeItem(USER_LOGIN);
+                    window.location = "/login";
+                  }}
+                >
+                  <button className="btn btn-bg-primary logout-button">
+                    <p style={{ lineHeight: "100%" }}>Log out</p>
+                  </button>
+                </Popconfirm>
+              </div>
             </div>
           </div>
         </div>
