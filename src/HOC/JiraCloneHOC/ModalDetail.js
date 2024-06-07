@@ -12,13 +12,11 @@ import {
   UPDATE_TASK_STATUS_SAGA,
 } from "../../redux/constant/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstans";
-import { Editor } from "@tinymce/tinymce-react";
 import ProjectDetail from "../../pages/ProjectDetail/ProjectDetail";
 import { Button, Popconfirm, Select, Tag } from "antd";
-import { CommentOutlined, DeleteOutlined } from "@ant-design/icons";
+import { CommentOutlined } from "@ant-design/icons";
 import {
   DELETE_COMMENT_SAGA,
-  GET_COMMENTS_SAGA,
   INSERT_COMMENT_SAGA,
   UPDATE_COMMENT_SAGA,
 } from "../../redux/constant/CommentConstant";
@@ -26,7 +24,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
 import { USER_LOGIN } from "../../redux/constant/SettingSystem";
-import UserLoginCyberBugsReducer from "../../redux/reducer/UserLoginCyberBugReducer";
 
 export default function ModalDetail() {
   const [commentValue, setCommentValue] = useState("");
@@ -46,7 +43,6 @@ export default function ModalDetail() {
     ? JSON.parse(localStorage.getItem(USER_LOGIN))
     : "";
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch({
       type: GET_ALL_STATUS_SAGA,
@@ -612,9 +608,13 @@ export default function ModalDetail() {
                                 ></img>
                               </div>
                               <p className="assigness-name mt-1 ml-1">
-                                <Tag color="cyan">
-                                  {user.name}
+                                <Tag
+                                  color="cyan"
+                                  className="assigness-name-tag"
+                                >
+                                  <p className="mb-0 name">{user.name}</p>
                                   <span
+                                    className="remove-assignees-btn"
                                     onClick={() => {
                                       dispatch({
                                         type: HANDLE_CHANGE_POST_API_SAGA,
@@ -632,6 +632,7 @@ export default function ModalDetail() {
                                       style={{
                                         marginLeft: 5,
                                         cursor: "pointer",
+                                        color: "#000",
                                       }}
                                     ></i>
                                   </span>

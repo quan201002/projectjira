@@ -813,7 +813,7 @@ const ProjectManagement = () => {
             </List.Item>
           )}
           pagination={{
-            pageSize: 7,
+            pageSize: 3,
           }}
         />
       </div>

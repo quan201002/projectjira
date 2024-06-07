@@ -6,11 +6,10 @@ import ModalDetail from "../HOC/JiraCloneHOC/ModalDetail";
 
 export default function Layout() {
   const inputEl = document.getElementById("dark-mode");
-  // console.log("input element", inputEl);
   const bodyEl = document.querySelector("body");
   const isDarkMode = JSON.parse(localStorage.getItem("mode"));
 
-  // console.log(isDarkMode);
+
   if (isDarkMode) {
     bodyEl.style.backgroundColor = "black";
     document.querySelector("html").classList.add("dark-mode");
@@ -23,7 +22,7 @@ export default function Layout() {
       <Modaljira />
       <div
         style={{
-          width: "100vw",
+          width: "100%",
           height: "100vh",
           display: "flex",
           flexDirection: "row",

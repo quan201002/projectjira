@@ -12,7 +12,7 @@ function CreateProject(props) {
   let arrProjectCaterory = useSelector(
     (state) => state.ProjectCateroryReducer.arrProjectCaterory
   );
-  // console.log("arrProjectCaterory", arrProjectCaterory);
+
   const dispatch = useDispatch();
   const {
     values,
@@ -36,18 +36,10 @@ function CreateProject(props) {
 
   return (
     <div className="form-wrapper container1 content-container">
-      <div
-        style={{
-          width: "80%",
-          position: "relative",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
+      <div className="create-project-container">
         <form
           onSubmit={handleSubmit}
-          className="create-project-container"
+          className="create-project-form"
           onChange={handleChange}
         >
           <div className="form-group w-100">
@@ -78,7 +70,7 @@ function CreateProject(props) {
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();
-                // console.log("data", data);
+     
                 setFieldValue("description", data);
               }}
               onBlur={(event, editor) => {
@@ -121,7 +113,7 @@ function CreateProject(props) {
 const createProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    // console.log("props value", props);
+  
     return {
       projectName: "",
       description: "",
@@ -135,7 +127,6 @@ const createProjectForm = withFormik({
     console.log(e.values);
   },
 
-  // Custom sync validation
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log("values", values);
     props.dispatch({ type: CREATE_PROJECT_SAGA, newProject: values });

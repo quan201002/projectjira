@@ -15,24 +15,15 @@ function FormEditProject(props) {
   console.log("arr", arrProjectCaterory);
   const {
     values,
-    touched,
-    errors,
     handleChange,
-    handleBlur,
     handleSubmit,
-    setValues,
     setFieldValue,
   } = props;
   let dispatch = useDispatch();
-  //   const submitForm = (e) => {
-  //     alert("submit edit");
-  //   };
-  useEffect(() => {
-    //goi api load project category
-    dispatch({ type: "GET_ALL_PROJECT_CATEGORY_SAGA" });
 
+  useEffect(() => {
+    dispatch({ type: "GET_ALL_PROJECT_CATEGORY_SAGA" });
     setFieldValue("description", values.description);
-    //load su kien len drawer nut submit
     dispatch({ type: "SET_SUBMIT_EDIT_PROJECT", submitFunction: handleSubmit });
   }, []);
 
@@ -68,12 +59,7 @@ function FormEditProject(props) {
         <div className="col-4">
           <div className="form-group">
             <h4 className="font-weight-bold input-label">Project category</h4>
-            {/* <input
-              value={values.categoryId}
-              className="form-control"
-              onChange={handleChange}
-              name="categoryId"
-            /> */}
+           
             <select
               name="categoryId"
               className="form-control input-form"
@@ -145,13 +131,13 @@ const editProjectForm = withFormik({
     console.log(e.values);
   },
 
-  // Custom sync validation
+
   handleSubmit: (values, { props, setSubmitting }) => {
     const action = {
       type: UPDATE_PROJECT_SAGA,
       projectUpdate: values,
     };
-    //call saga dinh nghia mot ham vi khong sai dc hook nen sai mapdispatchtoprops
+
     props.dispatch(action);
   },
   displayName: "edit form",

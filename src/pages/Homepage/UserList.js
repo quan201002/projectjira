@@ -184,7 +184,7 @@ const UserList = () => {
         }}
       />
       <List
-        className="list-user-jira"
+        className="list-user-jira mt-5"
         bordered
         dataSource={data.reverse()}
         renderItem={(item) => (
@@ -263,7 +263,7 @@ const UserList = () => {
           </List.Item>
         )}
         pagination={{
-          pageSize: 7,
+          pageSize: 5,
         }}
       />
     </div>

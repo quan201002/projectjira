@@ -3,6 +3,7 @@ import {
   GET_ALL_USER,
   GET_USER_BY_PROJECT_ID,
   GET_USER_SEARCH,
+  UPDATE_USER_LOGIN,
 } from "../constant/UserConstants";
 
 let usLogin = {};
@@ -26,6 +27,8 @@ const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
       return { ...state, arrUser: action.arrUser };
     case GET_ALL_USER:
       return { ...state, listUsers: action.userList };
+    case UPDATE_USER_LOGIN:
+      return { ...state, userLogin: action.user };
     default:
       return { ...state };
   }

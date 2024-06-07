@@ -8,6 +8,7 @@ import {
   PlusOutlined,
   SearchOutlined,
   SettingFilled,
+  UserOutlined,
   UserSwitchOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
@@ -27,18 +28,11 @@ const renderLoginRequireMent = () => {
     <></>
   ) : (
     <div className="login-notification">
-      {/* <Space direction="vertical" size={16}>
-        <Card className="card-notification text-center " title="Login require">
-          <h3>Login your account to continue</h3>
-          
-        </Card>
-      </Space> */}
       <h3 className="login-requirement">Login your account to continue</h3>
       <RippleButton />
     </div>
   );
 };
-//menu items
 
 const ControllBar = () => {
   let navigate = useNavigate();
@@ -75,48 +69,8 @@ const ControllBar = () => {
           <div className="sider-container">
             {renderLoginRequireMent()}
             <Sider
-              style={{ height: "100%", zIndex: "5" }}
-              trigger={null}
-              collapsible
-              collapsed={collapsed}
-              className="dark-sider"
-            >
-              <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container">
-                <Darkmode />
-              </p>
-              <Button
-                className="dark-sider-button ml-lg-3 "
-                type="text"
-                icon={<MenuOutlined style={{ color: "white" }} />}
-                onClick={() => setCollapsed(!collapsed)}
-              />
-              <Menu
-                theme="dark"
-                mode="inline"
-                items={[
-                  {
-                    key: "1",
-                    icon: <PlusOutlined />,
-                    label: "Create task",
-                    onClick: () => {
-                      dispatch({
-                        type: "OPEN_FORM_CREATE_TASK",
-                        ComponentContentDrawer: FormCreateTask,
-                        open: true,
-                      });
-                    },
-                  },
-                  {
-                    key: "2",
-                    icon: <SearchOutlined />,
-                    label: "Search",
-                  },
-                ]}
-              />
-            </Sider>
-            <Sider
               className="d-flex justify-content-center menu-sider white-sider"
-              width={200}
+              width={220}
             >
               <p className="logo-container text-center">
                 <NavLink className="logo-link " to="/">
@@ -126,6 +80,9 @@ const ControllBar = () => {
                     className="logo"
                   ></img>
                 </NavLink>
+              </p>
+              <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container darkmode-button">
+                <Darkmode />
               </p>
               <p className="menu-item-container">
                 <BuildOutlined className="navbar-icon" />
@@ -146,6 +103,28 @@ const ControllBar = () => {
                   User management
                 </NavLink>
               </p>
+              <p className="menu-item-container">
+                <UserOutlined className="navbar-icon" />
+
+                <NavLink className="menu-item" to="/profile">
+                  Profile
+                </NavLink>
+              </p>
+              <p
+                className="menu-item-container"
+                onClick={() => {
+                  dispatch({
+                    type: "OPEN_FORM_CREATE_TASK",
+                    ComponentContentDrawer: FormCreateTask,
+                    open: true,
+                  });
+                }}
+              >
+                <PlusOutlined className="navbar-icon" />
+                <span className="menu-item" style={{ cursor: "pointer" }}>
+                  Create Task
+                </span>
+              </p>
               {renderLoginButton()}
               <p className="menu-item-container">
                 <FormOutlined className="navbar-icon" />
@@ -155,74 +134,73 @@ const ControllBar = () => {
               </p>
               <Divider type="horizontal" />
             </Sider>
-            <div className="header-bar">
-              <div className="dropdown dropdown-bar">
+            <div className="header-bar header-controll">
+              <nav className="navbar navbar-expand-lg navbar-light bg-light text-center navbar-background">
+                <p className="logo-container text-left logo-reps mb-0">
+                  <NavLink className="" to="/">
+                    <img src="../logojira.png" className="logo"></img>
+                  </NavLink>
+                </p>
+
                 <button
-                  className="dropdown-toggle menu-button"
+                  className="navbar-toggler"
                   type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
+                  data-toggle="collapse"
+                  data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
                   aria-expanded="false"
+                  aria-label="Toggle navigation"
                 >
-                  Menu
+                  <span className="navbar-toggler-icon" />
                 </button>
                 <div
-                  className="dropdown-menu controller-menu"
-                  aria-labelledby="dropdownMenuButton"
+                  className="collapse navbar-collapse"
+                  id="navbarSupportedContent"
                 >
-                  <p className="logo-container text-center">
-                    <NavLink className="" to="/">
-                      <img src="../logojira.png" className="logo"></img>
-                    </NavLink>
+                  <p className="text-left mb-3 mt-3 ml-lg-3 ml-md-0 checkbox-container">
+                    <Darkmode />
                   </p>
                   <p>
-                    <BuildOutlined />
                     <NavLink className="menu-item" to="/createproject">
                       Createproject
                     </NavLink>
                   </p>
                   <p>
-                    <AppstoreOutlined />
                     <NavLink className="  menu-item" to="/projectmanagement">
                       Project management
                     </NavLink>
                   </p>
                   <p>
-                    <UserSwitchOutlined />
                     <NavLink className=" menu-item" to="/">
                       User management
                     </NavLink>
                   </p>
+
                   <p>
-                    <LoginOutlined />
-                    <NavLink className="menu-item" to="/login">
-                      Login
-                    </NavLink>
-                  </p>
-                  <p>
-                    <FormOutlined />
                     <NavLink className="menu-item" to="/signup">
                       Signup
                     </NavLink>
                   </p>
+                  <div className="account-actions text-center">
+                    <Popconfirm
+                      title="Log out"
+                      description="Are you sure to logout ?"
+                      onConfirm={() => {
+                        localStorage.removeItem(TOKEN);
+                        localStorage.removeItem(USER_LOGIN);
+                        window.location = "/login";
+                      }}
+                    >
+                      <button
+                        className="btn btn-bg-primary logout-button my-button"
+                        style={{ margin: "auto" }}
+                      >
+                        <p style={{ lineHeight: "100%" }}>Log out</p>
+                      </button>
+                    </Popconfirm>
+                  </div>
                 </div>
-              </div>
-              <div className="account-actions">
-                <Popconfirm
-                  title="Log out"
-                  description="Are you sure to logout ?"
-                  onConfirm={() => {
-                    localStorage.removeItem(TOKEN);
-                    localStorage.removeItem(USER_LOGIN);
-                    window.location = "/login";
-                  }}
-                >
-                  <button className="btn btn-bg-primary logout-button">
-                    <p style={{ lineHeight: "100%" }}>Log out</p>
-                  </button>
-                </Popconfirm>
-              </div>
+              </nav>
             </div>
           </div>
         </div>

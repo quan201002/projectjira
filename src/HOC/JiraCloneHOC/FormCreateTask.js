@@ -207,6 +207,7 @@ const FormCreateTask = (props) => {
               onChange={(values) => {
                 setFieldValue("listUserAsign", values);
               }}
+      
               placeholder="Please select"
               optionFilterProp="label"
               style={{

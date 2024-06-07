@@ -18,7 +18,6 @@ export default function LoadingComponent() {
         alignItems: "center",
       }}
     >
-      {/* coolors  */}
       <RingLoader size={150} color="#fca311" speedMultiplier={3} />
     </div>
   ) : (

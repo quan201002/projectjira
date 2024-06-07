@@ -7,9 +7,7 @@ export default function Loginpage() {
     <div
       className="login-background"
       style={{
-        height: "100vh",
         display: "flex",
-        width: "100%",
         justifyContent: "center",
         alignItems: "center",
       }}

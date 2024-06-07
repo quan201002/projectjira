@@ -22,6 +22,7 @@ export function* rootSaga() {
     CyberBugs.theoDoiRemoveUser(),
     CyberBugs.theoDoigetUserByProjectIdSaga(),
     CyberBugs.theoDoiEditUser(),
+    CyberBugs.theoDoiEditProfile(),
     CyberBugs.theoDoiDeleteUser(),
     TaskSaga.theoDoiCreateTaskSaga(),
     TaskSaga.theoDoiGetTaskSaga(),

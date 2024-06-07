@@ -15,9 +15,11 @@ const Formsignup = () => {
       .post("/api/Users/signup", values)
       .then((res) => {
         notifiFunction("success", "Sign up successfully");
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
+        notifiFunction("error", "Account has been registered");
       });
   };
   const onFinishFailed = (errorInfo) => {

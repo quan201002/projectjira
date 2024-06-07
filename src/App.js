@@ -15,6 +15,7 @@ import ModalDetail from "./HOC/JiraCloneHOC/ModalDetail";
 import DemoDrag from "./pages/DemoDrag";
 import DragandDropDnd from "./pages/DragandDropDnd";
 import SecureGate from "./component/GlobalSetting/SecureGate";
+import ProfilePage from "./pages/ProfilePage.js/ProfilePage";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
             path="/projectmanagement"
             element={<ProjectManagement />}
           ></Route>
-
+          <Route path="/profile" element={<ProfilePage />}></Route>
           <Route
             path="/projectdetail/:projectId"
             element={<ProjectDetail />}

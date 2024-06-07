@@ -21,6 +21,7 @@ import { https } from "../../../service/api";
 import {
   ADD_USER_PROJECT_API,
   DELETE_USER_SAGA,
+  EDIT_PROFILE_SAGA,
   EDIT_USER_SAGA,
   GET_ALL_USER,
   GET_ALL_USER_SAGA,
@@ -29,6 +30,7 @@ import {
   GET_USER_BY_PROJECT_ID_SAGA,
   GET_USER_SEARCH,
   REMOVE_USER_PROJECT_API,
+  UPDATE_USER_LOGIN,
 } from "../../constant/UserConstants";
 import { notifiFunction } from "../../../component/Notification/Notification";
 import {
@@ -250,6 +252,38 @@ function* editUsersSaga(action) {
 }
 export function* theoDoiEditUser() {
   yield takeLatest(EDIT_USER_SAGA, editUsersSaga);
+}
+
+function* editProfileSaga(action) {
+  console.log("action update profile saga", action);
+  let user = action.editUser;
+  user.avatar = `https://ui-avatars.com/api/?name=${user.name}`;
+  user.accessToken =
+    "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJoaWV1bWluaDExMjJAZ21haWwuY29tIiwibmJmIjoxNzE1MTUzNTM4LCJleHAiOjE3MTUxNTcxMzh9.RzArTvgmhZLSFs4pTetCzHnCyH3ipTeZL9OrfFiUcrE";
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.editUserSaga(action.editUser)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "Profile updated");
+      console.log("data edit", data);
+      yield put({
+        type: GET_USER_API,
+        keyWord: "",
+      });
+      yield put({
+        type: UPDATE_USER_LOGIN,
+        user: user,
+      });
+    }
+
+    localStorage.setItem(USER_LOGIN, JSON.stringify(user));
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* theoDoiEditProfile() {
+  yield takeLatest(EDIT_PROFILE_SAGA, editProfileSaga);
 }
 
 function* deleteUserSaga(action) {

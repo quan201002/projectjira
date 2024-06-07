@@ -7,18 +7,26 @@ import {
   Popconfirm,
   Popover,
   Row,
+  Select,
   Tag,
+  Tooltip,
 } from "antd";
+
 import { Breadcrumb, Modal, Button, Form, Input, Checkbox } from "antd";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import {
+  CREATE_TASK_SAGA,
   GET_TASK_SAGA,
   UPDATE_TASK_STATUS_SAGA,
 } from "../../redux/constant/TaskConstants";
 import { renderTaskTypeIcon } from "../../service/RenderTaskTypeIcon";
-import { BugOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  BugOutlined,
+  DownSquareOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { GET_PROJECT_DETAIL_SAGA } from "../../redux/constant/ProjectCyberBugsConstant";
 import { Header } from "antd/es/layout/layout";
 import {
@@ -27,6 +35,7 @@ import {
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../../redux/constant/UserConstants";
 import ModalDetail from "../../HOC/JiraCloneHOC/ModalDetail";
+
 const { Search } = Input;
 
 function ProjectDetail(props) {
@@ -39,8 +48,14 @@ function ProjectDetail(props) {
   const mockVal = (str, repeat = 1) => ({
     value: str.repeat(repeat),
   });
-  const [options, setOptions] = useState([]);
+  const [isCreatingTask, setIsCreatingTask] = useState(false);
+
   const [value, setValue] = useState("");
+  const [task, setTask] = useState({
+    taskName: "",
+    typeId: "1",
+  });
+  const [select, setSelect] = useState(1);
 
   const searchRef = useRef(null);
   const getPanelValue = (searchText) =>
@@ -102,7 +117,11 @@ function ProjectDetail(props) {
   let dispatch = useDispatch();
 
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
-
+  const renderCreateTaskButton = (index) => {
+    if (index == 0) {
+      return <></>;
+    }
+  };
   const renderAvatar = () => {
     return projectDetail?.members?.map((user, index) => {
       return (
@@ -281,16 +300,109 @@ function ProjectDetail(props) {
         return <i className="fa-solid fa-angles-down text-primary"></i>;
     }
   };
-  // const renderTaskTypeIcon = (taskType) => {
-  //   {
-  //     switch (taskType) {
-  //       case 1:
-  //         return <i class="fa-solid fa-bug text-danger"></i>;
-  //       case 2:
-  //         return <i className="fa fa-bookmark text-success"></i>;
-  //     }
-  //   }
-  // };
+  const handelChange = (e) => {
+    const { name, value } = e.target;
+    setTask({ ...task, [name]: value });
+  };
+  const handelChangeSelect = (e) => {
+    console.log(e.value);
+    setSelect(e.value);
+  };
+  const handleSubmit = (e) => {
+    setIsCreatingTask(false);
+    dispatch({
+      type: CREATE_TASK_SAGA,
+      taskObject: {
+        listUserAsign: [],
+        taskName: task.taskName,
+        description: "",
+        statusId: 1,
+        originalEstimate: 10,
+        timeTrackingSpent: 5,
+        timeTrackingRemaining: 5,
+        projectId: projectId,
+        typeId: select,
+        priorityId: 2,
+      },
+      projectId: projectId,
+    });
+    setTask("");
+  };
+
+  const renderCreatingTask = () => {
+    return !isCreatingTask ? (
+      <div className="create-task-btn-container">
+        <button
+          className="create-task-button my-button"
+          onClick={() => {
+            setIsCreatingTask(true);
+          }}
+        >
+          Create task
+        </button>
+      </div>
+    ) : (
+      <div className="quick-creatingtask-form">
+        <form onSubmit={handleSubmit} className="quick-create-task-form">
+          <input
+            style={{
+              color: "var(--text)",
+            }}
+            onChange={handelChange}
+            type="text"
+            value={task.taskName}
+            className="what-task"
+            name="taskName"
+            placeholder="What need to be done ?"
+          ></input>
+          <Select
+            labelInValue
+            dropdownRender={(menu) => (
+              <div style={{ backgroundColor: "var(--form-background)" }}>
+                {menu}
+              </div>
+            )}
+            defaultValue={{
+              value: "1",
+              label: (
+                <>
+                  <BugOutlined style={{ color: "red" }} />
+                </>
+              ),
+            }}
+            className="quicktask-select"
+            name="typeId"
+            title="type"
+            onSelect={handelChangeSelect}
+            style={{
+              width: 50,
+            }}
+            options={[
+              {
+                value: "1",
+                label: (
+                  <>
+                    <BugOutlined style={{ color: "red" }} />
+                  </>
+                ),
+              },
+              {
+                value: "2",
+                label: (
+                  <>
+                    <DownSquareOutlined style={{ color: "green" }} />
+                  </>
+                ),
+              },
+            ]}
+          />
+          <button type="submit" className="submit-create-task my-button">
+            +
+          </button>
+        </form>
+      </div>
+    );
+  };
 
   const handleDragEnd = (result) => {
     console.log("result", result);
@@ -381,7 +493,6 @@ function ProjectDetail(props) {
                                           document.getElementById(
                                             "taskDetailModal"
                                           );
-
                                         taskModalform.style.display = "block";
                                         document
                                           .querySelector("body")
@@ -398,7 +509,7 @@ function ProjectDetail(props) {
                                       data-toggle="modal"
                                       data-target="#taskDetailModal"
                                     >
-                                      <h4 className="mb-3">{task.taskName}</h4>
+                                      <h6 className="mb-3">{task.taskName}</h6>
                                       <div
                                         className="block"
                                         style={{
@@ -599,7 +710,7 @@ function ProjectDetail(props) {
                             </>
                           );
                         })}
-
+                        {index == 0 ? renderCreatingTask() : <></>}
                         {provided.placeholder}
                       </ul>
                     </div>
@@ -625,7 +736,6 @@ function ProjectDetail(props) {
           ]}
         />
       </div>
-
       <div className="members mb-3">
         <div className="board">
           <h1 className="text">Board</h1>
@@ -641,15 +751,18 @@ function ProjectDetail(props) {
           <h3 className="mr-4 text">Members</h3>
           <div className="avatar-container-detail">
             {renderAvatar()}
-            <button
-              className="add-user-btn add-button my-button"
-              onClick={showModal}
-            >
-              <span>+</span>
-            </button>
+            <div className="add-button-container">
+              <button
+                className="add-user-btn add-button my-button"
+                onClick={showModal}
+              >
+                <span>+</span>
+              </button>
+            </div>
           </div>
           <div className="avatar-container-detail-resp">
             {renderAvatarResp()}
+
             <button
               className="add-user-btn my-button add-button add-button-reps"
               onClick={showModal}
@@ -660,7 +773,6 @@ function ProjectDetail(props) {
         </div>
       </div>
       <div className="row works-container">{renderCardTaskList()}</div>
-
       <Modal
         className="modal-users"
         title={`Add member to project ${projectDetail.projectName}`}
@@ -709,7 +821,11 @@ function ProjectDetail(props) {
                 <List.Item>
                   <div className="w-100 d-flex justify-content-between">
                     <List.Item.Meta
-                      avatar={<Avatar src={item.avatar} />}
+                      avatar={
+                        <Tooltip placement="rightTop" title={item.name}>
+                          <Avatar src={item.avatar} />
+                        </Tooltip>
+                      }
                       title={item.name}
                       description={`User id: ${item.userId}`}
                     />
@@ -735,9 +851,9 @@ function ProjectDetail(props) {
                   </div>
                 </List.Item>
               )}
-              pagination={{
-                pageSize: 9,
-              }}
+              // pagination={{
+              //   pageSize: 9,
+              // }}
             />
           </div>
           <div className="col-6 col-sx-12 col-sm-6  users-container">
@@ -749,7 +865,11 @@ function ProjectDetail(props) {
                 <List.Item>
                   <div className="w-100 d-flex justify-content-between">
                     <List.Item.Meta
-                      avatar={<Avatar src={item.avatar} />}
+                      avatar={
+                        <Tooltip placement="rightTop" title={item.name}>
+                          <Avatar src={item.avatar} />
+                        </Tooltip>
+                      }
                       title={item.name}
                       description={`User id: ${item.userId}`}
                     />
@@ -780,9 +900,6 @@ function ProjectDetail(props) {
                   </div>
                 </List.Item>
               )}
-              pagination={{
-                pageSize: 9,
-              }}
             />
           </div>
         </div>
